@@ -20,6 +20,14 @@ int scr()
     noecho(); 
     cbreak();
 
+    if(!has_colors())
+    {
+        printw("Terminal doesn't support the color");
+        getch();
+        return -1;
+    }
+    start_color();
+
     getmaxyx(stdscr, yMax,xMax);
 
 
@@ -31,6 +39,7 @@ int scr()
     keypad(win,true);
     
     int c=4,r=1;
+    int i=0;
     fstream file;
     file.open("salvataggio_punteggio/test1.txt", ios::in);
     char line[80];
@@ -50,18 +59,33 @@ int scr()
             {
                 c++;
                 r=1;
+                i++;
             }
             else
             {
-                mvwprintw(win,c,r,line);
+                if(i==0)
+                {
+                    wattron(win,A_REVERSE);
+                    mvwprintw(win,c,r,line);
+                    wattroff(win,A_REVERSE);
+                }
+                else
+                {
+                    mvwprintw(win,c,r,line);
+                }
+                
                 r=r+20;
             }
+
         }
     }
     
     file.close();
 
+
     wrefresh(win);
+
+
 
     getch();
     endwin();

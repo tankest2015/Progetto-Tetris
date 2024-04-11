@@ -1,9 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-//#include "ordinamento.H"
+
 
 using namespace std;
+
+
 
 int main()
 {
@@ -14,14 +16,23 @@ int main()
     char input[length];
     
     char time[9];//time [9] = '\0'
-    char point[6] = "201";
-    char name[25] = "Giuorgiuo";
-    char line[6] = "124";
+    char point[6];
+    char name[25];
+    char line[6];
     char mess[40];
+    char mess_1[40];
     char s[2];
     char min[2];
     char h[2];
     char end[2] = "\n";
+
+    cout<<"Insert name: "<<endl;
+    cin>>name;
+    cout<<"Insert point "<<endl;
+    cin>>point;
+    cout<<"Insert line"<<endl;
+    cin>>line;
+    
 
     cout<<"inserire secondi:"<<endl;
     cin>>s;
@@ -64,12 +75,12 @@ int main()
 
     fstream including none 
     */
-    fstream newF;
-    newF.open("test_final.txt",ios::trunc);
+    ofstream newF;
+    newF.open("test_final.txt",ofstream::out | ios::trunc);
 
     newF.close();
 
-        
+       
         int j=1;
         fstream file;
         file.open("test1.txt", ios::in);
@@ -88,72 +99,154 @@ int main()
         {
             while(!file.eof())
             {
-
+                
+                //name
                 file>>line_pos;
                 strcpy(mess,line_pos);
+                strncat(mess,"      ",5);
+                
+                if(!strcmp(line_pos,"")==0)
+                {
+                 if(!strcmp(line_pos,"n")==0)
+                {
+
+                
         
+
+                //time
                 file>>line_pos;
                 strncat(mess,line_pos,9);
+                strncat(mess,"      ",5);
+                
+                
+        
+                //point
                 file>>line_pos;
                 strncat(mess,line_pos,6);
-                
+                strncat(mess,"      ",5);
                 strcpy(copy,line_pos);
+            
+                
 
-                cout<<"file: "<<line_pos<<endl;
-                cout<<"point: "<<point<<endl;
 
-                if(!strcmp(line_pos,"n")==0)
-                {
-                    if(stoi(copy)<stoi(point) && !flag)
+
+                //block
+                file>>line_pos;
+                strncat(mess,line_pos,6);
+                strncat(mess,"      ",5);
+                strcpy(mess_1,mess);
+                
+
+                    if(stoi(copy)<=stoi(point) && !flag)
                     {
                         flag = true;
+                        //name_insert
                         strcpy(mess,name);
+                        strncat(mess,"      ",5);
+                      
+
+                        //time_insert                       
                         strncat(mess,time,9);
-                        strncat(mess,point,6);
-                        strncat(mess,line,6);
-                        newFile<<mess<<endl;
-                        newFile<<"n"<<endl;
-                    } 
+                        strncat(mess,"      ",5);
                         
+                        //point_insert
+                        strncat(mess,point,6);
+                        strncat(mess,"      ",5);
+
+                        //line_insert
+                        strncat(mess,line,6);
+
+                        newFile<<mess<<endl;
+                        newFile<<"n"<<endl;  
+
+                        newFile<<mess_1<<endl;
+                        newFile<<"n"<<endl;
+
+
+                    }
                     else
                     {
-                        file>>line_pos;
-                        strncat(mess,line_pos,6);
                         newFile<<mess<<endl;
-                        newFile<<"n"<<endl;
-
-                    }          
+                        newFile<<"n"<<endl;        
+                    }
+             
                 }
-                
-
- 
-
-                file>>line_pos;
-                file>>line_pos;
-
-             memset(mess, 0, sizeof(mess));
-
+                } 
+               
             }
+
+        }
+
+      if(!flag)
+            {
+                flag = true;
+                //name_insert
+                strcpy(mess,name);
+                strncat(mess,"      ",5);
+                
+                //time_insert                       
+                strncat(mess,time,9);
+                strncat(mess,"      ",5);
+                
+                //point_insert
+                strncat(mess,point,6);
+                strncat(mess,"      ",5);
+                //line_insert
+                strncat(mess,line,6);
+                newFile<<mess<<endl;
+                newFile<<"n"<<endl;
+            }
+        
         file.close();
         newFile.close();
-        }
     
 
- /*   fstream file;
-    file.open("test1.txt", ios::app);
+    ofstream F;
+    F.open("test1.txt",ofstream::out | ios::trunc);
 
-        strcpy(mess,name);
+    F.close();
+
+    fstream final;
+    final.open("test_final.txt", ios::in);
+    
+    fstream file_text;
+    file_text.open("test1.txt", ios::app);
+    char read[80];
+
+    while(!final.eof())
+    {
+        final>>read;
+        strcpy(mess,read);
+        strncat(mess,"      ",5);
         
-        strncat(mess,time,9);
-       
-        strncat(mess,point,6);
-      
-        strncat(mess,line,6);
+        if(!strcmp(read,"n")==0)
+        {
 
-        file<<mess<<endl;
-        file<<"n"<<endl;
+            final>>read;
+            strncat(mess,read,9);
+            strncat(mess,"      ",5);
 
-        file.close();
-*/
+
+            final>>read;
+            strncat(mess,read,6);
+            strncat(mess,"      ",5);
+
+
+            final>>read;
+            strncat(mess,read,6);
+            strncat(mess,"      ",5);
+
+            final>>read;
+            file_text<<mess<<endl;
+            file_text<<"n"<<endl;
+
+        }
+
+
+    }
+
+        file_text.close();
+        final.close();
+
     return 0;
 }
