@@ -7,6 +7,25 @@
 
 using namespace std;
 
+char *choices[4] = {"Play","Rank","options","exit"};
+
+/*void menu_start(WINDOW *win)
+{
+     for(int i = 0;i<4;i++)
+        {
+            mvwprintw(win,i+1,1,choices[i]);
+        }
+
+        wrefresh(win);
+
+        wattron(win,A_REVERSE);
+        mvwprintw(win,1,1,choices[0]);
+        wattroff(win,A_REVERSE);
+        mvwprintw(win,2,1,choices[1]);
+        mvwprintw(win,3,1,choices[2]);
+        mvwprintw(win,4,1,choices[3]);
+}*/
+
 int main(int argc, char ** argv)
 {
     int x,y,xMax,yMax;
@@ -15,6 +34,7 @@ int main(int argc, char ** argv)
     initscr(); //initializeed the screen
     noecho(); 
     cbreak();
+    curs_set(0);
 
     if(!has_colors())
     {
@@ -26,7 +46,7 @@ int main(int argc, char ** argv)
     getmaxyx(stdscr, yMax,xMax);
 
     // WINDOW * win = newwin(height,width,start_y,start_x);
-    WINDOW * win = newwin(yMax/6,xMax/3,yMax/2,xMax/3);
+    WINDOW * win = newwin(yMax/7,xMax/3,yMax/2,xMax/3);
     refresh();
 
     box(win,0,0);//initialized my boards of menu
@@ -34,12 +54,13 @@ int main(int argc, char ** argv)
     
     keypad(win,true);
 
-    char *choices[3] = {"Play","Rank","options"};
+    char *choices[4] = {"Play","Rank","options","exit"};
     bool pass = true;
     int select;
     int highlight = 0;
 
-    for(int i = 0;i<3;i++)
+    //menu_start(win);
+    for(int i = 0;i<4;i++)
         {
             mvwprintw(win,i+1,1,choices[i]);
         }
@@ -51,10 +72,10 @@ int main(int argc, char ** argv)
     wattroff(win,A_REVERSE);
     mvwprintw(win,2,1,choices[1]);
     mvwprintw(win,3,1,choices[2]);
+    mvwprintw(win,4,1,choices[3]);
 
     while(pass)
     {
-
         select = wgetch(win);
 
         if(select == KEY_UP)
@@ -66,8 +87,8 @@ int main(int argc, char ** argv)
         else if(select==KEY_DOWN)
         {
             highlight++;
-            if(highlight == 3)
-                highlight = 2;
+            if(highlight == 4)
+                highlight = 3;
         }
 
         if(highlight==0)
@@ -77,6 +98,7 @@ int main(int argc, char ** argv)
             wattroff(win,A_REVERSE);
             mvwprintw(win,2,1,choices[1]);
             mvwprintw(win,3,1,choices[2]);
+            mvwprintw(win,4,1,choices[3]);
         }
         else if(highlight==1)
         {
@@ -85,6 +107,7 @@ int main(int argc, char ** argv)
             mvwprintw(win,2,1,choices[1]);
             wattroff(win,A_REVERSE);
             mvwprintw(win,3,1,choices[2]);
+            mvwprintw(win,4,1,choices[3]);
         }
         else if(highlight==2)
         {
@@ -93,25 +116,48 @@ int main(int argc, char ** argv)
             wattron(win,A_REVERSE);
             mvwprintw(win,3,1,choices[2]);
             wattroff(win,A_REVERSE);
+            mvwprintw(win,4,1,choices[3]);
+        }
+        else if(highlight==3)
+        {
+            mvwprintw(win,1,1,choices[0]);
+            mvwprintw(win,2,1,choices[1]);
+            mvwprintw(win,3,1,choices[2]);
+            wattron(win,A_REVERSE);
+            mvwprintw(win,4,1,choices[3]);
+            wattroff(win,A_REVERSE);
         }
 
-        if(select==10) pass = false;
+        if(select==10)//10 = premo invio per selezionare il campo 
+        {
+            //if(highlight==0)
+            //else 
+            if(highlight==1)
+            {
+                scr();
+            }
+            else if(highlight==3)
+            {
+                pass = false;
+            }
+            //else if(highlight==2)
+            
+
+        }
+        //menu_start(win);
+        refresh();
+        
     }
 
     wclear(win);
     wrefresh(win);
     delwin(win);
 
-    //if(highlight==0)
-    //else 
-    if(highlight==1)
-    {
-        scr();
-    }
-    //else if(highlight==2)
     
 
-    getch();
+    
+
+    //getch();
     endwin();
     return 0;
 }

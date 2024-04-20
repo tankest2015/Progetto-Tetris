@@ -9,16 +9,17 @@ using namespace std;
 #ifndef _PAGE_SAVE_H_
 #define _PAGE_SAVE_H_
 
-//#include "salvataggio_punteggio/read.h"
+
 
 int scr()
 {
     int x,y,xMax,yMax;
-    
+    bool flag = false;
     
     initscr(); //initializeed the screen
     noecho(); 
     cbreak();
+    curs_set(0);
 
     if(!has_colors())
     {
@@ -31,12 +32,12 @@ int scr()
     getmaxyx(stdscr, yMax,xMax);
 
 
-    WINDOW * win = newwin(yMax-5,xMax-10,2,5);
+    WINDOW * win_rank = newwin(yMax-5,xMax-10,2,5);
     refresh();
 
-    box(win,0,0);//initialized my boards of menu
-    wrefresh(win);
-    keypad(win,true);
+    box(win_rank,0,0);//initialized my boards of menu
+    wrefresh(win_rank);
+    keypad(win_rank,true);
     
     int c=4,r=1;
     int i=0;
@@ -44,10 +45,10 @@ int scr()
     file.open("salvataggio_punteggio/test1.txt", ios::in);
     char line[80];
 
-    mvwprintw(win,1,1,"Name");
-    mvwprintw(win,1,20,"Time[hh/mm/ss]");
-    mvwprintw(win,1,40,"Point");
-    mvwprintw(win,1,60,"Block");
+    mvwprintw(win_rank,1,1,"Name");
+    mvwprintw(win_rank,1,20,"Time[hh/mm/ss]");
+    mvwprintw(win_rank,1,40,"Point");
+    mvwprintw(win_rank,1,60,"Block");
     if(!file.is_open()) // is file doesn't exits i do an interrupt 
         cout<<"error to open file "<<endl;
     else
@@ -65,13 +66,13 @@ int scr()
             {
                 if(i==0)
                 {
-                    wattron(win,A_REVERSE);
-                    mvwprintw(win,c,r,line);
-                    wattroff(win,A_REVERSE);
+                    wattron(win_rank,A_REVERSE);
+                    mvwprintw(win_rank,c,r,line);
+                    wattroff(win_rank,A_REVERSE);
                 }
                 else
                 {
-                    mvwprintw(win,c,r,line);
+                    mvwprintw(win_rank,c,r,line);
                 }
                 
                 r=r+20;
@@ -83,11 +84,37 @@ int scr()
     file.close();
 
 
-    wrefresh(win);
+    wrefresh(win_rank);
+
+    WINDOW *exit = newwin(yMax/10,xMax/14,yMax-10,xMax-20);
+    box(exit,0,0);
+    wrefresh(exit);
 
 
+    wattron(exit,A_REVERSE);
+    mvwprintw(exit,1,2,"EXIT");
+    wattroff(exit,A_REVERSE);
+    int car = wgetch(exit);
 
-    getch();
+    while(!flag)
+    {
+        if(car == 10)
+        {
+            flag = true;
+        }
+
+        car = wgetch(exit);
+    }
+
+    wclear(exit);
+    wrefresh(exit);
+    delwin(exit);    
+
+    wclear(win_rank);
+    wrefresh(win_rank);
+    delwin(win_rank);
+
+    //getch();
     endwin();
     return 0;
 }
