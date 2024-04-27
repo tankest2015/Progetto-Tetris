@@ -9,25 +9,17 @@ using namespace std;
 #ifndef _PAGE_SAVE_H_
 #define _PAGE_SAVE_H_
 
+void delete_W(WINDOW * win);
+int init();
+//prototipi
 
 
 int scr()
 {
     int x,y,xMax,yMax;
     bool flag = false;
-    
-    initscr(); //initializeed the screen
-    noecho(); 
-    cbreak();
-    curs_set(0);
 
-    if(!has_colors())
-    {
-        printw("Terminal doesn't support the color");
-        getch();
-        return -1;
-    }
-    start_color();
+    init();
 
     getmaxyx(stdscr, yMax,xMax);
 
@@ -49,6 +41,8 @@ int scr()
     mvwprintw(win_rank,1,20,"Time[hh/mm/ss]");
     mvwprintw(win_rank,1,40,"Point");
     mvwprintw(win_rank,1,60,"Block");
+
+
     if(!file.is_open()) // is file doesn't exits i do an interrupt 
         cout<<"error to open file "<<endl;
     else
@@ -105,16 +99,10 @@ int scr()
 
         car = wgetch(exit);
     }
+    
+    delete_W(exit);
+    delete_W(win_rank);
 
-    wclear(exit);
-    wrefresh(exit);
-    delwin(exit);    
-
-    wclear(win_rank);
-    wrefresh(win_rank);
-    delwin(win_rank);
-
-    //getch();
     endwin();
     return 0;
 }
