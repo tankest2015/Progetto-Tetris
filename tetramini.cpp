@@ -1,11 +1,10 @@
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
+
 using namespace std;
 #define rows 4
 #define cols 4
-
-struct BArray {
-    int data[rows][cols];
-};
 
 struct Position {
     int x;
@@ -16,34 +15,220 @@ struct Position {
 class tetramino {
     protected:
         int colour;
-        BArray matrix;
+        int data[rows][cols];
         Position p1, p2, p3, p4;
    
         void set_matrix() {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    matrix.data[i][j] = 0;
+                    data[i][j] = 0;
                 }
             }
         }
 
+
     public:
         tetramino(int colour) {
-            set_matrix();
             this->colour = colour;
-        };
+            set_matrix();
+
+            switch (colour){
+            
+            case 1:                         // Z : Red(1)
+                data[1][1] = 1;             //  [][]
+                data[1][2] = 1;             //    [][]
+                data[2][2] = 1;
+                data[2][3] = 1;
+
+                p1.x = 5; //posizione blocco 1
+                p1.y = 1;
+
+                p2.x = 6; //posizione blocco 2
+                p2.y = 1;
+
+                p3.x = 6; //posizione blocco 3
+                p3.y = 2;
+
+                p4.x = 7; //posizione blocco 4
+                p4.y = 2;
+                break;
+
+             case 2:                        // S : Green(2)
+                data[1][2] = 1;             //    [][]
+                data[1][3] = 1;             //  [][]
+                data[2][1] = 1;
+                data[2][2] = 1;
+
+                p1.x = 6; //posizione blocco 1
+                p1.y = 1;
+
+                p2.x = 7; //posizione blocco 2
+                p2.y = 1;
+
+                p3.x = 5; //posizione blocco 3
+                p3.y = 2;
+
+                p4.x = 6; //posizione blocco 4
+                p4.y = 2;
+                break;
+
+            case 3:                         // O : Yellow(3)
+                data[1][1] = 1;             //  [][]
+                data[1][2] = 1;             //  [][]
+                data[2][1] = 1;
+                data[2][2] = 1;             
+                
+                p1.x = 5; //posizione blocco 1
+                p1.y = 1;
+
+                p2.x = 6; //posizione blocco 2
+                p2.y = 1;
+
+                p3.x = 5; //posizione blocco 3
+                p3.y = 2;
+
+                p4.x = 6; //posizione blocco 4
+                p4.y = 2;
+                break;
+
+            case 4:                         // J : Blue(4)
+                data[1][1] = 1;             //  []
+                data[2][1] = 1;             //  [][][]
+                data[2][2] = 1;
+                data[2][3] = 1;
+
+                p1.x = 4; //posizione blocco 1
+                p1.y = 1;
+
+                p2.x = 5; //posizione blocco 2
+                p2.y = 1;
+
+                p3.x = 6; //posizione blocco 3
+                p3.y = 1;
+
+                p4.x = 7; //posizione blocco 4
+                p4.y = 1;
+                break;
+
+            case 5:                         // T : Magenta(5)
+                data[1][2] = 1;             //    []
+                data[2][1] = 1;             //  [][][]
+                data[2][2] = 1;
+                data[2][3] = 1;
+
+                p1.x = 6; //posizione blocco 1
+                p1.y = 1;
+
+                p2.x = 5; //posizione blocco 2
+                p2.y = 2;
+
+                p3.x = 6; //posizione blocco 3
+                p3.y = 2;
+
+                p4.x = 7; //posizione blocco 4
+                p4.y = 2;
+                break;
+
+            case 6:                         // I : Cyan(6)
+                data[1][0] = 1;             //  [][][][]
+                data[1][1] = 1;
+                data[1][2] = 1;
+                data[1][3] = 1;
+
+                p1.x = 4; //posizione blocco 1
+                p1.y = 1;
+
+                p2.x = 5; //posizione blocco 2
+                p2.y = 1;
+
+                p3.x = 6; //posizione blocco 3
+                p3.y = 1;
+
+                p4.x = 7; //posizione blocco 4
+                p4.y = 1;
+                break;
+
+            case 7:                         // L : Orange(7) {DA CREARE SU NCURSES}
+                data[1][3] = 1;             //  []
+                data[2][1] = 1;             //  [][][]
+                data[2][2] = 1;
+                data[2][3] = 1;
+
+                p1.x = 7; //posizione blocco 1
+                p1.y = 1;
+
+                p2.x = 5; //posizione blocco 2
+                p2.y = 2;
+
+                p3.x = 6; //posizione blocco 3
+                p3.y = 2;
+
+                p4.x = 7; //posizione blocco 4
+                p4.y = 2;
+                break;
+            
+            default:
+                break;
+            }
+        }
+
+        void print_matrix(){
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if(data[i][j] == 1){
+                        cout<<"[]";
+                    }
+                    else cout<<"  ";
+                }
+                cout<<endl;
+            }
+        }
+
+        void print_colour(){
+            switch (colour)
+            {
+            case 1:
+                cout<<"Red (ID: 1)";
+                break;
+
+            case 2:
+                cout<<"Green (ID: 2)";
+                break;
+            
+            case 3:
+                cout<<"Yellow (ID: 3)";
+                break;
+
+            case 4:
+                cout<<"Blue (ID: 4)";
+                break;
+
+            case 5:
+                cout<<"Magenta (ID: 5)";
+                break;
+
+            case 6:
+                cout<<"Cyan (ID: 6)";
+                break;
+
+            case 7:
+                cout<<"Orange (ID: 7)";
+                break;
+            
+            default:
+                cout<<"Undefined (ID: ?)";
+                break;
+            }
+        }
+};
    
-        BArray get_matrix() {
+    /*BArray get_matrix() {
         return matrix;
-        };
-   
-        void set_matrix_cell(int row, int col) {
-        matrix.data[row][col] = 1;
-        };
+    };
        
         int get_colour_id() {
         return colour;
-        };
+        };*/
 
        
         /*void print_tetramino(BArray matrix, griglia Griglia) {
@@ -57,280 +242,27 @@ class tetramino {
         void print_griglia() {
         //funzione che stampa in ncurses
         };
-};
 
-class tetramino_O: public tetramino{ //[][]
-    private:                         //[][]    O yellow: 3
-   
-    public:
-    tetramino_O(int colour = 3):tetramino(colour) {
-        set_matrix_cell(1,1);
-        set_matrix_cell(1,2);
-        set_matrix_cell(2,1);
-        set_matrix_cell(2,2);
-        p1.x = 5; //posizione blocco 1
-        p1.y = 1;
+tetramino* gen_tetramino(){
+    int color;
+    tetramino* point;
+    srand(time(0));
+    color = rand()%7+1;
 
-        p2.x = 6; //posizone blocco2
-        p2.y = 1;
+    point = new tetramino(color);
+    return point;
+}
 
-        p3.x = 5; //posizone blocco3
-        p3.y = 2;
-
-        p4.x = 6; //posizone blocco4
-        p4.y = 2;
-
-    }
-
-};
-
-class tetramino_I: public tetramino{ //[][][][]  I cyan: 6
-    private:
-   
-    public:
-    tetramino_I(int colour = 6):tetramino(colour) {
-        set_matrix_cell(1,0);            set_matrix_cell(1,1);
-        set_matrix_cell(1,2);
-        set_matrix_cell(1,3);
-
-        p1.x = 4; //posizione blocco 1
-        p1.y = 1;
-
-        p2.x = 5; //posizone blocco2
-        p2.y = 1;
-
-        p3.x = 6; //posizone blocco3
-        p3.y = 1;
-
-        p4.x = 7; //posizone blocco4
-        p4.y = 1;
-    }
-};
-
-class tetramino_J: public tetramino{ //[]
-    private:                         //[][][]    J blue: 4
-   
-    public:
-    tetramino_J(int colour = 4):tetramino(colour) {
-        set_matrix_cell(1,1);
-        set_matrix_cell(2,1);
-        set_matrix_cell(2,2);
-        set_matrix_cell(2,3);
-
-        p1.x = 5; //posizione blocco 1
-        p1.y = 1;
-
-        p2.x = 5; //posizone blocco2
-        p2.y = 2;
-
-        p3.x = 6; //posizone blocco3
-        p3.y = 2;
-
-        p4.x = 7; //posizone blocco4
-        p4.y = 2;
-    }
-};
-
-class tetramino_L: public tetramino{ //    []
-    private:                         //[][][]    L orange: --
-   
-    public:
-    tetramino_L(int colour = 0):tetramino(colour) {
-        set_matrix_cell(1,3);
-        set_matrix_cell(2,1);            
-        set_matrix_cell(2,2);
-        set_matrix_cell(2,3);
-
-        p1.x = 7; //posizione blocco 1
-        p1.y = 1;
-
-        p2.x = 5; //posizone blocco2
-        p2.y = 2;
-
-        p3.x = 6; //posizone blocco3
-        p3.y = 2;
-
-        p4.x = 7; //posizone blocco4
-        p4.y = 2;
-    }
-};
-
-class tetramino_S: public tetramino{ //  [][]
-    private:                         //[][]      S green: 2
-   
-    public:
-    tetramino_S(int colour = 2):tetramino(colour) {
-        set_matrix_cell(1,2);            
-        set_matrix_cell(1,3);
-        set_matrix_cell(2,1);
-        set_matrix_cell(2,2);
-
-        p1.x = 6; //posizione blocco 1
-        p1.y = 1;
-
-        p2.x = 7; //posizone blocco2
-        p2.y = 1;
-
-        p3.x = 5; //posizone blocco3
-        p3.y = 2;
-
-        p4.x = 6; //posizone blocco4
-        p4.y = 2;
-    }
-};
-
-class tetramino_Z: public tetramino{ //[][]
-    private:                         //  [][]    Z red: 1
-   
-    public:
-    tetramino_Z(int colour = 1):tetramino(colour) {
-        set_matrix_cell(1,1);            
-        set_matrix_cell(1,2);
-        set_matrix_cell(2,2);
-        set_matrix_cell(2,3);
-
-        p1.x = 5; //posizione blocco 1
-        p1.y = 1;
-
-        p2.x = 6; //posizone blocco2
-        p2.y = 1;
-
-        p3.x = 6; //posizone blocco3
-        p3.y = 2;
-
-        p4.x = 7; //posizone blocco4
-        p4.y = 2;
-    }
-};
-
-class tetramino_T: public tetramino{ //  []
-    private:                         //[][][]    T magenta: 5
-   
-    public:
-    tetramino_T(int colour = 5):tetramino(colour) {
-        set_matrix_cell(1,2);
-        set_matrix_cell(2,1);
-        set_matrix_cell(2,2);
-        set_matrix_cell(2,3);
-
-        p1.x = 6; //posizione blocco 1
-        p1.y = 1;
-
-        p2.x = 5; //posizone blocco2
-        p2.y = 2;
-
-        p3.x = 6; //posizone blocco3
-        p3.y = 2;
-
-        p4.x = 7; //posizone blocco4
-        p4.y = 2;
-    }
-};
 
 int main() {
-    tetramino_O O;
-    BArray matrix = O.get_matrix();
-   
-    cout << "Printing tetramino: O" << endl;
-    cout << "Colour ID: " << O.get_colour_id() << endl;
-    cout << "Colour name: yellow" << endl;
-   
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cout << matrix.data[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-   
-    tetramino_I I;
-    matrix = I.get_matrix();
-   
-    cout << "Printing tetramino: I" << endl;
-    cout << "Colour ID: " << I.get_colour_id() << endl;
-    cout << "Colour name: cyan" << endl;
-   
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cout << matrix.data[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-   
-    tetramino_J J;
-    matrix = J.get_matrix();
-   
-    cout << "Printing tetramino: J" << endl;
-    cout << "Colour ID: " << J.get_colour_id() << endl;
-    cout << "Colour name: blue" << endl;
-   
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cout << matrix.data[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-   
-    tetramino_L L;
-    matrix = L.get_matrix();
-   
-    cout << "Printing tetramino: L" << endl;
-    cout << "Colour ID: " << L.get_colour_id() << endl;
-    cout << "Colour name: orange" << endl;
-   
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cout << matrix.data[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-   
-    tetramino_S S;
-    matrix = S.get_matrix();
-   
-    cout << "Printing tetramino: S" << endl;
-    cout << "Colour ID: " << S.get_colour_id() << endl;
-    cout << "Colour name: green" << endl;
-   
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cout << matrix.data[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-   
-    tetramino_Z Z;
-    matrix = Z.get_matrix();
-   
-    cout << "Printing tetramino: Z" << endl;
-    cout << "Colour ID: " << Z.get_colour_id() << endl;
-    cout << "Colour name: red" << endl;
-   
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cout << matrix.data[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-   
-    tetramino_T T;
-    matrix = T.get_matrix();
-   
-    cout << "Printing tetramino: T" << endl;
-    cout << "Colour ID: " << T.get_colour_id() << endl;
-    cout << "Colour name: magenta" << endl;
-   
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            cout << matrix.data[i][j] << " ";
-        }
-        cout << endl;
-    }
-   
+    tetramino *pointer;
+    pointer = gen_tetramino();
+
+    pointer->print_matrix();
+    cout<<endl;
+    cout<<"Color: ";
+    pointer->print_colour();
+    cout<<endl;
+
    return 0;
 }
