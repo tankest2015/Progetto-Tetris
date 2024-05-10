@@ -15,30 +15,28 @@ struct Position {
 class tetramino {
     protected:
         int colour;
-        int data[rows][cols];
-        Position p1, p2, p3, p4;
+        /*int data[rows][cols];*/
    
-        void set_matrix() {
+        /*void set_matrix() {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     data[i][j] = 0;
                 }
             }
-        }
+        }*/
 
 
     public:
+        Position p1, p2, p3, p4;
+
         tetramino(int colour) {
             this->colour = colour;
-            set_matrix();
 
             switch (colour){
             
-            case 1:                         // Z : Red(1)
-                data[1][1] = 1;             //  [][]
-                data[1][2] = 1;             //    [][]
-                data[2][2] = 1;
-                data[2][3] = 1;
+            case 1:     // Z : Red(1)
+                        //  [][]
+                        //    [][]
 
                 p1.x = 5; //posizione blocco 1
                 p1.y = 1;
@@ -53,11 +51,9 @@ class tetramino {
                 p4.y = 2;
                 break;
 
-             case 2:                        // S : Green(2)
-                data[1][2] = 1;             //    [][]
-                data[1][3] = 1;             //  [][]
-                data[2][1] = 1;
-                data[2][2] = 1;
+             case 2:    // S : Green(2)
+                        //    [][]
+                        //  [][]
 
                 p1.x = 6; //posizione blocco 1
                 p1.y = 1;
@@ -72,11 +68,9 @@ class tetramino {
                 p4.y = 2;
                 break;
 
-            case 3:                         // O : Yellow(3)
-                data[1][1] = 1;             //  [][]
-                data[1][2] = 1;             //  [][]
-                data[2][1] = 1;
-                data[2][2] = 1;             
+            case 3:     // O : Yellow(3)
+                        //  [][]
+                        //  [][]             
                 
                 p1.x = 5; //posizione blocco 1
                 p1.y = 1;
@@ -91,11 +85,9 @@ class tetramino {
                 p4.y = 2;
                 break;
 
-            case 4:                         // J : Blue(4)
-                data[1][1] = 1;             //  []
-                data[2][1] = 1;             //  [][][]
-                data[2][2] = 1;
-                data[2][3] = 1;
+            case 4:     // J : Blue(4)
+                        //  []
+                        //  [][][]
 
                 p1.x = 4; //posizione blocco 1
                 p1.y = 1;
@@ -110,11 +102,9 @@ class tetramino {
                 p4.y = 1;
                 break;
 
-            case 5:                         // T : Magenta(5)
-                data[1][2] = 1;             //    []
-                data[2][1] = 1;             //  [][][]
-                data[2][2] = 1;
-                data[2][3] = 1;
+            case 5:     // T : Magenta(5)
+                        //    []
+                        //  [][][]
 
                 p1.x = 6; //posizione blocco 1
                 p1.y = 1;
@@ -129,11 +119,8 @@ class tetramino {
                 p4.y = 2;
                 break;
 
-            case 6:                         // I : Cyan(6)
-                data[1][0] = 1;             //  [][][][]
-                data[1][1] = 1;
-                data[1][2] = 1;
-                data[1][3] = 1;
+            case 6:     // I : Cyan(6)
+                        //  [][][][]
 
                 p1.x = 4; //posizione blocco 1
                 p1.y = 1;
@@ -148,11 +135,9 @@ class tetramino {
                 p4.y = 1;
                 break;
 
-            case 7:                         // L : Orange(7) {DA CREARE SU NCURSES}
-                data[1][3] = 1;             //  []
-                data[2][1] = 1;             //  [][][]
-                data[2][2] = 1;
-                data[2][3] = 1;
+            case 7:     // L : Orange(7) {DA CREARE SU NCURSES}
+                        //  []
+                        //  [][][]
 
                 p1.x = 7; //posizione blocco 1
                 p1.y = 1;
@@ -172,7 +157,7 @@ class tetramino {
             }
         }
 
-        void print_matrix(){
+        /*void print_matrix(){
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     if(data[i][j] == 1){
@@ -182,6 +167,10 @@ class tetramino {
                 }
                 cout<<endl;
             }
+        }*/
+
+        int get_colour(){
+            return colour;
         }
 
         void print_colour(){
@@ -222,22 +211,6 @@ class tetramino {
         }
 };
    
-    /*BArray get_matrix() {
-        return matrix;
-    };
-       
-        int get_colour_id() {
-        return colour;
-        };*/
-
-       
-        /*void print_tetramino(BArray matrix, griglia Griglia) {
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    griglia[i][j+8] = matrix.data[i][j];
-                }
-            }
-        };*/
        
         void print_griglia() {
         //funzione che stampa in ncurses
@@ -253,12 +226,72 @@ tetramino* gen_tetramino(){
     return point;
 }
 
+void rotation_left(tetramino* point){
+    switch (point->get_colour())
+            {
+            case 1:
+                if(point->p4.y - point->p1.y < 0) {     //Determina se il tetramino è routato
+
+                }
+                else{
+                    
+                }
+
+                cout<<"Red (ID: 1)";
+
+                break;
+
+            case 2:
+                cout<<"Green (ID: 2)";
+                break;
+
+            case 4:
+                cout<<"Blue (ID: 4)";
+                break;
+
+            case 5:
+                cout<<"Magenta (ID: 5)";
+                break;
+
+            case 6:
+                cout<<"Cyan (ID: 6)";
+                break;
+
+            case 7:
+                cout<<"Orange (ID: 7)";
+                break;
+            
+            default:
+                cout<<"Undefined (ID: ?)";
+                break;
+        }
+}
+
+/*void move_left(tetramino* point){ //SERVE LA GRIGLIA
+    if(point->p1.x == 1 || point->p2.x == 1 || point->p3.x == 1 || point->p4.x == 1) return;
+
+}
+
+bool check_move(char c, tetramino* point)
+{
+    switch (c)
+    {
+    case 'l':
+        if(point->p1.x == 1 || point->p2.x == 1 || point->p3.x == 1 || point->p4.x == 1) return false;
+        break;
+    
+    case 'r':
+        if(point->p1.x == 10 || point->p2.x == 10 || point->p3.x == 10 || point->p4.x == 10) return false;
+
+    default:
+        break;
+    }  
+}*/
+
 
 int main() {
     tetramino *pointer;
     pointer = gen_tetramino();
-
-    pointer->print_matrix();
     cout<<endl;
     cout<<"Color: ";
     pointer->print_colour();
