@@ -89,17 +89,17 @@ class tetramino {
                         //  []
                         //  [][][]
 
-                p1.x = 4; //posizione blocco 1
+                p1.x = 5; //posizione blocco 1
                 p1.y = 1;
 
                 p2.x = 5; //posizione blocco 2
-                p2.y = 1;
+                p2.y = 2;
 
                 p3.x = 6; //posizione blocco 3
-                p3.y = 1;
+                p3.y = 2;
 
                 p4.x = 7; //posizione blocco 4
-                p4.y = 1;
+                p4.y = 2;
                 break;
 
             case 5:     // T : Magenta(5)
@@ -136,7 +136,7 @@ class tetramino {
                 break;
 
             case 7:     // L : Orange(7) {DA CREARE SU NCURSES}
-                        //  []
+                        //      []
                         //  [][][]
 
                 p1.x = 7; //posizione blocco 1
