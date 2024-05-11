@@ -20,7 +20,7 @@ class Board{
         void move_down(int row, int n_rows);
         void clear_row(int row);
         int max_y(tetramino* point);
-        void clear_full_rows();
+        void clear_full_rows(tetramino* point);
         bool is_game_over();
         void update_score(int l_cleared, int m_points);
         int matrix[20][10];      
