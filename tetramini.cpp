@@ -35,8 +35,8 @@ class tetramino {
             switch (colour){
             
             case 1:     // Z : Red(1)
-                        //  [][]
-                        //    [][]
+                        //  [p1][p2]
+                        //      [p3][p4]
 
                 p1.x = 5; //posizione blocco 1
                 p1.y = 1;
@@ -52,25 +52,25 @@ class tetramino {
                 break;
 
              case 2:    // S : Green(2)
-                        //    [][]
-                        //  [][]
+                        //      [p3][p4]
+                        //  [p1][p2]
 
-                p1.x = 6; //posizione blocco 1
-                p1.y = 1;
+                p1.x = 5; //posizione blocco 1
+                p1.y = 2;
 
-                p2.x = 7; //posizione blocco 2
-                p2.y = 1;
+                p2.x = 6; //posizione blocco 2
+                p2.y = 2;
 
-                p3.x = 5; //posizione blocco 3
-                p3.y = 2;
+                p3.x = 6; //posizione blocco 3
+                p3.y = 1;
 
-                p4.x = 6; //posizione blocco 4
-                p4.y = 2;
+                p4.x = 7; //posizione blocco 4
+                p4.y = 1;
                 break;
 
             case 3:     // O : Yellow(3)
-                        //  [][]
-                        //  [][]             
+                        //  [p1][p2]
+                        //  [p3][p4]             
                 
                 p1.x = 5; //posizione blocco 1
                 p1.y = 1;
@@ -86,8 +86,8 @@ class tetramino {
                 break;
 
             case 4:     // J : Blue(4)
-                        //  []
-                        //  [][][]
+                        //  [p1]
+                        //  [p2][p3][p4]
 
                 p1.x = 5; //posizione blocco 1
                 p1.y = 1;
@@ -103,24 +103,24 @@ class tetramino {
                 break;
 
             case 5:     // T : Magenta(5)
-                        //    []
-                        //  [][][]
+                        //  [p1][p2][p3]
+                        //      [p4]
 
-                p1.x = 6; //posizione blocco 1
+                p1.x = 5; //posizione blocco 1
                 p1.y = 1;
 
-                p2.x = 5; //posizione blocco 2
-                p2.y = 2;
+                p2.x = 6; //posizione blocco 2
+                p2.y = 1;
 
-                p3.x = 6; //posizione blocco 3
-                p3.y = 2;
+                p3.x = 7; //posizione blocco 3
+                p3.y = 1;
 
-                p4.x = 7; //posizione blocco 4
+                p4.x = 6; //posizione blocco 4
                 p4.y = 2;
                 break;
 
             case 6:     // I : Cyan(6)
-                        //  [][][][]
+                        //  [p1][p2][p3][p4]
 
                 p1.x = 4; //posizione blocco 1
                 p1.y = 1;
@@ -136,19 +136,19 @@ class tetramino {
                 break;
 
             case 7:     // L : Orange(7) {DA CREARE SU NCURSES}
-                        //      []
-                        //  [][][]
+                        //          [p1]
+                        //  [p4][p3][p2]
 
                 p1.x = 7; //posizione blocco 1
                 p1.y = 1;
 
-                p2.x = 5; //posizione blocco 2
+                p2.x = 7; //posizione blocco 2
                 p2.y = 2;
 
                 p3.x = 6; //posizione blocco 3
                 p3.y = 2;
 
-                p4.x = 7; //posizione blocco 4
+                p4.x = 5; //posizione blocco 4
                 p4.y = 2;
                 break;
             
