@@ -23,7 +23,7 @@ int main(){
         case 'a':
             pointer->move_left(griglia);
             break;
-        
+
         case 'd':
             pointer->move_right(griglia);
             break;

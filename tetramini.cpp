@@ -252,7 +252,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
             if(rot_id == 0){
                 P1.y ++;
                 P3.y --;
-                P4.y --;
+                P4.x --;
                 rot_id = 1;
             } else if(rot_id == 1){
                 P1.x ++;
@@ -317,35 +317,33 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
     else if(C == 'l'){
         switch (colour){
         case 1:                 //Tetramino: Z
-            if(rot_id == 0) {
-                P1.y++;                 //                      [p4]
-                P3.x++;                 //[p1][p2]          [p2][p3]
-                P4.x++;                 //    [p3][p4]  ->  [p1]
-                P4.y++;
+            if(rot_id == 0){
+                P1.y --;
+                P3.x --;
+                P4.y ++;
+                P4.x --;
                 rot_id = 1;
-            }
-            if(rot_id == 1) {
-                P1.x--;                 //    [p4]          [p1][p2]
-                P3.y++;                 //[p2][p3]      ->      [p3][p4]
-                P4.x++;                 //[p1]
-                P4.y++;
+            } else if(rot_id == 1){
+                P1.x --;
+                P3.y ++;
+                P4.x ++;
+                P4.y ++;
                 rot_id = 0;
             }
             break;
 
         case 2:                 //Tetramino: S
-            if(rot_id == 0) {
-                P1.y++;                 //      [p3][p4]    [p4]
-                P3.x--;                 //  [p1][p2]    ->  [p3][p2]
-                P4.x--;                 //                      [p1]
-                P4.y--;
+            if(rot_id == 0){
+                P1.y --;
+                P3.x ++;
+                P4.y ++;
+                P4.x ++;
                 rot_id = 1;
-            }
-            if(rot_id == 1) {
-                P1.x--;                 //[p4]                [p3][p4]
-                P3.y--;                 //[p3][p2]      ->[p1][p2]
-                P4.x++;                 //    [p1]
-                P4.y--;
+            } else if(rot_id == 1){
+                P1.x --;
+                P3.y --;
+                P4.x ++;
+                P4.y --;
                 rot_id = 0;
             }
             break;
@@ -356,33 +354,27 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
 
         case 4:                 //Tetramino: J
             if(rot_id == 0) {		    //			              [p4]
-                P2.x++;			        //[p1]			      	  [p3]
+                P1.x--;			        //[p1]			      	  [p3]
                 P3.y++;			        //[p2][p3][p4]   ->   [p1][p2]
-                P4.x++;
                 P4.y+=2;
                 rot_id = 3;
             }
             else if(rot_id == 1) {		//[p2][p1]
-                P2.y++;			        //[p3]		      [p1]
-                P3.x+=2;		        //[p4]		 ->   [p2][p3][p4]
+                P1.y--;			        //[p3]		      [p1]
+                P3.x++;		            //[p4]		 ->   [p2][p3][p4]
                 P4.x+=2;
-                P4.y--;
                 rot_id = 0;
             }
             else if(rot_id == 2) {		//[p4][p3][p2]	      [p2][p1]
-                P2.y++;			        //        [p1]   ->   [p3]
-                P3.x++;			        //		              [p4]
-                P3.y++;
-                P4.x+=2;
-                P4.y++;
+                P1.x++;			        //        [p1]   ->   [p3]
+                P3.y++;		            //		              [p4]
+                P4.y+=2;
                 rot_id = 1;
             }
             else if(rot_id == 3) {		//    [p4]
-                P2.y--;			        //    [p3]	        [p4][p3][p2]
+                P1.y++;			        //    [p3]	        [p4][p3][p2]
                 P3.x--;			        //[p1][p2]       ->         [p1]
-                P3.y--;
                 P4.x-=2;
-                P4.y--;
                 rot_id = 2;
             }
             break;
@@ -394,19 +386,19 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
                 P4.x++;                 //    [p4]          [p1]
                 rot_id = 3;
             }
-            if(rot_id == 1) {
+            else if(rot_id == 1) {
                 P1.x--;                 //    [p1]
                 P3.x++;                 //[p4][p2]      ->  [p1][p2][p3]
                 P4.y++;                 //    [p3]              [p4]
                 rot_id = 0;
             }
-            if(rot_id == 2) {
+            else if(rot_id == 2) {
                 P1.y--;                 //    [p4]            [p1]
                 P3.y++;                 //[p3][p2][p1]  ->[p4][p2]
                 P4.x--;                 //                    [p3]
                 rot_id = 1;
             }
-            if(rot_id == 3) {
+            else if(rot_id == 3) {
                 P1.x++;                 //[p3]                 [p4]
                 P3.x--;                 //[p2][p4]      -> [p3][p2][p1]
                 P4.y--;                 //[p1]
@@ -415,16 +407,15 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
             break;
 
         case 6:                 //Tetramino: I
-            if(rot_id == 0) {           //                      [p1]
-                P1.y--;                 //                      [p2]
-                P3.y++;                 //[p1][p2][p3][p4]  ->  [p3]
-                P4.y+=2;                //                      [p4]
+            if(rot_id == 0){
+                P1.x ++;
+                P3.x --;
+                P4.x -= 2;
                 rot_id = 1;
-            }
-            if(rot_id == 1) {           //[p1]
-                P1.x--;                 //[p2]
-                P3.x++;                 //[p3]      ->  [p1][p2][p3][p4]
-                P4.x+=2;                //[p4]
+            } else if(rot_id == 1){
+                P1.y --;
+                P3.y ++;
+                P4.y += 2;
                 rot_id = 0;
             }
             break;
@@ -436,19 +427,19 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
                 P4.y+=2;                //                        [p4]
                 rot_id = 3;
             }
-            if(rot_id == 1) {
+            else if(rot_id == 1) {
                 P1.y--;                 //[p4]                      [p1]
                 P3.x--;                 //[p3]          ->  [p4][p3][p2]
                 P4.x-=2;                //[p2][p1]
                 rot_id = 0;
             }
-            if(rot_id == 2) {           //                  [p4]
+            else if(rot_id == 2) {           //                  [p4]
                 P1.x++;                 //                  [p3]
                 P3.y--;                 //[p2][p3][p4]  ->  [p2][p1]
                 P4.y-=2;                //[p1]
                 rot_id = 1;
             }
-            if(rot_id == 3) {
+            else if(rot_id == 3) {
                 P1.y++;                 //[p1][p2]      ->  [p2][p3][p4]
                 P3.x++;                 //    [p3]          [p1]
                 P4.x+=2;                //    [p4]
@@ -462,7 +453,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
     }
     
     /*Control if the blocks are in the grid and can rotate without collide*/
-    if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x > 0 && P2.x > 0 && P3.x > 0 && P4.x > 0 && P1.y < 21 && P2.y < 21 && P3.y < 21 && P4.y < 21){
+    if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x > 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20){
         if(griglia.matrix[p1.x][p1.y] != 1 && griglia.matrix[p2.x][p2.y] != 1 && griglia.matrix[p3.x][p3.y] != 1 && griglia.matrix[p4.x][p4.y] != 1){
             p1 = P1;
             p2 = P2;
@@ -492,7 +483,7 @@ void tetramino::right_rotation(Board &griglia){
 
 bool tetramino::move_right(Board &griglia){
     bool flag = false;
-    if(p1.x == 10 || p2.x == 10 || p3.x == 10 || p4.x == 10) return false;
+    if(p1.x == 9 || p2.x == 9 || p3.x == 9 || p4.x == 9) return false;
     board_delete_assign(false, griglia);
     if(griglia.matrix[p1.x + 1][p1.y] != 1 && griglia.matrix[p2.x + 1][p2.y] != 1 && griglia.matrix[p3.x + 1][p3.y] != 1 && griglia.matrix[p4.x + 1][p4.y] != 1)
     {
@@ -508,7 +499,7 @@ bool tetramino::move_right(Board &griglia){
 
 bool tetramino::move_left(Board &griglia){
     bool flag = false;
-    if(p1.x == 1 || p2.x == 1 || p3.x == 1 || p4.x == 1) return false;
+    if(p1.x == 0 || p2.x == 0 || p3.x == 0 || p4.x == 0) return false;
     board_delete_assign(false, griglia);
     if(griglia.matrix[p1.x - 1][p1.y] != 1 && griglia.matrix[p2.x - 1][p2.y] != 1 && griglia.matrix[p3.x - 1][p3.y] != 1 && griglia.matrix[p4.x - 1][p4.y] != 1)
     {
