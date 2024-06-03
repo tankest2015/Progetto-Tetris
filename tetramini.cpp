@@ -221,14 +221,16 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
             break;
 
         case 3:                 //Tetramino: O
-        //Do nothing
+        P1 = p1;
+        P3 = p3;
+        P4 = p4;
             break;
 
         case 4:                 //Tetramino: J
             if(rot_id == 0){
                 P1.x ++;
-                P3.y --;
-                P4.y -= 2;
+                P3.y ++;
+                P4.y += 2;
                 rot_id = 1;
             } else if(rot_id == 1){
                 P1.y ++;
@@ -349,14 +351,16 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
             break;
 
         case 3:                 //Tetramino: O
-        //no need to rotate
+            P1 = p1;
+            P3 = p3;
+            P4 = p4;
             break;
 
         case 4:                 //Tetramino: J
             if(rot_id == 0) {		    //			              [p4]
                 P1.x--;			        //[p1]			      	  [p3]
-                P3.y++;			        //[p2][p3][p4]   ->   [p1][p2]
-                P4.y+=2;
+                P3.y--;			        //[p2][p3][p4]   ->   [p1][p2]
+                P4.y-=2;
                 rot_id = 3;
             }
             else if(rot_id == 1) {		//[p2][p1]
@@ -453,13 +457,23 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
     }
     
     /*Control if the blocks are in the grid and can rotate without collide*/
-    if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x > 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20){
-        if(griglia.matrix[p1.x][p1.y] != 1 && griglia.matrix[p2.x][p2.y] != 1 && griglia.matrix[p3.x][p3.y] != 1 && griglia.matrix[p4.x][p4.y] != 1){
+    if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x >= 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20 && 
+       griglia.matrix[p1.x][p1.y] != 1 && griglia.matrix[p2.x][p2.y] != 1 && griglia.matrix[p3.x][p3.y] != 1 && griglia.matrix[p4.x][p4.y] != 1){
             p1 = P1;
             p2 = P2;
             p3 = P3;
             p4 = P4;
             return true;
+    }
+    else{
+        if(C == 'r'){
+            if (rot_id == 0 && (colour == 1 || colour == 2 || colour == 6)) rot_id = 1;
+            else if(rot_id == 0) rot_id = 3;
+            else rot_id --;
+        }else if(C == 'l'){
+            if(rot_id == 3) rot_id = 0;
+            else if(rot_id == 1 && (colour == 1 || colour == 2 || colour == 6)) rot_id = 0;
+            else rot_id ++;
         }
     }
     return false;
