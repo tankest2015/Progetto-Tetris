@@ -1,24 +1,26 @@
 #include "board.h"
+#include "tetramini.h"
 #include <iostream>
 #include <ncurses.h>
 using namespace std;
 
-Board::Board(){
+Board::Board(int score){
+    this->score = score;
     init_matrix();
-    print_matrix();
+    /*print_matrix();*/
 }
 
 void Board::init_matrix(){
-    for(int i=0; i<row_size; i++){
-        for(int j=0; j<col_size; j++){
+    for(int i=0; i<col_size; i++){
+        for(int j=0; j<row_size; j++){
             matrix[i][j] = 0;
         }
     }
 }
 
 void Board::print_matrix(){
-    for(int i=0; i<row_size; i++){
-        for(int j=0; j<col_size; j++){
+    for(int i=0; i<col_size; i++){
+        for(int j=0; j<row_size; j++){
             cout << matrix[i][j] << " ";
         }
         cout << endl;
@@ -65,29 +67,28 @@ void Board::clear_row(int row){
     }
 }
 
-void Board::clear_full_rows(tetramino* point) {
-    int row_pos = max_y(point);
-    int counter = 0;
-    while(!is_empty(row_pos)) {
-        if(is_full(row_pos)) {
-            clear_row(row_pos);
-            counter++;
-        }
-        else if(counter > 0) {
-            move_down(row_pos-1, counter);
-            row_pos--;
-        }
-        row_pos--;
-    }
-} 
-
-int Board::max_y(tetramino* point) { //y più bassa del tetramino
+int max_y(tetramino* point) { //y più bassa del tetramino
     if(point->p1.y >= point->p2.y && point->p1.y >= point->p3.y && point->p1.y >= point->p4.y) return point->p1.y;
     else if(point->p2.y >= point->p1.y && point->p2.y >= point->p3.y && point->p2.y >= point->p4.y) return point->p2.y;
     else if(point->p3.y >= point->p1.y && point->p3.y >= point->p2.y && point->p3.y >= point->p4.y) return point->p3.y;
     else if(point->p4.y >= point->p1.y && point->p4.y >= point->p2.y && point->p4.y >= point->p3.y) return point->p4.y;
 }
 
+void clear_full_rows(tetramino* point, Board &griglia) {
+    int row_pos = max_y(point);
+    int counter = 0;
+    while(!griglia.is_empty(row_pos)) {
+        if(griglia.is_full(row_pos)) {
+            griglia.clear_row(row_pos);
+            counter++;
+        }
+        else if(counter > 0) {
+            griglia.move_down(row_pos-1, counter);
+            row_pos--;
+        }
+        row_pos--;
+    }
+}
 
 bool Board::is_game_over() {
     if(matrix[5][1] != 0 || matrix[5][2] != 0) return true;
