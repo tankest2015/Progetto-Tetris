@@ -6,8 +6,8 @@ using namespace std;
 
 void set_colors(){
     start_color();
-
-    init_color(7, 918, 457, 82);
+    
+    init_color(8, 918, 457, 82);
 
     init_pair(1, COLOR_RED, COLOR_RED);
     init_pair(2, COLOR_GREEN, COLOR_GREEN);
@@ -15,15 +15,13 @@ void set_colors(){
     init_pair(4, COLOR_BLUE, COLOR_BLUE);
     init_pair(5, COLOR_MAGENTA, COLOR_MAGENTA);
     init_pair(6, COLOR_CYAN, COLOR_CYAN);
-    init_pair(7, 7, 7);
-    init_pair(8, COLOR_WHITE, COLOR_WHITE);
+    init_pair(7, 8, 8);
 }
 
 void print_gamespace(WINDOW *win){
     box(win, 0, 0);
-    refresh();
     wrefresh(win);
-}
+    }
 
 void print_griglia(WINDOW* win, Board &griglia, tetramino* point){
     print_gamespace(win);
