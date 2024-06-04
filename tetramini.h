@@ -14,7 +14,7 @@ protected:
 public:
         Position p1, p2, p3, p4;
 
-        tetramino(int colour);
+        tetramino(int colour, Board &griglia);
 
         int get_colour();
         void print_colour();
@@ -26,7 +26,7 @@ public:
         void board_delete_assign(bool action, Board &griglia);
 };
 
-    tetramino* gen_tetramino();
+    tetramino* gen_tetramino(Board &griglia);
     
 
 #endif

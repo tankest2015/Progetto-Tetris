@@ -7,7 +7,7 @@
 using namespace std;
 
 
-tetramino::tetramino(int colour) {
+tetramino::tetramino(int colour, Board &griglia) {
     this->colour = colour;
     rot_id = 0;
 
@@ -134,6 +134,7 @@ tetramino::tetramino(int colour) {
         default:
             break;
         }
+    board_delete_assign(true, griglia);
 }
 
 int tetramino::get_colour(){
@@ -527,13 +528,13 @@ bool tetramino::move_left(Board &griglia){
     return(flag);
 }
 
-tetramino* gen_tetramino(){
+tetramino* gen_tetramino(Board &griglia){
     int color;
     tetramino* point;
     srand(time(0));
     color = rand()%7+1;
 
-    point = new tetramino(color);
+    point = new tetramino(color, griglia);
     return point;
 }
 

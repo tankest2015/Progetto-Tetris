@@ -1,23 +1,31 @@
 #include "tetramini.h"
 #include "board.h"
+#include "style_game.h"
 #include <iostream>
-
+#include <ncurses.h>
 using namespace std;
 
 int main(){
-    tetramino *pointer;
-    pointer = gen_tetramino();
-    Board griglia(0);
-    pointer->board_delete_assign(true, griglia);
-    griglia.print_matrix();
-    cout<<endl;
-    pointer->print_colour();
-    cout << endl;
 
+    initscr();
+    noecho();
+    curs_set(0);
+
+    
+    tetramino *pointer;
+    Board griglia(0);
+    pointer = gen_tetramino(griglia);
+    WINDOW* win = set_win();
+    if(!has_colors) mvwprintw(win, 40, 10, "Daltonico");
+    set_colors();
+    print_gamespace(win);
+    print_griglia(win, griglia, pointer);
+
+    //keypad(win, true);
+    //int movement = wgetch(win);
     char c;
     do{
-    
-        cin >> c;
+        c = wgetch(win);
         switch (c)
         {
         case 'a':
@@ -28,19 +36,20 @@ int main(){
             pointer->move_right(griglia);
             break;
         
-        case 'k':
+        case 'n':
             pointer->left_rotation(griglia);
             break;
 
-        case 'l':
+        case 'm':
             pointer->right_rotation(griglia);
             break;
 
         default:
             break;
         }
-        griglia.print_matrix();
-        cout<<endl;
+        print_griglia(win, griglia, pointer);
     } while (c != 'q');
+
+    endwin();
     return 0;
 }
