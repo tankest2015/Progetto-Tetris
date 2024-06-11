@@ -21,34 +21,34 @@ int main(){
     print_gamespace(win);
     print_griglia(win, griglia, pointer);
 
-    //keypad(win, true);
-    //int movement = wgetch(win);
-    char c;
+    keypad(win, true);
+    int movement;
     do{
-        c = wgetch(win);
-        switch (c)
+        movement = wgetch(win);
+        switch (movement)
         {
-        case 'a':
+        case KEY_LEFT:
             pointer->move_left(griglia);
             break;
 
-        case 'd':
+        case KEY_RIGHT:
             pointer->move_right(griglia);
             break;
         
-        case 'n':
+        case 97:
             pointer->left_rotation(griglia);
             break;
 
-        case 'm':
+        case 100:
             pointer->right_rotation(griglia);
             break;
 
         default:
             break;
         }
+
         print_griglia(win, griglia, pointer);
-    } while (c != 'q');
+    } while (movement != 113);
 
     endwin();
     return 0;
