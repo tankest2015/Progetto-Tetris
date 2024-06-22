@@ -35,11 +35,11 @@ int main(){
             pointer->move_right(griglia);
             break;
         
-        case 97:
+        case 97:                             //press a to rotate left
             pointer->left_rotation(griglia);
             break;
 
-        case 100:
+        case 100:                            //press d to rotate right
             pointer->right_rotation(griglia);
             break;
 
@@ -48,7 +48,7 @@ int main(){
         }
 
         print_griglia(win, griglia, pointer);
-    } while (movement != 113);
+    } while (movement != 113);                //press q to quit
 
     endwin();
     return 0;
