@@ -67,7 +67,7 @@ void Board::clear_row(int row){
     }
 }
 
-int max_y(tetramino* point) { //y più bassa del tetramino
+int max_y(tetramino* point) { //blocco più basso del tetramino, quindi il valore y più alto
     if(point->p1.y >= point->p2.y && point->p1.y >= point->p3.y && point->p1.y >= point->p4.y) return point->p1.y;
     else if(point->p2.y >= point->p1.y && point->p2.y >= point->p3.y && point->p2.y >= point->p4.y) return point->p2.y;
     else if(point->p3.y >= point->p1.y && point->p3.y >= point->p2.y && point->p3.y >= point->p4.y) return point->p3.y;
