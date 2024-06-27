@@ -47,19 +47,19 @@ int main(int argc, char ** argv)
 
         if(highlight==0)
         {
-           M.menu_S(highlight);
+           M.menu_S(highlight,4);
         }
         else if(highlight==1)
         {
-           M.menu_S(highlight);
+           M.menu_S(highlight,4);
         }
         else if(highlight==2)
         {
-           M.menu_S(highlight);
+           M.menu_S(highlight,4);
         }
         else if(highlight==3)
         {
-           M.menu_S(highlight);
+           M.menu_S(highlight,4);
         }
 
         if(select==10)//10 = premo invio per selezionare il campo 

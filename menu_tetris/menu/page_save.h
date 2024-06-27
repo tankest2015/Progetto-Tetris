@@ -33,6 +33,7 @@ int scr()
     
     int c=4,r=1;
     int i=0;
+    bool fix=true; //flag per verificare se il file è stato modificato o no 
     fstream file;
     file.open("salvataggio_punteggio/test1.txt", ios::in);
     char line[80];
@@ -50,7 +51,15 @@ int scr()
         while(!file.eof())
         {
             file>>line;
-            if(strcmp(line,"n")==0)
+            
+            if(strcmp(line,"flag: 0")==0)
+            {
+                c = 4;
+                r = 1;
+                i = 0;
+
+            }
+            else if(strcmp(line,"n")==0)
             {
                 c++;
                 r=1;
@@ -99,6 +108,7 @@ int scr()
 
         car = wgetch(exit);
     }
+    
     
     delete_W(exit);
     delete_W(win_rank);

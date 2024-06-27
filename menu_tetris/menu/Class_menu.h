@@ -10,11 +10,13 @@ using namespace std;
 #ifndef _CLASS_MENU_H_
 #define _CLASS_MENU_H_
 
-
+/*
+Classe principale e padrre di tutte le altre
+*/
 class menu
 {
     protected:
-    int k;
+    int k; //indice dell'array
     char *choices[4];
     WINDOW *win;
     int yMax;
@@ -22,7 +24,7 @@ class menu
 
     public:
 
-    menu(WINDOW *win,char *str[],int k,int y,int x)
+    menu(WINDOW *win,char *str[],int k,int y,int x) //costruttore
     {
         this->win = win;
         this->k = k;
@@ -37,7 +39,7 @@ class menu
         }
     }
     
-    int init()
+    void init() //funziona che mi inizializza lo schermo
     {
         initscr(); //initializeed the screen
         noecho(); 
@@ -48,7 +50,7 @@ class menu
         {
             printw("Terminal doesn't support the color");
             getch();
-            return -1;
+            
         }
         else getmaxyx(stdscr, yMax,xMax);
     }
@@ -64,12 +66,12 @@ class menu
         return xMax;
     }
 
-    void create_W()
+    void create_W() //mi inizializza la finestra
     {
         init();
 
         // WINDOW * win = newwin(height,width,start_y,start_x);
-        win = newwin(yMax/7,xMax/3,yMax/2,xMax/3);
+        win = newwin(yMax/5,xMax/3,yMax/2,xMax/2);
         refresh();
 
         box(win,0,0);//initialized my boards of menu
@@ -77,7 +79,7 @@ class menu
         keypad(win,true);
     }
     
-    void menu_start()
+    void menu_start() //mi inizializza il menu
     {
         for(int i = 0;i<4;i++)
         {
@@ -94,9 +96,9 @@ class menu
         mvwprintw(win,4,1,choices[3]);
     }
 
-    void menu_S(int k)
+    void menu_S(int k,int j) //evidenzia il corretto campo in cui l'utente si trova 
     {
-        for(int i = 0;i<4;i++)
+        for(int i = 0;i<j;i++)
         {
             if(k==i)
             {
@@ -108,7 +110,7 @@ class menu
         }
     }
 
-    void delete_W(WINDOW * win)
+    void delete_W() //mi elimina la finestra 
     {
         wclear(win);
         wrefresh(win);
@@ -123,7 +125,11 @@ class menu
 };
 
 
+/*
+    Classe derivata dalla classe menu
 
+    MENU_DI_GIOCO
+*/
 class Read_menu: public menu
 {
 
@@ -131,6 +137,7 @@ class Read_menu: public menu
     WINDOW * win_rank;
     WINDOW *exit;
     int c,r,i;
+
     public:
     Read_menu(WINDOW * win,char *str[],int k,int y,int x,WINDOW * win_rank,WINDOW * exit,int col,int righe,int i):menu(win,str,k,y,x)
     {
@@ -155,7 +162,6 @@ class Read_menu: public menu
 
     void create_win_exit()
     {
-        //menu::init();
 
         exit = newwin(yMax/10,xMax/14,yMax-10,xMax-20);
         box(exit,0,0);
@@ -167,13 +173,15 @@ class Read_menu: public menu
     void scr()
     {
         bool flag = false;
+        bool fix=true; //flag per verificare se il file è stato modificato o no 
 
         create_win_rank();
 
         fstream file;
-        file.open("salvataggio_punteggio/test1.txt", ios::in);
+        file.open("salvataggio_punteggio/test1.txt", ios::in); //mi apre il file in lettura
         char line[80];
 
+        //colonne
         mvwprintw(win_rank,1,1,"Name");
         mvwprintw(win_rank,1,20,"Time[hh/mm/ss]");
         mvwprintw(win_rank,1,40,"Point");
@@ -184,9 +192,20 @@ class Read_menu: public menu
             cout<<"error to open file "<<endl;
         else
         {
-            while(!file.eof())
+            while(!file.eof())//è vero fin tanto che il file non sia finito
             {
                 file>>line;
+                
+                //W.I.P.
+                if(strcmp(line,"ff")==0)
+                {
+                    this->c = 4;
+                    this->r = 1;
+                    this->i = 0;
+                    file>>line;
+                }
+                else file>>line;
+                
                 if(strcmp(line,"n")==0)
                 {
                     c++;
@@ -212,7 +231,18 @@ class Read_menu: public menu
             }
         }
         
-        file.close();
+        file.close();//chiude il file
+
+        //W.I.P.
+        fstream fileR;
+        fileR.open("salvataggio_punteggio/test1.txt", ios::app);
+
+
+        fileR<<"ff"<<endl;
+
+        fileR.close();
+
+
 
 
         wrefresh(win_rank);
@@ -241,6 +271,94 @@ class Read_menu: public menu
     }
 
 };
+
+
+/*
+Classe derivata dalla classe menu
+
+MENU_DI_PAUSA
+*/
+
+class Menu_pausa : public menu
+{
+    protected:
+    WINDOW *P;
+    char *choices[2];
+    int x;
+    int y;
+    int k;
+
+    public:
+    Menu_pausa(WINDOW * win,char *ch[],int k,int y,int x,WINDOW *P,int xMax,int yMax,char* str[],int c):menu(win,ch,k,y,x)
+    {
+        this->P = P;
+        this->x =xMax;
+        this->y =yMax;
+
+        for(int i=0;i<c;i++)
+        {
+            choices[i] = new char[strlen(str[i]) + 1];
+            strcpy(choices[i],str[i]);
+        }
+    }
+
+    void create_W()
+    {
+        menu::init();
+
+        // WINDOW * win = newwin(height,width,start_y,start_x);
+        P = newwin(yMax/6,xMax/4,yMax/2,xMax/2);
+        refresh();
+
+        box(P,0,0);//initialized my boards of menu
+        wrefresh(P);
+        keypad(P,true);
+    }
+
+    void menu_start()
+    {
+        for(int i = 0;i<2;i++)
+        {
+            mvwprintw(P,i+1,1,choices[i]);
+        }
+
+        wrefresh(P);
+
+        wattron(P,A_REVERSE);
+        mvwprintw(P,1,1,choices[0]);
+        wattroff(P,A_REVERSE);
+        mvwprintw(P,2,1,choices[1]);
+        
+        //wrefresh(P);
+    }
+
+    void menu_S(int k,int j)
+    {
+        for(int i = 0;i<j;i++)
+        {
+            if(k==i)
+            {
+                wattron(P,A_REVERSE);
+                mvwprintw(P,i+1,1,choices[i]);
+                wattroff(P,A_REVERSE);
+            }
+            else mvwprintw(P,i+1,1,choices[i]);
+        }
+    }
+
+    void delete_W()
+    {
+        wclear(P);
+        wrefresh(P);
+        delwin(P);
+    }
+
+    int get_wg()
+    {
+        return wgetch(P);
+    }
+};
+
 
 
 #endif _CLASS_MENU_H_
