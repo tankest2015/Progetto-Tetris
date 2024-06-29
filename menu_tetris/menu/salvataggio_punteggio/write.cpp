@@ -1,3 +1,29 @@
+    /*
+    #####
+    Is part of the std namespace and refers to a set of flags and constants used to control the behavior of input/output (I/O) streams. 
+    These flags are used in conjunction with classes like std::ios_base
+    #####
+
+    std::ios::in: File open mode for reading.
+    std::ios::out: File open mode for writing.
+    std::ios::binary: File open mode for binary mode.
+    std::ios::app: File open mode for appending to the end of the file.
+    std::ios::ate: File open mode with the file pointer positioned at the end of the file.
+    std::ios::trunc: If the file already exists, its contents are truncated upon opening.
+    std::ios::ate: The file pointer is positioned at the end of the file after opening.
+    std::ios::in | std::ios::out: File open mode for reading and writing simultaneously.
+    */
+
+
+    /*
+    ofstream including ios::out
+    ifstream including ios::in
+
+    fstream including none 
+    */
+
+
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -52,29 +78,6 @@ int main()
 
 
 
-    /*
-    #####
-    Is part of the std namespace and refers to a set of flags and constants used to control the behavior of input/output (I/O) streams. 
-    These flags are used in conjunction with classes like std::ios_base
-    #####
-
-    std::ios::in: File open mode for reading.
-    std::ios::out: File open mode for writing.
-    std::ios::binary: File open mode for binary mode.
-    std::ios::app: File open mode for appending to the end of the file.
-    std::ios::ate: File open mode with the file pointer positioned at the end of the file.
-    std::ios::trunc: If the file already exists, its contents are truncated upon opening.
-    std::ios::ate: The file pointer is positioned at the end of the file after opening.
-    std::ios::in | std::ios::out: File open mode for reading and writing simultaneously.
-    */
-
-
-    /*
-    ofstream including ios::out
-    ifstream including ios::in
-
-    fstream including none 
-    */
     ofstream newF;
     newF.open("test_final.txt",ofstream::out | ios::trunc);
 
@@ -89,7 +92,7 @@ int main()
         newFile.open("test_final.txt", ios::app);
 
         char line_pos[80];
-        char copy[7];
+        char copy[10];
         bool flag = false;
         int i = 0;
 
@@ -105,36 +108,33 @@ int main()
                 strcpy(mess,line_pos);
                 strncat(mess,"      ",5);
                 
-                if(!strcmp(line_pos,"")==0)
+                if(!strcmp(line_pos,"")==0 && !strcmp(line_pos,"ff")==0 && !strcmp(line_pos,"tt")==0)
                 {
                  if(!strcmp(line_pos,"n")==0)
                 {
 
-                
-        
-
-                //time
-                file>>line_pos;
-                strncat(mess,line_pos,9);
-                strncat(mess,"      ",5);
-                
-                
-        
-                //point
-                file>>line_pos;
-                strncat(mess,line_pos,6);
-                strncat(mess,"      ",5);
-                strcpy(copy,line_pos);
-            
-                
+                    //time
+                    file>>line_pos;
+                    strncat(mess,line_pos,9);
+                    strncat(mess,"      ",5);
 
 
 
-                //block
-                file>>line_pos;
-                strncat(mess,line_pos,6);
-                strncat(mess,"      ",5);
-                strcpy(mess_1,mess);
+                    //point
+                    file>>line_pos;
+                    strncat(mess,line_pos,6);
+                    strncat(mess,"      ",5);
+                    strcpy(copy,line_pos);
+
+
+
+
+
+                    //block
+                    file>>line_pos;
+                    strncat(mess,line_pos,6);
+                    strncat(mess,"      ",5);
+                    strcpy(mess_1,mess);
                 
 
                     if(stoi(copy)<=stoi(point) && !flag)
@@ -202,7 +202,9 @@ int main()
     
 
     ofstream F;
-    F.open("test1.txt",ofstream::out | ios::trunc);
+    F.open("test1.txt",ofstream::out | ios::trunc); //pulisce tutto il file e mi aggiorna il flag della modifica
+
+    F<<"tt"<<endl;
 
     F.close();
 

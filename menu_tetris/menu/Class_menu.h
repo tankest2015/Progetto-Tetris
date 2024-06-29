@@ -110,7 +110,7 @@ class menu
         }
     }
 
-    void delete_W() //mi elimina la finestra 
+    void delete_W(WINDOW *win) //mi elimina la finestra 
     {
         wclear(win);
         wrefresh(win);
@@ -153,7 +153,7 @@ class Read_menu: public menu
         menu::init();
 
         win_rank = newwin(yMax-5,xMax-10,2,5);
-        refresh();
+        wrefresh(win_rank);
         box(win_rank,0,0);//initialized my boards of menu
         wrefresh(win_rank);
         keypad(win_rank,true);
@@ -197,14 +197,19 @@ class Read_menu: public menu
                 file>>line;
                 
                 //W.I.P.
-                if(strcmp(line,"ff")==0)
+               if(strcmp(line,"ff")==0)
                 {
                     this->c = 4;
                     this->r = 1;
                     this->i = 0;
                     file>>line;
+                    fix = false;
                 }
-                else file>>line;
+                else if(strcmp(line,"tt")==0)
+                {
+                    file>>line;
+                    fix = true;
+                } 
                 
                 if(strcmp(line,"n")==0)
                 {
@@ -233,15 +238,20 @@ class Read_menu: public menu
         
         file.close();//chiude il file
 
-        //W.I.P.
-        fstream fileR;
-        fileR.open("salvataggio_punteggio/test1.txt", ios::app);
+        if(fix)// se vero allora nella prima riga c'è tt quindi il file in precendenza è stato modificato
+        {    
+            
+            fstream fileR;
+            fileR.open("salvataggio_punteggio/test1.txt", std::ios::in | std::ios::out);
 
+            fileR<<"ff"<<endl;
 
-        fileR<<"ff"<<endl;
+            //file>>endl;
 
-        fileR.close();
-
+            fileR.close();
+            fix = false;
+            
+        }
 
 
 
@@ -252,16 +262,15 @@ class Read_menu: public menu
         wattron(exit,A_REVERSE);
         mvwprintw(exit,1,2,"EXIT");
         wattroff(exit,A_REVERSE);
-        int car = wgetch(exit);
+        int car ;
 
         while(!flag)
         {
+            car = wgetch(exit);
             if(car == 10)
             {
                 flag = true;
             }
-
-            car = wgetch(exit);
         }
         
         menu::delete_W(exit);
