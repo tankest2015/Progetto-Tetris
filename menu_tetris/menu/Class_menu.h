@@ -196,7 +196,7 @@ class Read_menu: public menu
             {
                 file>>line;
                 
-                //W.I.P.
+                
                if(strcmp(line,"ff")==0)
                 {
                     this->c = 4;

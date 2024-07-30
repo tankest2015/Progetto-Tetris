@@ -4,6 +4,7 @@
 #include <cstring>
 #include <string>
 #include "Class_menu.h"
+#include "salvataggio_punteggio/write_lead.h"
 
 
 using namespace std;
@@ -13,6 +14,7 @@ int main(int argc, char ** argv)
     WINDOW * win;
     WINDOW * win_rank;
     WINDOW * exit;
+    
     char *choices[4] = {"Play","Leaderboard","options","exit"};
     
     menu M(win,choices,4,0,0);
@@ -64,9 +66,17 @@ int main(int argc, char ** argv)
 
         if(select==10)//10 = premo invio per selezionare il campo 
         {
-            //if(highlight==0)
-            //else 
-            if(highlight==1)
+            if(highlight==0)
+            {
+                M.delete_W(win);
+                
+                insert();
+
+                M.create_W();
+                M.menu_start();
+
+            }
+            else if(highlight==1)
             {
                 R.scr();
             }

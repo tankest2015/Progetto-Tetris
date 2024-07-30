@@ -26,6 +26,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <ncurses.h>
 
 
 using namespace std;
@@ -56,17 +57,17 @@ int write(char h[],char min[],char s[],char point[],char name[],char line[])
  
 
     ofstream newF;
-    newF.open("test_final.txt",ofstream::out | ios::trunc);
+    newF.open("salvataggio_punteggio/test_final.txt",ofstream::out | ios::trunc);
 
     newF.close();
 
        
         int j=1;
         fstream file;
-        file.open("test1.txt", ios::in);
+        file.open("salvataggio_punteggio/test1.txt", ios::in);
         
         fstream newFile;
-        newFile.open("test_final.txt", ios::app);
+        newFile.open("salvataggio_punteggio/test_final.txt", ios::app);
 
         char line_pos[80];
         char copy[10];
@@ -179,17 +180,17 @@ int write(char h[],char min[],char s[],char point[],char name[],char line[])
     
 
     ofstream F;
-    F.open("test1.txt",ofstream::out | ios::trunc); //pulisce tutto il file e mi aggiorna il flag della modifica
+    F.open("salvataggio_punteggio/test1.txt",ofstream::out | ios::trunc); //pulisce tutto il file e mi aggiorna il flag della modifica
 
     F<<"tt"<<endl;
 
     F.close();
 
     fstream final;
-    final.open("test_final.txt", ios::in);
+    final.open("salvataggio_punteggio/test_final.txt", ios::in);
     
     fstream file_text;
-    file_text.open("test1.txt", ios::app);
+    file_text.open("salvataggio_punteggio/test1.txt", ios::app);
     char read[80];
 
     while(!final.eof())
@@ -228,6 +229,84 @@ int write(char h[],char min[],char s[],char point[],char name[],char line[])
         final.close();
 
     return 0;
+}
+
+void insert() 
+{
+
+    initscr();
+    noecho();
+    cbreak();
+    refresh();
+
+ 
+    bool flag = false;
+    int xMax,yMax;
+    getmaxyx(stdscr, yMax,xMax);
+
+
+
+    int i = 0;
+
+
+    WINDOW *player;
+    player = newwin(yMax/7,xMax/7,yMax/2,xMax/2);
+    refresh();
+    box(player,0,0);
+    wrefresh(player);
+    mvwprintw(player,1,1,"INSERT NAME:");
+    wrefresh(player);
+    
+    keypad(player,true);
+
+    int ch;
+    char text[10] = {0};
+    char h[3] = {'0','5','\0'};
+    char min[3] = {'1','2','\0'};
+    char s[3] = {'1','4','\0'};
+    char point[5] = {'2','3','4','5','\0'};
+    char block[5] = {'9','0','8','5','\0'};
+
+
+    while(!flag)
+    {
+        ch = wgetch(player);
+        if(ch == 10) //10 = invio
+        {
+            write(h,min,s,point,text,block);
+
+            wclear(player);
+            wrefresh(player);
+            delwin(player);
+
+            flag = true;
+
+        }
+        else if(ch == KEY_BACKSPACE)
+        {
+            i--;
+            text[i] = '\0';
+            mvwdelch(player, 2, i+1);
+            wrefresh(player);
+
+        }
+        else
+        {
+            if(i<sizeof(text)-1)
+            {
+                
+                text[i]= (char) ch;
+                mvwprintw(player,2,1,"%s",text);
+                wrefresh(player);
+                i++;
+            }
+
+
+        }
+    }
+
+    endwin();
+    
 }
 
 #endif _WRITE_LEAD_H_

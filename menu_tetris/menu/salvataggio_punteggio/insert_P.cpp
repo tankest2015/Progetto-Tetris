@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
     while(c = wgetch(win))
     {
-        if(c == 22) //22 = CTRL + V
+        if(c == 10) //22 = CTRL + V
         {
             write(h,min,s,point,text,block);
             wclear(win);
@@ -75,6 +75,6 @@ int main(int argc, char **argv)
         }
     }
 
-    
+    endwin();
     return 0;
 }

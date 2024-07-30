@@ -35,7 +35,7 @@ int scr()
     int i=0;
     bool fix=true; //flag per verificare se il file è stato modificato o no 
     fstream file;
-    file.open("salvataggio_punteggio/test1.txt", ios::in);
+    file.open("test1.txt", ios::in);
     char line[80];
 
     mvwprintw(win_rank,1,1,"Name");
