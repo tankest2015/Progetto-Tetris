@@ -35,7 +35,7 @@ using namespace std;
 #define _WRITE_LEAD_H_
 
 
-int write(char h[],char min[],char s[],char point[],char name[],char line[])
+void write(char h[],char min[],char s[],char point[],char name[],char line[])
 {
 
     
@@ -78,6 +78,7 @@ int write(char h[],char min[],char s[],char point[],char name[],char line[])
             cout<<"error to open file "<<endl;
         else
         {
+
             while(!file.eof())
             {
                 
@@ -95,18 +96,12 @@ int write(char h[],char min[],char s[],char point[],char name[],char line[])
                     file>>line_pos;
                     strncat(mess,line_pos,9);
                     strncat(mess,"      ",5);
-
-
-
+                    
                     //point
                     file>>line_pos;
                     strncat(mess,line_pos,6);
                     strncat(mess,"      ",5);
                     strcpy(copy,line_pos);
-
-
-
-
 
                     //block
                     file>>line_pos;
@@ -228,7 +223,6 @@ int write(char h[],char min[],char s[],char point[],char name[],char line[])
         file_text.close();
         final.close();
 
-    return 0;
 }
 
 void insert() 

@@ -127,9 +127,6 @@ int main()
                     strcpy(copy,line_pos);
 
 
-
-
-
                     //block
                     file>>line_pos;
                     strncat(mess,line_pos,6);

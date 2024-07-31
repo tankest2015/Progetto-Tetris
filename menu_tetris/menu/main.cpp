@@ -78,12 +78,19 @@ int main(int argc, char ** argv)
             }
             else if(highlight==1)
             {
+                M.delete_W(win);
+
                 R.scr();
+
+                M.create_W();
+                M.menu_start();
             }
             else if(highlight==3)
             {
                 pass = false;
             }
+
+            highlight = 0;
             //else if(highlight==2)
         }
         refresh();

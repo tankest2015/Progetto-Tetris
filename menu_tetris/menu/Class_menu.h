@@ -199,14 +199,17 @@ class Read_menu: public menu
                 
                if(strcmp(line,"ff")==0)
                 {
-                    this->c = 4;
-                    this->r = 1;
-                    this->i = 0;
+                    c = 4;
+                    r = 1;
+                    i = 0;
                     file>>line;
                     fix = false;
                 }
                 else if(strcmp(line,"tt")==0)
                 {
+                    c = 4;
+                    r = 1;
+                    i = 0;
                     file>>line;
                     fix = true;
                 } 
@@ -229,10 +232,8 @@ class Read_menu: public menu
                     {
                         mvwprintw(win_rank,c,r,line);
                     }
-                    
                     r=r+20;
                 }
-
             }
         }
         
