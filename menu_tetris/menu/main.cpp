@@ -69,12 +69,12 @@ int main(int argc, char ** argv)
             if(highlight==0)
             {
                 M.delete_W(win);
-                
-                insert();
 
+                insert();
+                
                 M.create_W();
                 M.menu_start();
-
+            
             }
             else if(highlight==1)
             {
@@ -91,6 +91,7 @@ int main(int argc, char ** argv)
             }
 
             highlight = 0;
+            M.menu_S(highlight,4);
             //else if(highlight==2)
         }
         refresh();

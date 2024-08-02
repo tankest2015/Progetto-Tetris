@@ -225,6 +225,35 @@ void write(char h[],char min[],char s[],char point[],char name[],char line[])
 
 }
 
+
+void del_ch(WINDOW *player,char text[],int i)
+{
+    text[i] = '\0';
+    mvwdelch(player, 2, i+1);
+    wrefresh(player);
+
+}
+
+bool check(char text[])
+{
+    int i = 0;
+    bool flag = false;
+    if(text[i]=='\0')
+    {
+        flag = true;
+    }
+    else
+    {
+        while(text[i]!='\0' && !flag)
+        {
+            if(text[i]==char(32))
+                flag = true;
+            i++;
+        }
+    }
+    return flag;
+}
+
 void insert() 
 {
 
@@ -254,6 +283,7 @@ void insert()
     keypad(player,true);
 
     int ch;
+    bool BSp = false;
     char text[10] = {0};
     char h[3] = {'0','5','\0'};
     char min[3] = {'1','2','\0'};
@@ -267,22 +297,34 @@ void insert()
         ch = wgetch(player);
         if(ch == 10) //10 = invio
         {
-            write(h,min,s,point,text,block);
+            BSp = check(text);
 
-            wclear(player);
-            wrefresh(player);
-            delwin(player);
+            if(BSp)
+            {
+                mvwprintw(player,3,1,"%s","è presente un carattere non valido");
+                while(i>0)
+                {
+                    i--;
+                    del_ch(player,text,i);
+                }
+            }
+            else
+            {    
+                write(h,min,s,point,text,block);
 
-            flag = true;
+                wclear(player);
+                wrefresh(player);
+                delwin(player);
+
+                flag = true;
+            }
 
         }
         else if(ch == KEY_BACKSPACE)
         {
             i--;
-            text[i] = '\0';
-            mvwdelch(player, 2, i+1);
-            wrefresh(player);
-
+            del_ch(player,text,i);
+            
         }
         else
         {
