@@ -26,7 +26,9 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <stdlib.h>
 #include <ncurses.h>
+#include <stdio.h>
 
 
 using namespace std;
@@ -44,9 +46,8 @@ void write(char h[],char min[],char s[],char point[],char name[],char line[])
     char input[length];
     
     char time[9];//time [9] = '\0'
-    char mess[40];
-    char mess_1[40];
-    char end[2] = "\n";
+    char mess[80];
+    char mess_1[80];
 
 
     strcpy(time,h);
@@ -71,104 +72,179 @@ void write(char h[],char min[],char s[],char point[],char name[],char line[])
 
         char line_pos[80];
         char copy[10];
+        char pc[4];
         bool flag = false;
         int i = 0;
+        int pos_prec;
+        bool flagI = false;
+
+        char Nm[20];
+        char Tim[9];
+        char B[6];
+        char P[6];
 
         if(!file.is_open()) // is file doesn't exits i do an interrupt 
             cout<<"error to open file "<<endl;
         else
         {
-
             while(!file.eof())
             {
                 
-                //name
+                //pos
                 file>>line_pos;
                 strcpy(mess,line_pos);
                 strncat(mess,"      ",5);
                 
                 if(!strcmp(line_pos,"")==0 && !strcmp(line_pos,"ff")==0 && !strcmp(line_pos,"tt")==0)
                 {
-                 if(!strcmp(line_pos,"n")==0)
-                {
-
-                    //time
-                    file>>line_pos;
-                    strncat(mess,line_pos,9);
-                    strncat(mess,"      ",5);
-                    
-                    //point
-                    file>>line_pos;
-                    strncat(mess,line_pos,6);
-                    strncat(mess,"      ",5);
-                    strcpy(copy,line_pos);
-
-                    //block
-                    file>>line_pos;
-                    strncat(mess,line_pos,6);
-                    strncat(mess,"      ",5);
-                    strcpy(mess_1,mess);
-                
-
-                    if(stoi(copy)<=stoi(point) && !flag)
+                    if(!strcmp(line_pos,"n")==0)
                     {
-                        flag = true;
-                        //name_insert
-                        strcpy(mess,name);
-                        strncat(mess,"      ",5);
-                      
-
-                        //time_insert                       
-                        strncat(mess,time,9);
-                        strncat(mess,"      ",5);
+                        pos_prec = stoi(line_pos); //mi salva la posizione in cui sono ora 
                         
-                        //point_insert
-                        strncat(mess,point,6);
+                        //name
+                        file>>line_pos;
+                        strncat(mess,line_pos,10);
                         strncat(mess,"      ",5);
-
-                        //line_insert
-                        strncat(mess,line,6);
-
-                        newFile<<mess<<endl;
-                        newFile<<"n"<<endl;  
-
-                        newFile<<mess_1<<endl;
-                        newFile<<"n"<<endl;
+                        strcpy(Nm,line_pos);
 
 
+                        //time
+                        file>>line_pos;
+                        strncat(mess,line_pos,9);
+                        strncat(mess,"      ",5);
+                        strcpy(Tim,line_pos);
+                        
+                        //point
+                        file>>line_pos;
+                        strncat(mess,line_pos,6);
+                        strncat(mess,"      ",5);
+                        strcpy(copy,line_pos);
+
+                        //block
+                        file>>line_pos;
+                        strncat(mess,line_pos,6);
+                        strncat(mess,"      ",5);
+                        strcpy(B,line_pos);
+
+                        if(flag)
+                        {
+                            //pos insert
+                            pos_prec++;
+                            sprintf(pc, "%d", pos_prec);
+                            strcpy(mess,pc);
+                            strncat(mess,"      ",5);
+
+                            //name_insert
+                            strncat(mess,Nm,10);
+                            strncat(mess,"      ",5);
+
+                            //time_insert
+                            strncat(mess,Tim,9);
+                            strncat(mess,"      ",5);
+
+                            //point_insert
+                            strncat(mess,copy,6);
+                            strncat(mess,"      ",5);
+
+                            //line_insert
+                            strncat(mess,B,6);
+                        
+                            newFile<<mess<<endl;
+                            newFile<<"n"<<endl;  
+                        }
+                        else if(stoi(copy)<=stoi(point) && !flag)
+                        {
+                            //if()
+                            flag = true;
+
+                            //pos insert
+                            //pos_prec++;
+                            sprintf(pc, "%d", pos_prec);
+                            strcpy(mess,pc);
+                            strncat(mess,"      ",5);
+
+                            //name_insert
+                            strncat(mess,name,10);
+                            strncat(mess,"      ",5);
+
+                            //time_insert
+                            strncat(mess,time,9);
+                            strncat(mess,"      ",5);
+
+                            //point_insert
+                            strncat(mess,point,6);
+                            strncat(mess,"      ",5);
+
+                            //line_insert
+                            strncat(mess,line,6);
+
+                            newFile<<mess<<endl;
+                            newFile<<"n"<<endl;  
+                        
+                            //pos insert
+                            pos_prec++;
+                            sprintf(pc, "%d", pos_prec);
+                            strcpy(mess,pc);
+                            strncat(mess,"      ",5);
+
+                            //name_insert
+                            strncat(mess,Nm,10);
+                            strncat(mess,"      ",5);
+
+                            //time_insert
+                            strncat(mess,Tim,9);
+                            strncat(mess,"      ",5);
+
+                            //point_insert
+                            strncat(mess,copy,6);
+                            strncat(mess,"      ",5);
+
+                            //line_insert
+                            strncat(mess,B,6);
+                        
+                            newFile<<mess<<endl;
+                            newFile<<"n"<<endl;  
+                            
+                        }
+                        else
+                        {
+                            newFile<<mess<<endl;
+                            newFile<<"n"<<endl;        
+                        }
                     }
-                    else
-                    {
-                        newFile<<mess<<endl;
-                        newFile<<"n"<<endl;        
-                    }
-             
-                }
-                } 
-               
-            }
-
+            }        
         }
+    }
 
-      if(!flag)
-            {
-                flag = true;
-                //name_insert
-                strcpy(mess,name);
-                strncat(mess,"      ",5);
-                
-                //time_insert                       
-                strncat(mess,time,9);
-                strncat(mess,"      ",5);
-                
-                //point_insert
-                strncat(mess,point,6);
-                strncat(mess,"      ",5);
-                //line_insert
-                strncat(mess,line,6);
-                newFile<<mess<<endl;
-                newFile<<"n"<<endl;
-            }
+    if(!flag)
+        {
+            flag = true;
+
+
+            //pos_insert
+            pos_prec++;
+            sprintf(pc, "%d", pos_prec);
+            strcpy(mess,pc);
+            strncat(mess,"      ",5);
+                        
+            //name_insert
+            strncat(mess,name,10);
+            strncat(mess,"      ",5);
+            
+            //time_insert                       
+            strncat(mess,time,9);
+            strncat(mess,"      ",5);
+            
+            //point_insert
+            strncat(mess,point,6);
+            strncat(mess,"      ",5);
+            
+            //line_insert
+            strncat(mess,line,6);
+
+            newFile<<mess<<endl;
+            newFile<<"n"<<endl;
+        }
         
         file.close();
         newFile.close();
@@ -196,6 +272,10 @@ void write(char h[],char min[],char s[],char point[],char name[],char line[])
         
         if(!strcmp(read,"n")==0)
         {
+            
+            final>>read;
+            strncat(mess,read,10);
+            strncat(mess,"      ",5);
 
             final>>read;
             strncat(mess,read,9);
@@ -206,7 +286,6 @@ void write(char h[],char min[],char s[],char point[],char name[],char line[])
             strncat(mess,read,6);
             strncat(mess,"      ",5);
 
-
             final>>read;
             strncat(mess,read,6);
             strncat(mess,"      ",5);
@@ -216,12 +295,9 @@ void write(char h[],char min[],char s[],char point[],char name[],char line[])
             file_text<<"n"<<endl;
 
         }
-
-
     }
-
-        file_text.close();
-        final.close();
+    file_text.close();
+    final.close();
 
 }
 
@@ -288,7 +364,7 @@ void insert()
     char h[3] = {'0','5','\0'};
     char min[3] = {'1','2','\0'};
     char s[3] = {'1','4','\0'};
-    char point[5] = {'2','3','4','5','\0'};
+    char point[5] = {'3','3','4','5','\0'};
     char block[5] = {'9','0','8','5','\0'};
 
 

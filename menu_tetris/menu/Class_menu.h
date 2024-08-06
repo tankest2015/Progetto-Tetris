@@ -183,10 +183,11 @@ class Read_menu: public menu
         char line[80];
 
         //colonne
-        mvwprintw(win_rank,1,1,"Name");
-        mvwprintw(win_rank,1,20,"Time[hh/mm/ss]");
-        mvwprintw(win_rank,1,40,"Point");
-        mvwprintw(win_rank,1,60,"Block");
+        mvwprintw(win_rank,1,1,"Pos:");
+        mvwprintw(win_rank,1,20,"Name:");
+        mvwprintw(win_rank,1,40,"Time[hh/mm/ss]:");
+        mvwprintw(win_rank,1,60,"Point:");
+        mvwprintw(win_rank,1,80,"Block:");
 
 
         if(!file.is_open()) // is file doesn't exits i do an interrupt 
