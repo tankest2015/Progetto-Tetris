@@ -115,6 +115,7 @@ class menu
         wclear(win);
         wrefresh(win);
         delwin(win);
+        clear();
         
     }
 

@@ -69,6 +69,7 @@ int main(int argc, char ** argv)
             if(highlight==0)
             {
                 M.delete_W(win);
+                clear();
 
                 insert();
                 
@@ -79,7 +80,8 @@ int main(int argc, char ** argv)
             else if(highlight==1)
             {
                 M.delete_W(win);
-
+                clear();
+                
                 R.scr();
 
                 M.create_W();
