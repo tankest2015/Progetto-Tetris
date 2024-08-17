@@ -1,0 +1,186 @@
+//funzioni modificate da board
+void Board::update_score(int l_cleared){
+    if(l_cleared == 1){
+        score += 100;
+    } else if (l_cleared == 2){
+        score += 300;
+    } else if(l_cleared == 3){
+        score += 500;
+    }
+}
+
+void clear_full_rows(tetramino* point, Board &griglia) {
+    int row_pos = max_y(point);
+    int counter = 0;
+    while(!griglia.is_empty(row_pos)) {
+        if(griglia.is_full(row_pos)) {
+            griglia.clear_row(row_pos);
+            counter++;
+            griglia.update_score(counter);
+        }
+        else if(counter > 0) {
+            griglia.move_down(row_pos-1, counter);
+            row_pos--;
+        }
+        row_pos--;
+    }
+}
+
+//tetramini
+bool tetramino::descend(Board &griglia){
+    bool flag = false;
+    if(p1.y == 19 || p2.y == 19 || p3.y == 19 || p4.y == 19) return false;
+    board_delete_assign(false, griglia);
+    if(griglia.matrix[p1.x][p1.y+1] != 1 && griglia.matrix[p2.x][p2.y+1] != 1 && griglia.matrix[p3.x][p3.y+1] != 1 && griglia.matrix[p4.x][p4.y+1] != 1){
+        p1.y++;
+        p2.y++;
+        p3.y++;
+        p4.y++;
+        flag = true;
+    }
+    board_delete_assign(true, griglia);
+    return(flag);
+}
+
+
+//test_ata
+
+int main(){
+
+    initscr();
+    noecho();
+    curs_set(0);
+
+    int delay = 1000;
+    tetramino *pointer;
+    Board griglia(0);
+    pointer = gen_tetramino(griglia);
+    WINDOW* win = set_win();
+    set_colors();
+    print_gamespace(win);
+    print_griglia(win, griglia, pointer);
+
+    keypad(win, true);
+    int c;
+    
+    while(!griglia.is_game_over()){
+        if(griglia.score < 1500){
+            wtimeout(win, delay);
+            pointer->descend(griglia);
+            griglia.score++;
+
+            clear_full_rows(pointer, griglia);
+            
+            c = wgetch(win);
+            switch(c){
+            case KEY_LEFT:
+                pointer->move_left(griglia);
+                break;
+            case KEY_RIGHT:
+                pointer->move_right(griglia);
+                break;
+            case 97:
+                pointer->left_rotation(griglia);
+                break;
+            case 100:
+                pointer->right_rotation(griglia);
+                break;
+            default:
+                break;
+            }
+
+            print_griglia(win, griglia, pointer);
+        } else if(griglia.score < 3000 && griglia.score >= 1500){
+            delay = 750;
+            wtimeout(win, delay);
+            pointer->descend(griglia);
+            griglia.score++;
+
+            clear_full_rows(pointer, griglia);
+
+            c = wgetch(win);
+            switch(c){
+            case KEY_LEFT:
+                pointer->move_left(griglia);
+                break;
+            case KEY_RIGHT:
+                pointer->move_right(griglia);
+                break;
+            case 97:
+                pointer->left_rotation(griglia);
+                break;
+            case 100:
+                pointer->right_rotation(griglia);
+                break;
+            default:
+                break;
+            }
+
+            pointer = gen_tetramino(griglia);
+
+            print_griglia(win, griglia, pointer);
+        } else if(griglia.score < 7000 && griglia.score >= 3000){
+            delay = 500;
+            wtimeout(win, delay);
+            pointer->descend(griglia);
+            griglia.score++;
+
+            clear_full_rows(pointer, griglia);
+
+            c = wgetch(win);
+            switch(c){
+            case KEY_LEFT:
+                pointer->move_left(griglia);
+                break;
+            case KEY_RIGHT:
+                pointer->move_right(griglia);
+                break;
+            case 97:
+                pointer->left_rotation(griglia);
+                break;
+            case 100:
+                pointer->right_rotation(griglia);
+                break;
+            default:
+                break;
+            }
+
+
+            print_griglia(win, griglia, pointer);
+        } else {
+            delay = 400;
+            wtimeout(win, delay);
+            pointer->descend(griglia);
+            griglia.score++;
+
+            clear_full_rows(pointer, griglia);
+
+            c = wgetch(win);
+            switch(c){
+            case KEY_LEFT:
+                pointer->move_left(griglia);
+                break;
+            case KEY_RIGHT:
+                pointer->move_right(griglia);
+                break;
+            case 97:
+                pointer->left_rotation(griglia);
+                break;
+            case 100:
+                pointer->right_rotation(griglia);
+                break;
+            default:
+                break;
+            }
+
+            pointer = gen_tetramino(griglia);
+
+            print_griglia(win, griglia, pointer);
+        }
+
+        
+    }
+    
+    endwin();
+    return 0;
+}
