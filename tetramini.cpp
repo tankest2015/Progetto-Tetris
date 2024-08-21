@@ -134,14 +134,14 @@ tetramino::tetramino(int colour, Board &griglia) {
         default:
             break;
         }
-    board_delete_assign(true, griglia);
+    board_delete_assign(true, griglia, colour);
 }
 
 int tetramino::get_colour(){
     return colour;
 }
 
-void tetramino::print_colour(){
+void tetramino::print_colour(){ //funzione di test da ELIMINARE
     switch (colour)
     {
     case 1:
@@ -459,7 +459,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
     
     /*Control if the blocks are in the grid and can rotate without collide*/
     if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x >= 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20 && 
-       griglia.matrix[p1.x][p1.y] != 1 && griglia.matrix[p2.x][p2.y] != 1 && griglia.matrix[p3.x][p3.y] != 1 && griglia.matrix[p4.x][p4.y] != 1){
+       griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
             p1 = P1;
             p2 = P2;
             p3 = P3;
@@ -481,26 +481,26 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
 }
 
 void tetramino::left_rotation(Board &griglia) {		//ogni volta che si genera un tetramino si impone rot_id == 0
-    board_delete_assign(false, griglia);
+    board_delete_assign(false, griglia, colour);
 
     control_rot('l', griglia);
 
-    board_delete_assign(true, griglia);
+    board_delete_assign(true, griglia, colour);
 }
 
 void tetramino::right_rotation(Board &griglia){
-    board_delete_assign(false, griglia);
+    board_delete_assign(false, griglia, colour);
 
     control_rot('r', griglia);
 
-    board_delete_assign(true, griglia);
+    board_delete_assign(true, griglia, colour);
 }
 
 bool tetramino::move_right(Board &griglia){
     bool flag = false;
     if(p1.x == 9 || p2.x == 9 || p3.x == 9 || p4.x == 9) return false;
-    board_delete_assign(false, griglia);
-    if(griglia.matrix[p1.x + 1][p1.y] != 1 && griglia.matrix[p2.x + 1][p2.y] != 1 && griglia.matrix[p3.x + 1][p3.y] != 1 && griglia.matrix[p4.x + 1][p4.y] != 1)
+    board_delete_assign(false, griglia, colour);
+    if(griglia.matrix[p1.y][p1.x + 1] == 0 && griglia.matrix[p2.y][p2.x + 1] == 0 && griglia.matrix[p3.y][p3.x + 1] == 0 && griglia.matrix[p4.y][p4.x + 1] == 0)
     {
         p1.x ++;
         p2.x ++;
@@ -508,15 +508,15 @@ bool tetramino::move_right(Board &griglia){
         p4.x ++;
         flag = true;
     }
-    board_delete_assign(true, griglia);
+    board_delete_assign(true, griglia, colour);
     return(flag);
 }
 
 bool tetramino::move_left(Board &griglia){
     bool flag = false;
     if(p1.x == 0 || p2.x == 0 || p3.x == 0 || p4.x == 0) return false;
-    board_delete_assign(false, griglia);
-    if(griglia.matrix[p1.x - 1][p1.y] != 1 && griglia.matrix[p2.x - 1][p2.y] != 1 && griglia.matrix[p3.x - 1][p3.y] != 1 && griglia.matrix[p4.x - 1][p4.y] != 1)
+    board_delete_assign(false, griglia, colour);
+    if(griglia.matrix[p1.y][p1.x - 1] == 0 && griglia.matrix[p2.y][p2.x - 1] == 0 && griglia.matrix[p3.y][p3.x - 1] == 0 && griglia.matrix[p4.y][p4.x - 1] == 0)
     {
         p1.x --;
         p2.x --;
@@ -524,7 +524,23 @@ bool tetramino::move_left(Board &griglia){
         p4.x --;
         flag = true;
     }
-    board_delete_assign(true, griglia);
+    board_delete_assign(true, griglia, colour);
+    return(flag);
+}
+
+bool tetramino::descend(Board &griglia){
+    bool flag = false;
+    if(p1.y == 19 || p2.y == 19 || p3.y == 19 || p4.y == 19) return false;
+    board_delete_assign(false, griglia, colour);
+    if(griglia.matrix[p1.y + 1][p1.x] == 0 && griglia.matrix[p2.y + 1][p2.x] == 0 && griglia.matrix[p3.y + 1][p3.x] == 0 && griglia.matrix[p4.y + 1][p4.x] == 0)
+    {
+        p1.y ++;
+        p2.y ++;
+        p3.y ++;
+        p4.y ++;
+        flag = true;
+    }
+    board_delete_assign(true, griglia, colour);
     return(flag);
 }
 
@@ -538,12 +554,12 @@ tetramino* gen_tetramino(Board &griglia){
     return point;
 }
 
-void tetramino::board_delete_assign (bool action, Board &griglia){     // For delete use false
-    if(action){                                                        // For assign use true
-        griglia.matrix[p1.y][p1.x] = 1;
-        griglia.matrix[p2.y][p2.x] = 1;
-        griglia.matrix[p3.y][p3.x] = 1;
-        griglia.matrix[p4.y][p4.x] = 1;
+void tetramino::board_delete_assign (bool action, Board &griglia, int colour){     // For delete use false
+    if(action){                                                                   // For assign use true
+        griglia.matrix[p1.y][p1.x] = colour;
+        griglia.matrix[p2.y][p2.x] = colour;
+        griglia.matrix[p3.y][p3.x] = colour;
+        griglia.matrix[p4.y][p4.x] = colour;
     }
     else{
         griglia.matrix[p1.y][p1.x] = 0;

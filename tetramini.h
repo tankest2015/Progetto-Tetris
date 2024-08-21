@@ -12,8 +12,8 @@ protected:
         int colour;
         int rot_id;
 public:
-        Position p1, p2, p3, p4;
-
+        Position p1, p2, p3, p4;                //componente x = colonne
+                                                //componente y = righe
         tetramino(int colour, Board &griglia);
 
         int get_colour();
@@ -23,7 +23,8 @@ public:
         void right_rotation(Board &griglia);
         bool move_right(Board &griglia);
         bool move_left(Board &griglia);
-        void board_delete_assign(bool action, Board &griglia);
+        void board_delete_assign (bool action, Board &griglia, int color);
+        bool descend(Board &griglia);
 };
 
     tetramino* gen_tetramino(Board &griglia);

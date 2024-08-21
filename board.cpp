@@ -7,7 +7,6 @@ using namespace std;
 Board::Board(int score){
     this->score = score;
     init_matrix();
-    /*print_matrix();*/
 }
 
 void Board::init_matrix(){
@@ -21,31 +20,25 @@ void Board::init_matrix(){
 void Board::print_matrix(){
     for(int i=0; i<col_size; i++){
         for(int j=0; j<row_size; j++){
-            cout << matrix[i][j] << " ";
+            cout << matrix[i][j];
         }
         cout << endl;
     }
+    cout<<endl;
 }
-
-/*bool Board::is_full(int row){
-    for(int i=0; i<col_size; i++){
-        if(matrix[row][i] == 0) return false;
-    }
-    return true;
-}*/
 
 bool Board::is_full(int row) {
     int i = 0;
     bool flag = true;
-    while(matrix[row][i] < col_size && flag) {
+    while(i < row_size && flag) {
         if(matrix[row][i] == 0) flag = false;
         i++;
     }
     return flag;
 } 
 
-void Board::move_down(int row, int n_rows){ //n_rows: numero di spostamenti verso il basso da effettuare
-    for(int i=0; i<col_size; i++){          //Propoosta nome funzione: move_row_down
+void Board::move_row_down(int row, int n_rows){ //n_rows: numero di spostamenti verso il basso da effettuare
+    for(int i=0; i < row_size; i++){
         matrix[row+n_rows][i] = matrix[row][i];
         matrix[row][i] = 0; 
     }
@@ -54,7 +47,7 @@ void Board::move_down(int row, int n_rows){ //n_rows: numero di spostamenti vers
 bool Board::is_empty(int row) {
     int i = 0;
     bool flag = true;
-    while(matrix[row][i] < col_size && flag) {
+    while(i < row_size && flag) {
         if(matrix[row][i] != 0) flag = false;
         i++;
     }
@@ -62,7 +55,7 @@ bool Board::is_empty(int row) {
 }
 
 void Board::clear_row(int row){
-    for(int i=0; i<col_size; i++){
+    for(int i=0; i < row_size; i++){
         matrix[row][i] = 0;
     }
 }
@@ -71,8 +64,9 @@ int max_y(tetramino* point) { //blocco più basso del tetramino, quindi il valor
     if(point->p1.y >= point->p2.y && point->p1.y >= point->p3.y && point->p1.y >= point->p4.y) return point->p1.y;
     else if(point->p2.y >= point->p1.y && point->p2.y >= point->p3.y && point->p2.y >= point->p4.y) return point->p2.y;
     else if(point->p3.y >= point->p1.y && point->p3.y >= point->p2.y && point->p3.y >= point->p4.y) return point->p3.y;
-    else if(point->p4.y >= point->p1.y && point->p4.y >= point->p2.y && point->p4.y >= point->p3.y) return point->p4.y;
+    else return point->p4.y;
 }
+
 
 void clear_full_rows(tetramino* point, Board &griglia) {
     int row_pos = max_y(point);
@@ -83,26 +77,28 @@ void clear_full_rows(tetramino* point, Board &griglia) {
             counter++;
         }
         else if(counter > 0) {
-            griglia.move_down(row_pos-1, counter);
-            row_pos--;
+            griglia.move_row_down(row_pos, counter);
         }
         row_pos--;
     }
+    update_score(counter, griglia);
 }
 
-bool Board::is_game_over() {
-    if(matrix[5][1] != 0 || matrix[5][2] != 0) return true;
+bool is_game_over(tetramino* point, Board &griglia) {
+    point->board_delete_assign(false, griglia, point->get_colour());
+    if(griglia.matrix[1][5] != 0 || griglia.matrix[2][5] != 0) return true;
+    point->board_delete_assign(true, griglia, point->get_colour());
     return false;
 }
 
-void Board::update_score(int l_cleared, int m_points){
+void update_score(int l_cleared, Board &griglia){
     if(l_cleared == 1){
-        score += 100;
+        griglia.score += 150;
     } else if (l_cleared == 2){
-        score += 300;
+        griglia.score += 200;
     } else if(l_cleared == 3){
-        score += 500;
-    } else {
-        score += m_points;
+        griglia.score += 400;
+    } else if(l_cleared == 4){
+        griglia.score += 600;
     }
 }

@@ -6,7 +6,7 @@
 
 void set_colors();
 void print_gamespace(WINDOW *win);
-void print_griglia(WINDOW* win, Board &griglia, tetramino* point);
+void print_griglia(WINDOW* win, Board &griglia);
 WINDOW* set_win();
 
 #endif

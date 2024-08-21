@@ -23,7 +23,7 @@ void print_gamespace(WINDOW *win){
     wrefresh(win);
     }
 
-void print_griglia(WINDOW* win, Board &griglia, tetramino* point){
+void print_griglia(WINDOW* win, Board &griglia){
     print_gamespace(win);
     wmove(win, 1, 1);
     int curr_y = 1;
@@ -33,12 +33,12 @@ void print_griglia(WINDOW* win, Board &griglia, tetramino* point){
     {
         for (int j = 0; j < 10; j++)
         {
-            if(griglia.matrix[i][j] == 1)
+            if(griglia.matrix[i][j] != 0)
             {
-                wattron(win, COLOR_PAIR(point->get_colour())); 
+                wattron(win, COLOR_PAIR(griglia.matrix[i][j])); 
                 wprintw(win, "[]");
                 wrefresh(win);
-                wattroff(win, COLOR_PAIR(point->get_colour()));
+                wattroff(win, COLOR_PAIR(griglia.matrix[i][j]));
             }
             else{
                 wprintw(win, "  ");
