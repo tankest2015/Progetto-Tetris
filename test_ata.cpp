@@ -22,7 +22,7 @@ int main(){
 
     keypad(win, true);
     int movement;
-    int timer = 0, delay = 3000;   //in millisecondi
+    int timer = 0, delay = 3000;   //in millisecondi        //1000
     while(!is_game_over(pointer, griglia)){
         print_griglia(win, griglia);
         do{
@@ -31,7 +31,7 @@ int main(){
             switch (movement){
                 case KEY_LEFT:
                     pointer->move_left(griglia);
-                    timer = timer + 250;
+                    timer = timer + 250;                    //150/200
                     break;
 
                 case KEY_RIGHT:
@@ -62,10 +62,10 @@ int main(){
             pointer = gen_tetramino(griglia); 
         }
 
-        if(griglia.score < 1000) delay = 2000;
-        else if(griglia.score < 3000) delay = 1000;
-        else if(griglia.score < 7000) delay = 500;
-        else if(griglia.score >= 7000) delay = 300;
+        if(griglia.score < 1000) delay = 2000;        //1000
+        else if(griglia.score < 3000) delay = 1000;    //500
+        else if(griglia.score < 7000) delay = 500;     //300
+        else if(griglia.score >= 7000) delay = 300;    //150
         timer = 0;
     }
 
