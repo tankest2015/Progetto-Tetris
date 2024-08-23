@@ -57,7 +57,7 @@ int main(){
         } while (timer < delay);
 
         if(!pointer->descend(griglia)){         //se descend è true fa la discesa, se è false crea una collisione  
-            clear_full_rows(pointer, griglia);
+            clear_full_rows(pointer, griglia, win);
             delete pointer;
             pointer = gen_tetramino(griglia); 
         }

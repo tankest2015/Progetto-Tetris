@@ -8,5 +8,6 @@ void set_colors();
 void print_gamespace(WINDOW *win);
 void print_griglia(WINDOW* win, Board &griglia);
 WINDOW* set_win();
+void flicker_row(WINDOW* win, Board &griglia, int row);
 
 #endif

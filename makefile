@@ -9,8 +9,11 @@ test_ata.o: test_ata.cpp tetramini.h board.h
 tetramini.o: board.h tetramini.h tetramini.cpp 
 	g++ -c tetramini.cpp
 
-board.o: tetramini.h board.h board.cpp
+board.o: tetramini.h board.h style_game.h board.cpp
 	g++ -c board.cpp
 
 style_game.o: board.h tetramini.h style_game.h style_game.cpp
 	g++ -c style_game.cpp
+
+clean:
+	rm -f test_ata *.o

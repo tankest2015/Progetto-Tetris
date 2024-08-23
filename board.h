@@ -2,6 +2,8 @@
 #define BOARD_H
 class tetramino;
 
+#include <ncurses.h>
+
 struct Coordinate{
     int x, y;
 };
@@ -21,10 +23,11 @@ class Board {
         bool is_empty(int row);
         void move_row_down(int row, int n_rows);
         void clear_row(int row);
+        int get_row_col_size(bool flag);
 };
 
 int max_y(tetramino* point);
 void update_score(int l_cleared, Board &griglia);
-void clear_full_rows(tetramino* point, Board &griglia);
+void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win);
 bool is_game_over(tetramino* point, Board &griglia);
 #endif

@@ -1,7 +1,7 @@
 #include "board.h"
 #include "tetramini.h"
+#include "style_game.h"
 #include <iostream>
-#include <ncurses.h>
 using namespace std;
 
 Board::Board(int score){
@@ -68,11 +68,12 @@ int max_y(tetramino* point) { //blocco più basso del tetramino, quindi il valor
 }
 
 
-void clear_full_rows(tetramino* point, Board &griglia) {
+void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win) {
     int row_pos = max_y(point);
     int counter = 0;
     while(!griglia.is_empty(row_pos)) {
         if(griglia.is_full(row_pos)) {
+            flicker_row(win, griglia, row_pos);
             griglia.clear_row(row_pos);
             counter++;
         }
@@ -100,5 +101,14 @@ void update_score(int l_cleared, Board &griglia){
         griglia.score += 400;
     } else if(l_cleared == 4){
         griglia.score += 600;
+    }
+}
+
+int Board::get_row_col_size(bool flag) {        //true per restituire row_size, false per col_size
+    if(flag){
+        return row_size;
+    }
+    else {
+         return col_size;
     }
 }
