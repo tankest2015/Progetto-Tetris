@@ -17,12 +17,12 @@ int main(){
     pointer = gen_tetramino(griglia);
     WINDOW* win = set_win();
     if(!has_colors) mvwprintw(win, 40, 10, "Daltonico"); //DA CAMBIARE
-    set_colors();
+    set_colors(false); //preso dal menu
     print_gamespace(win);
 
     keypad(win, true);
     int movement;
-    int timer = 0, delay = 3000;   //in millisecondi        //1000
+    int timer = 0, delay = 1000;   //in millisecondi
     while(!is_game_over(pointer, griglia)){
         print_griglia(win, griglia);
         do{
@@ -62,10 +62,10 @@ int main(){
             pointer = gen_tetramino(griglia); 
         }
 
-        if(griglia.score < 1000) delay = 2000;        //1000
-        else if(griglia.score < 3000) delay = 1000;    //500
-        else if(griglia.score < 7000) delay = 500;     //300
-        else if(griglia.score >= 7000) delay = 300;    //150
+        if(griglia.score < 1000) delay = 1000;
+        else if(griglia.score < 3000) delay = 500;
+        else if(griglia.score < 7000) delay = 300;
+        else if(griglia.score >= 7000) delay = 150;
         timer = 0;
     }
 

@@ -276,14 +276,14 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
             break;
         case 6:                 //Tetramino: I
         if(rot_id == 0){
-                P1.x ++;
-                P3.x --;
-                P4.x -= 2;
+                P1.y ++;
+                P3.y --;
+                P4.y -= 2;
                 rot_id = 1;
             } else if(rot_id == 1){
-                P1.y --;
-                P3.y ++;
-                P4.y += 2;
+                P1.x --;
+                P3.x ++;
+                P4.x += 2;
                 rot_id = 0;
             }
             break;
@@ -413,14 +413,14 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
 
         case 6:                 //Tetramino: I
             if(rot_id == 0){
-                P1.x ++;
-                P3.x --;
-                P4.x -= 2;
+                P1.y ++;
+                P3.y --;
+                P4.y -= 2;
                 rot_id = 1;
             } else if(rot_id == 1){
-                P1.y --;
-                P3.y ++;
-                P4.y += 2;
+                P1.x --;
+                P3.x ++;
+                P4.x += 2;
                 rot_id = 0;
             }
             break;
@@ -438,7 +438,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
                 P4.x-=2;                //[p2][p1]
                 rot_id = 0;
             }
-            else if(rot_id == 2) {           //                  [p4]
+            else if(rot_id == 2) {       //                 [p4]
                 P1.x++;                 //                  [p3]
                 P3.y--;                 //[p2][p3][p4]  ->  [p2][p1]
                 P4.y-=2;                //[p1]
@@ -525,6 +525,7 @@ bool tetramino::move_left(Board &griglia){
         flag = true;
     }
     board_delete_assign(true, griglia, colour);
+    cout<<"Lesgoskyletsgo!"<<endl;  //LEVALAAAAAAA
     return(flag);
 }
 
@@ -548,7 +549,7 @@ tetramino* gen_tetramino(Board &griglia){
     int color;
     tetramino* point;
     srand(time(0));
-    color = rand()%7+1;
+    color =6 /*rand()%7+1*/;
 
     point = new tetramino(color, griglia);
     return point;
