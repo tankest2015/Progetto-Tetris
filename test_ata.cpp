@@ -17,7 +17,7 @@ int main(){
     pointer = gen_tetramino(griglia);
     WINDOW* win = set_win();
     if(!has_colors) mvwprintw(win, 40, 10, "Daltonico"); //DA CAMBIARE
-    set_colors(false); //preso dal menu
+    set_colors(true); //preso dal menu
     print_gamespace(win);
 
     keypad(win, true);
@@ -31,7 +31,7 @@ int main(){
             switch (movement){
                 case KEY_LEFT:
                     pointer->move_left(griglia);
-                    timer = timer + 250;                    //150/200
+                    timer = timer + 250;
                     break;
 
                 case KEY_RIGHT:

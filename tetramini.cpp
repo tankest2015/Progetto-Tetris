@@ -525,7 +525,6 @@ bool tetramino::move_left(Board &griglia){
         flag = true;
     }
     board_delete_assign(true, griglia, colour);
-    cout<<"Lesgoskyletsgo!"<<endl;  //LEVALAAAAAAA
     return(flag);
 }
 
@@ -549,7 +548,7 @@ tetramino* gen_tetramino(Board &griglia){
     int color;
     tetramino* point;
     srand(time(0));
-    color =6 /*rand()%7+1*/;
+    color = rand()%7+1;
 
     point = new tetramino(color, griglia);
     return point;
