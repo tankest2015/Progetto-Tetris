@@ -8,6 +8,7 @@
 #include <ctime>
 #include <time.h>
 #include <unistd.h>
+#include <cstring>
 
 using namespace std;
 
@@ -20,9 +21,29 @@ void play(){
     noecho();
     curs_set(0);
 
-    int close = 0;
-
+    WINDOW *stat;
     
+
+    int close = 0;
+    int diff_time;
+    int h;
+    int min;
+    int s;
+    int xMax,yMax;
+
+    char time_tot[9] ;
+    char score[15] ;
+
+
+
+
+    //tempo della partita
+    time_t start_time;
+    time_t current_time;
+
+    //tempo delle mosse
+    time_t start_move;
+    time_t current_move;
     
     tetramino *pointer;
     Board griglia(0);
@@ -35,31 +56,53 @@ void play(){
     keypad(win, true);
     int movement;
     int timer = 0, delay = 1000;   //in millisecondi
+
+
+    //##### INIZIO CONTEGGIO DEL TEMPO ####
+    start_time = time(NULL);  // Ottieni il tempo attuale all'inizio
+
+    getmaxyx(stdscr, yMax,xMax);    
+
+    stat = newwin(yMax/6,xMax/6,yMax/8,xMax/5);
+    box(stat,0,0);
+    wrefresh(stat);
+    
+    
     while(!is_game_over(pointer, griglia) && close == 0){
+        current_time = time(NULL);
+        diff_time = difftime(current_time, start_time);
+        h = diff_time / 3600;
+        min = (diff_time %3600) / 60;
+        s = diff_time % 60;
+        
         print_griglia(win, griglia);
+
+ 
+        start_move = time(NULL);  // Ottieni il tempo attuale all'inizio
         do{
-                
+            current_move = time(NULL);  // Ottieni il tempo attuale all'inizio   
+            timer = difftime(current_move, start_move);
             wtimeout(win, delay);
             movement = wgetch(win);
             switch (movement){
                 case KEY_LEFT:
                     pointer->move_left(griglia);
-                    timer = timer + 250;
+                    //timer = timer + 250;
                     break;
 
                 case KEY_RIGHT:
                     pointer->move_right(griglia);
-                    timer = timer + 250;
+                    //timer = timer + 250;
                     break;
 
                 case 97:
                     pointer->left_rotation(griglia);
-                    timer = timer + 250;
+                    //timer = timer + 250;
                     break;
 
                 case 100:
                     pointer->right_rotation(griglia);
-                    timer = timer + 250;
+                    //timer = timer + 250;
                     break;
 
                 case 27:
@@ -71,31 +114,45 @@ void play(){
                     break;
                 }
             }while (timer < delay && close == 0);
+
+
+
             if(close == 0)
             {
                 if(!pointer->descend(griglia)){         //se descend è true fa la discesa, se è false crea una collisione  
                     clear_full_rows(pointer, griglia, win);
                     delete pointer;
                     pointer = gen_tetramino(griglia);
-                    cout<<griglia.score<<endl; 
+    
                 }
 
                 if(griglia.score < 1000) delay = 1000;
                 else if(griglia.score < 3000) delay = 500;
                 else if(griglia.score < 7000) delay = 300;
                 else if(griglia.score >= 7000) delay = 150;
-                timer = 0;
+
+ 
+
+                
+                // Formatta e stampa il tempo totale
+                sprintf(time_tot, "time: %02d:%02d:%02d", h, min, s);
+                mvwprintw(stat, 1, 1, "%s", time_tot);
+
+                // Formatta e stampa il punteggio
+                sprintf(score, "score: %d", griglia.score);
+                mvwprintw(stat, 2, 1, "%s", score);
+                wrefresh(stat);
             } 
     }
     if(close == 0)
     {
         clear();
         refresh();
-        insert(griglia.score);
+        insert(griglia.score,h,min,s);
     }
     else
     {
-    cout<<close<<endl;
+    
         wclear(win);
         wrefresh(win);
         delwin(win);

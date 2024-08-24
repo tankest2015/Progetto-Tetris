@@ -77,12 +77,37 @@ void write(char h[],char min[],char s[],char point[],char name[],char line[])
     char mess[80];
     char mess_1[80];
 
+    if (strlen(h) == 1) {
+        // Sposta il carattere corrente alla fine e aggiungi '0' all'inizio
+        h[1] = h[0]; // Sposta il numero che ho ora a destra
+        h[0] = '0';    // Aggiungi '0' all'inizio
+        h[2] = '\0';   // Aggiungi il terminatore nullo
+    }
+    if (strlen(min) == 1) {
+        // Sposta il carattere corrente alla fine e aggiungi '0' all'inizio
+        min[1] = min[0]; // Sposta il numero che ho ora a destra
+        min[0] = '0';    // Aggiungi '0' all'inizio
+        min[2] = '\0';   // Aggiungi il terminatore nullo
+    }
+    if (strlen(s) == 1) {
+        // Sposta il carattere corrente alla fine e aggiungi '0' all'inizio
+        s[1] = s[0]; // Sposta il numero che ho ora a destra
+        s[0] = '0';    // Aggiungi '0' all'inizio
+        s[2] = '\0';   // Aggiungi il terminatore nullo
+    }
+    
+
 
     strcpy(time,h);
     strcat(time,":");
     strncat(time,min,2);
     strcat(time,":");
     strncat(time,s,2);
+
+
+
+    cout<<"tempo [hh:mm:ss]: "<<time<<endl;
+    cout<<"score: "<<point<<endl;
  
 
     ofstream newF;
@@ -362,7 +387,7 @@ bool check(char text[])
     return flag;
 }
 
-void insert(int p) 
+void insert(int p,int h,int min,int s) 
 {
 
     initscr();
@@ -396,12 +421,19 @@ void insert(int p)
     int ch;
     bool BSp = false;
     char text[20] = {0};
-    char h[3] = {'0','7','\0'};
-    char min[3] = {'4','3','\0'};
-    char s[3] = {'0','4','\0'};
-    char point[5];
+    char hour[3];
+    char minute[3];
+    char second[3];
+    char point[6];
     char block[5] = {'9','0','8','5','\0'};
+
     sprintf(point, "%d", p);
+    sprintf(hour, "%d", h);
+    sprintf(minute, "%d", min);
+    sprintf(second, "%d", s);
+
+
+
 
 
     while(!flag)
@@ -423,7 +455,7 @@ void insert(int p)
             else
             {
                     
-                write(h,min,s,point,text,block);
+                write(hour,minute,second,point,text,block);
 
                 wclear(player);
                 wrefresh(player);
@@ -442,7 +474,7 @@ void insert(int p)
             }
             
         }
-        else if(ch!= KEY_UP && ch!= KEY_DOWN && ch != KEY_LEFT && ch!= KEY_RIGHT)
+        else if(ch!= KEY_UP && ch!= KEY_DOWN && ch != KEY_LEFT && ch!= KEY_RIGHT && ch!= 27)
         {
             if(i<sizeof(text)-1)
             {
