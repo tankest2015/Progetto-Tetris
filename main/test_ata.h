@@ -4,17 +4,25 @@
 #include <iostream>
 #include <ncurses.h>
 #include "pause.h"
+#include "salvataggio_punteggio/write_lead.h"
+#include <ctime>
+#include <time.h>
+#include <unistd.h>
 
 using namespace std;
 
+#ifndef _TEST_ATA__H_
+#define _TEST_ATA__H_
 
-
-int main(){
+void play(){
 
     initscr();
     noecho();
     curs_set(0);
 
+    int close = 0;
+
+    
     
     tetramino *pointer;
     Board griglia(0);
@@ -27,9 +35,10 @@ int main(){
     keypad(win, true);
     int movement;
     int timer = 0, delay = 1000;   //in millisecondi
-    while(!is_game_over(pointer, griglia)){
+    while(!is_game_over(pointer, griglia) && close == 0){
         print_griglia(win, griglia);
         do{
+                
             wtimeout(win, delay);
             movement = wgetch(win);
             switch (movement){
@@ -42,7 +51,7 @@ int main(){
                     pointer->move_right(griglia);
                     timer = timer + 250;
                     break;
-                
+
                 case 97:
                     pointer->left_rotation(griglia);
                     timer = timer + 250;
@@ -52,31 +61,48 @@ int main(){
                     pointer->right_rotation(griglia);
                     timer = timer + 250;
                     break;
-                
+
                 case 27:
-                    Pause();
+                    close = Pause(win);
                     break;
 
                 default:
                     if(movement == KEY_DOWN || movement == ERR) timer = timer + delay;
                     break;
-            }
-            print_griglia(win, griglia); 
-        } while (timer < delay);
+                }
+            }while (timer < delay && close == 0);
+            if(close == 0)
+            {
+                if(!pointer->descend(griglia)){         //se descend è true fa la discesa, se è false crea una collisione  
+                    clear_full_rows(pointer, griglia, win);
+                    delete pointer;
+                    pointer = gen_tetramino(griglia);
+                    cout<<griglia.score<<endl; 
+                }
 
-        if(!pointer->descend(griglia)){         //se descend è true fa la discesa, se è false crea una collisione  
-            clear_full_rows(pointer, griglia, win);
-            delete pointer;
-            pointer = gen_tetramino(griglia); 
-        }
-
-        if(griglia.score < 1000) delay = 1000;
-        else if(griglia.score < 3000) delay = 500;
-        else if(griglia.score < 7000) delay = 300;
-        else if(griglia.score >= 7000) delay = 150;
-        timer = 0;
+                if(griglia.score < 1000) delay = 1000;
+                else if(griglia.score < 3000) delay = 500;
+                else if(griglia.score < 7000) delay = 300;
+                else if(griglia.score >= 7000) delay = 150;
+                timer = 0;
+            } 
     }
-
+    if(close == 0)
+    {
+        clear();
+        refresh();
+        insert(griglia.score);
+    }
+    else
+    {
+    cout<<close<<endl;
+        wclear(win);
+        wrefresh(win);
+        delwin(win);
+        clear();
+        refresh();
+    }
+    
     /*
     tetramino *pointer;
     Board griglia(0);
@@ -112,8 +138,7 @@ int main(){
             pointer = gen_tetramino(griglia); 
         }
     }*/
-    endwin();
-    cout << "Game Over [Rantegoso! Ti spacco la faccia!]" << endl; //DA TOGLIERE
-    return 0;
 
 }
+
+#endif _PAUSE_H_
