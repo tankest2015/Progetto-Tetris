@@ -1,18 +1,9 @@
 #include <ncurses.h>
-#include <iostream>
-#include <fstream>
-#include <cstring>
-#include <string>
-#include "Class_menu.h"
-
+#include "class_menu.h"
 
 using namespace std;
 
-#ifndef _PAUSE_H_
-#define _PAUSE_H_
-
-int Pause(WINDOW *Fut)
-{
+bool pause(WINDOW* Fut){
     bool pass = true; //flag falso: l'utente ha cliccato resume o exit vero: deve ancora scegliere l'opzione 
     int select;       //mi rivaca il getch() della finestra del menu di pausa
     int highlight = 0; //contatore per definire che cosa ha scelto l'utente
@@ -86,13 +77,10 @@ int Pause(WINDOW *Fut)
         refresh();
         
     }
-    if(highlight==1)
-    {
-        return 1;
-    }
-    else return 0;
-    //endwin();
-    
-}
 
-#endif _PAUSE_H_
+    if(highlight==1){
+        return true;
+    }
+    else return false;
+    //endwin();
+}

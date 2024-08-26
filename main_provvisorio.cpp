@@ -3,9 +3,9 @@
 #include <fstream>
 #include <cstring>
 #include <string>
-#include "Class_menu.h"
+#include "class_menu.h"
 #include "salvataggio_punteggio/write_lead.h"
-#include "test_ata.h"
+#include "game_engine.h"
 #include "tetramini.h"
 #include "board.h"
 #include "style_game.h"
@@ -19,7 +19,7 @@ int main(int argc, char ** argv)
     WINDOW * win_rank;
     WINDOW * exit;
     
-    char *choices[4] = {"Play","Leaderboard","options","exit"};
+    char *choices[4] = {"Play","Leaderboard","Options","Exit"};
     
     menu M(win,choices,4,0,0);
     Read_menu R(win,choices,4,0,0,win_rank,exit,4,1,0);
@@ -36,7 +36,7 @@ int main(int argc, char ** argv)
 
     while(pass)
     {
-        select = M.get_wg();
+        select = getch();
 
         if(select == KEY_UP)
         {
