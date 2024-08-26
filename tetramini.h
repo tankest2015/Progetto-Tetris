@@ -28,6 +28,6 @@ public:
 };
 
     tetramino* gen_tetramino(Board &griglia);
-    
+    void swap_tetramino_pointer(tetramino* &point, tetramino* &next_point, Board &griglia);    
 
 #endif

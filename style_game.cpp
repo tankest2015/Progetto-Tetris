@@ -29,6 +29,11 @@ void set_colors(bool flag){
     }
     init_pair(8, COLOR_BLACK, COLOR_BLACK); //for flicker_row()
     init_pair(9, COLOR_WHITE, COLOR_WHITE); //for flicker_row()
+
+    init_pair(10, COLOR_GREEN, COLOR_BLACK); //per personalizzare il livello di difficoltà
+    init_pair(11, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(12, COLOR_RED, COLOR_BLACK);
+    init_pair(13, COLOR_MAGENTA, COLOR_BLACK);
 }
 
 void print_gamespace(WINDOW *win){
@@ -65,13 +70,6 @@ void print_griglia(WINDOW* win, Board &griglia){
     }
 }
 
-WINDOW* set_win(){
-    int height = 22;
-    int width = 22;
-    WINDOW* win = newwin(height, width, 0, 0);
-    return(win);
-}
-
 void flicker_row(WINDOW *win, Board &griglia, int row){
     wmove(win, row, 1);
     int i = 0;
@@ -81,7 +79,7 @@ void flicker_row(WINDOW *win, Board &griglia, int row){
             if(flag){       //linea bianca
                 griglia.matrix[row][j] = 9;
             }
-            else{
+            else{           //linea nera
                 griglia.matrix[row][j] = 8;
             }
         }
@@ -90,16 +88,130 @@ void flicker_row(WINDOW *win, Board &griglia, int row){
         napms(150);
         i++;
     }
-    /*chgat(-1, 9, COLOR_PAIR(9), NULL);
+}
+
+WINDOW* set_win(){
+    int height = 22;
+    int width = 22;
+    WINDOW* win = newwin(height, width, 0, 0);
+    return(win);
+}
+
+WINDOW* set_predict_window(){
+    int height = 6;
+    int width = 14;
+    WINDOW* win = newwin(height, width, 0, 25);
+    return(win);
+}
+
+void predict_window(WINDOW* win, tetramino* next_point){
+    wmove(win, 2, 0);
+    wclrtoeol(win);
+    wmove(win, 3, 0);
+    wclrtoeol(win);
+
+    box(win, 0, 0);
+    switch (next_point->get_colour()){
+    case 1:
+        wmove(win, 2, 4);
+        wattron(win, COLOR_PAIR(1));
+        wprintw(win, "[][]");
+        wmove(win, 3, 6);
+        wprintw(win, "[][]");
+        wattroff(win, COLOR_PAIR(1));
+        break;
+
+    case 2:
+        wmove(win, 2, 6);
+        wattron(win, COLOR_PAIR(2));
+        wprintw(win, "[][]");
+        wmove(win, 3, 4);
+        wprintw(win, "[][]");
+        wattroff(win, COLOR_PAIR(2));
+        break;
+
+    case 3:
+        wmove(win, 2, 5);
+        wattron(win, COLOR_PAIR(3));
+        wprintw(win, "[][]");
+        wmove(win, 3, 5);
+        wprintw(win, "[][]");
+        wattroff(win, COLOR_PAIR(3));
+        break;
+
+    case 4:
+        wmove(win, 2, 4);
+        wattron(win, COLOR_PAIR(4));
+        wprintw(win, "[]");
+        wmove(win, 3, 4);
+        wprintw(win, "[][][]");
+        wattroff(win, COLOR_PAIR(4));
+        break;
+
+    case 5:
+        wmove(win, 2, 4);
+        wattron(win, COLOR_PAIR(5));
+        wprintw(win, "[][][]");
+        wmove(win, 3, 6);
+        wprintw(win, "[]");
+        wattroff(win, COLOR_PAIR(5));
+        break;
+
+    case 6:
+        wmove(win, 3, 3);
+        wattron(win, COLOR_PAIR(6));
+        wprintw(win, "[][][][]");
+        wattroff(win, COLOR_PAIR(6));
+        break;
+
+    case 7:
+        wmove(win, 2, 8);
+        wattron(win, COLOR_PAIR(7));
+        wprintw(win, "[]");
+        wmove(win, 3, 4);
+        wprintw(win, "[][][]");
+        wattroff(win, COLOR_PAIR(7));
+        break;
+
+    default:
+        break;
+    }
     wrefresh(win);
-    wtimeout(win, 500);
-    chgat(-1, 8, COLOR_PAIR(8), NULL);
+}
+
+WINDOW* set_info_window(){
+    int height = 9;
+    int width = 17;
+    WINDOW* win = newwin(height, width, 8, 25);
+    return(win);
+}
+
+void info_window(WINDOW* win, Board &griglia){
+    box(win, 0, 0);
+    wmove(win, 2, 2);
+    wattron(win, A_BOLD);
+    wprintw(win, "SCORE:");
+    wattroff(win, A_BOLD);
+    mvwprintw(win, 4, 2, "%d", griglia.score);
+
+    if(griglia.score < 1000){
+        wattron(win, A_BOLD);
+        wattron(win, COLOR_PAIR(10));
+        mvwprintw(win, 6, 2, "LEVEL EASY   ");
+        wattroff(win, A_BOLD);
+        wattroff(win, COLOR_PAIR(10));
+    } else if(griglia.score < 1500) {
+        wattron(win, COLOR_PAIR(11));
+        mvwprintw(win, 6, 2, "LEVEL MEDIUM ");
+        wattroff(win, COLOR_PAIR(11));
+    }else if(griglia.score < 2000){
+        wattron(win, COLOR_PAIR(12));
+        mvwprintw(win, 6, 2, "LEVEL HARD   ");
+        wattroff(win, COLOR_PAIR(12));
+    }else if(griglia.score >= 2500){
+        wattron(win, COLOR_PAIR(13));
+        mvwprintw(win, 6, 2, "LEVEL EXTREME");
+        wattroff(win, COLOR_PAIR(13));
+    }
     wrefresh(win);
-    wtimeout(win, 500);
-    chgat(-1, 9, COLOR_PAIR(9), NULL);
-    wrefresh(win);
-    wtimeout(win, 500);
-    chgat(-1, 8, COLOR_PAIR(8), NULL);
-    wrefresh(win);
-    wtimeout(win, 500);*/
 }

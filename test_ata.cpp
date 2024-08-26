@@ -11,14 +11,20 @@ int main(){
     noecho();
     curs_set(0);
 
-    
-    tetramino *pointer;
     Board griglia(0);
-    pointer = gen_tetramino(griglia);
+    tetramino *pointer = gen_tetramino(griglia);
+    pointer->board_delete_assign(true, griglia, pointer->get_colour());
+    tetramino *next_pointer = gen_tetramino(griglia);
+
     WINDOW* win = set_win();
+    WINDOW* win_info = set_info_window();
+    WINDOW* win_predict = set_predict_window();
+
     if(!has_colors) mvwprintw(win, 40, 10, "Daltonico"); //DA CAMBIARE
-    set_colors(true); //preso dal menu
+    set_colors(false); //false per modalità neon
     print_gamespace(win);
+    info_window(win_info, griglia);
+    predict_window(win_predict, next_pointer);
 
     keypad(win, true);
     int movement;
@@ -59,52 +65,29 @@ int main(){
         if(!pointer->descend(griglia)){         //se descend è true fa la discesa, se è false crea una collisione  
             clear_full_rows(pointer, griglia, win);
             delete pointer;
-            pointer = gen_tetramino(griglia); 
+            swap_tetramino_pointer(pointer, next_pointer, griglia);
         }
 
         if(griglia.score < 1000) delay = 1000;
-        else if(griglia.score < 3000) delay = 500;
-        else if(griglia.score < 7000) delay = 300;
-        else if(griglia.score >= 7000) delay = 150;
+        else if(griglia.score < 1500) delay = 800;
+        else if(griglia.score < 2000) delay = 500;
+        else if(griglia.score >= 2500) delay = 300;
         timer = 0;
+        info_window(win_info, griglia);
+        predict_window(win_predict, next_pointer);
     }
 
-    /*
-    tetramino *pointer;
-    Board griglia(0);
-    pointer = gen_tetramino(griglia);
-    char c = 'k';
-    while (c != 'q')
-    {
-        griglia.print_matrix();
-        switch (c){
-                case 'a':
-                    pointer->move_left(griglia);
-                    break;
-
-                case 'd':
-                    pointer->move_right(griglia);
-                    break;
-                
-                case 'n':
-                    pointer->left_rotation(griglia);
-                    break;
-
-                case 'm':
-                    pointer->right_rotation(griglia);
-                    break;
-
-                default:
-                    break;
-            }
-        cin >> c;
-        if(!pointer->descend(griglia)){         //se descend è true fa la discesa, se è false crea una collisione  
-            clear_full_rows(pointer, griglia);
-            delete pointer;
-            pointer = gen_tetramino(griglia); 
-        }
-    }*/
+    delwin(win);
+    delwin(win_info);
+    delwin(win_predict);
+    
     endwin();
+
+    delete pointer;
+    pointer = NULL;
+    delete next_pointer;
+    next_pointer = NULL;
+
     cout << "Game Over [Rantegoso! Ti spacco la faccia!]" << endl; //DA TOGLIERE
     return 0;
 

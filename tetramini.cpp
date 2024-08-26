@@ -134,7 +134,6 @@ tetramino::tetramino(int colour, Board &griglia) {
         default:
             break;
         }
-    board_delete_assign(true, griglia, colour);
 }
 
 int tetramino::get_colour(){
@@ -549,9 +548,14 @@ tetramino* gen_tetramino(Board &griglia){
     tetramino* point;
     srand(time(0));
     color = rand()%7+1;
-
     point = new tetramino(color, griglia);
     return point;
+}
+
+void swap_tetramino_pointer(tetramino* &point, tetramino* &next_point, Board &griglia){
+    point = next_point;
+    point->board_delete_assign(true, griglia, point->get_colour());
+    next_point = gen_tetramino(griglia); 
 }
 
 void tetramino::board_delete_assign (bool action, Board &griglia, int colour){     // For delete use false
