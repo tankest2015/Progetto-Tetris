@@ -17,4 +17,4 @@ void del_ch(WINDOW *player,char text[],int i);
 bool check(char text[]);
 void insert(int p,int h,int min,int s);
 
-#endif WRITE_LEAD_H
+#endif
