@@ -180,7 +180,7 @@ void predict_window(WINDOW* win, tetramino* next_point){
 WINDOW* set_info_window(){
     int height = 9;
     int width = 17;
-    WINDOW* win = newwin(height, width, 8, 25);
+    WINDOW* win = newwin(height, width, 6, 25);
     return(win);
 }
 
@@ -215,9 +215,9 @@ void info_window(WINDOW* win, Board &griglia){
 }
 
 WINDOW* set_crono_window(){
-    int height = 6;
+    int height = 7;
     int width = 14;
-    WINDOW* win = newwin(height, width, 17, 25);
+    WINDOW* win = newwin(height, width, 15, 25);
     box(win,0,0);
     wrefresh(win);
     return win;
