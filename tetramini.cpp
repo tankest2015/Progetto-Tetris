@@ -45,7 +45,7 @@ tetramino::tetramino(int colour, Board &griglia) {
 
         case 3:     // O : Yellow(3)
                     //  [][]
-                    //  [][]             
+                    //  [][]
             
             p1.x = 4; //posizione blocco 1
             p1.y = 1;
@@ -137,8 +137,7 @@ int tetramino::get_colour(){
 }
 
 void tetramino::print_colour(){ //funzione di test da ELIMINARE
-    switch (colour)
-    {
+    switch (colour){
     case 1:
         cout<<"Red (ID: 1)";
         break;
@@ -220,7 +219,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
         P1 = p1;
         P3 = p3;
         P4 = p4;
-            break;
+        break;
 
         case 4:                 //Tetramino: J
             if(rot_id == 0){
@@ -308,7 +307,6 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
             break;
         
         default:
-
             break;
         }
     }
@@ -454,7 +452,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
     
     /*Control if the blocks are in the grid and can rotate without collide*/
     if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x >= 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20 && 
-       griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
+        griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
             p1 = P1;
             p2 = P2;
             p3 = P3;
@@ -511,8 +509,7 @@ bool tetramino::move_left(Board &griglia){
     bool flag = false;
     if(p1.x == 0 || p2.x == 0 || p3.x == 0 || p4.x == 0) return false;
     board_delete_assign(false, griglia, colour);
-    if(griglia.matrix[p1.y][p1.x - 1] == 0 && griglia.matrix[p2.y][p2.x - 1] == 0 && griglia.matrix[p3.y][p3.x - 1] == 0 && griglia.matrix[p4.y][p4.x - 1] == 0)
-    {
+    if(griglia.matrix[p1.y][p1.x - 1] == 0 && griglia.matrix[p2.y][p2.x - 1] == 0 && griglia.matrix[p3.y][p3.x - 1] == 0 && griglia.matrix[p4.y][p4.x - 1] == 0)    {
         p1.x --;
         p2.x --;
         p3.x --;
@@ -527,8 +524,7 @@ bool tetramino::descend(Board &griglia){
     bool flag = false;
     if(p1.y == 19 || p2.y == 19 || p3.y == 19 || p4.y == 19) return false;
     board_delete_assign(false, griglia, colour);
-    if(griglia.matrix[p1.y + 1][p1.x] == 0 && griglia.matrix[p2.y + 1][p2.x] == 0 && griglia.matrix[p3.y + 1][p3.x] == 0 && griglia.matrix[p4.y + 1][p4.x] == 0)
-    {
+    if(griglia.matrix[p1.y + 1][p1.x] == 0 && griglia.matrix[p2.y + 1][p2.x] == 0 && griglia.matrix[p3.y + 1][p3.x] == 0 && griglia.matrix[p4.y + 1][p4.x] == 0) {
         p1.y ++;
         p2.y ++;
         p3.y ++;
@@ -551,7 +547,7 @@ tetramino* gen_tetramino(Board &griglia){
 void swap_tetramino_pointer(tetramino* &point, tetramino* &next_point, Board &griglia){
     point = next_point;
     point->board_delete_assign(true, griglia, point->get_colour());
-    next_point = gen_tetramino(griglia); 
+    next_point = gen_tetramino(griglia);
 }
 
 void tetramino::board_delete_assign (bool action, Board &griglia, int colour){     // For delete use false

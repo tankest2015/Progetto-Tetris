@@ -1,4 +1,4 @@
-    /*
+ /*
     #####
     Is part of the std namespace and refers to a set of flags and constants used to control the behavior of input/output (I/O) streams. 
     These flags are used in conjunction with classes like std::ios_base
@@ -457,7 +457,6 @@ void insert(int p,int h,int min,int s)
                 i--;
                 del_ch(player,text,i);
             }
-            
         }
         else if(ch!= KEY_UP && ch!= KEY_DOWN && ch != KEY_LEFT && ch!= KEY_RIGHT && ch!= 27)
         {
@@ -469,8 +468,6 @@ void insert(int p,int h,int min,int s)
                 wrefresh(player);
                 i++;
             }
-
-
         }
     }
 

@@ -28,7 +28,7 @@ void set_colors(bool flag){
     init_pair(8, COLOR_BLACK, COLOR_BLACK); //for flicker_row()
     init_pair(9, COLOR_WHITE, COLOR_WHITE); //for flicker_row()
 
-    init_pair(10, COLOR_GREEN, COLOR_BLACK); //per personalizzare il livello di difficoltà
+    init_pair(10, COLOR_GREEN, COLOR_BLACK); //per personalizzare il livello di difficoltÃ 
     init_pair(11, COLOR_YELLOW, COLOR_BLACK);
     init_pair(12, COLOR_RED, COLOR_BLACK);
     init_pair(13, COLOR_MAGENTA, COLOR_BLACK);
@@ -51,7 +51,7 @@ void print_griglia(WINDOW* win, Board &griglia){
         {
             if(griglia.matrix[i][j] != 0)
             {
-                wattron(win, COLOR_PAIR(griglia.matrix[i][j])); 
+                wattron(win, COLOR_PAIR(griglia.matrix[i][j]));
                 wprintw(win, "[]");
                 wrefresh(win);
                 wattroff(win, COLOR_PAIR(griglia.matrix[i][j]));
@@ -74,12 +74,10 @@ void flicker_row(WINDOW *win, Board &griglia, int row){
     bool flag = true;
     while (i < 4) {
         for (int j = 0; j < griglia.get_row_col_size(true); j++){
-            if(flag){       //linea bianca
+            if(flag)       //linea bianca
                 griglia.matrix[row][j] = 9;
-            }
-            else{           //linea nera
+            else           //linea nera
                 griglia.matrix[row][j] = 8;
-            }
         }
         flag = !flag;
         print_griglia(win, griglia);

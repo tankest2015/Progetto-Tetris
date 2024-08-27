@@ -18,7 +18,7 @@ class Board {
     public:
         int score;
         Board(int score);
-        int matrix[20][10];   
+        int matrix[20][10];
 
         void init_matrix();
         void print_matrix();
