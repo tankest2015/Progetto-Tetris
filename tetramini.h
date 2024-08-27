@@ -1,6 +1,11 @@
 #ifndef TETRAMINI_H
 #define TETRAMINI_H
+class Board;
+
 #include "board.h"
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 struct Position {
     int x;

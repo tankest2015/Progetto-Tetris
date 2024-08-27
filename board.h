@@ -2,6 +2,9 @@
 #define BOARD_H
 class tetramino;
 
+#include "tetramini.h"
+#include "style_game.h"
+#include <iostream>
 #include <ncurses.h>
 
 struct Coordinate{

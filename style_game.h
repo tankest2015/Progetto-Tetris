@@ -13,5 +13,7 @@ WINDOW* set_predict_window();
 void predict_window(WINDOW* win, tetramino* next_point);
 WINDOW* set_info_window();
 void info_window(WINDOW* win, Board &griglia);
+WINDOW* set_crono_window();
+void crono_window(WINDOW* win, int hours, int minutes, int seconds);
 
 #endif

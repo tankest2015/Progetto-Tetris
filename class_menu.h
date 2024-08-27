@@ -33,7 +33,7 @@ class Read_menu: public menu {      // Classe derivata dalla classe menu: MENU_D
     int c,r,i;
 
     public:
-    Read_menu(WINDOW * win,char *str[],int k,int y,int x,WINDOW * win_rank,WINDOW * exit,int col,int righe,int i); //ricontrolla
+    Read_menu(WINDOW * win,char *str[],int k,int y,int x,WINDOW * win_rank,WINDOW * exit,int col,int righe,int i);
 
     void create_win_rank();
     void create_win_exit();
@@ -49,7 +49,7 @@ class Menu_pausa : public menu {     //Classe derivata dalla classe menu: MENU_D
     int k;
 
     public:
-    Menu_pausa(WINDOW * win,char *ch[],int k,int y,int x,WINDOW *P,int xMax,int yMax,char* str[],int c); //ricontrollare
+    Menu_pausa(WINDOW * win,char *ch[],int k,int y,int x,WINDOW *P,int xMax,int yMax,char* str[],int c);
 
     void create_W();
 

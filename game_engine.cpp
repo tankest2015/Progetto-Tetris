@@ -1,5 +1,4 @@
 #include "game_engine.h"
-#include "salvataggio_punteggio/write_lead.h"
 
 using namespace std;
 
@@ -15,20 +14,40 @@ void play(){
     pointer->board_delete_assign(true, griglia, pointer->get_colour());
     tetramino *next_pointer = gen_tetramino(griglia);
 
+    int diff_time;
+    int hours = diff_time / 3600;
+    int minute = (diff_time %3600) / 60;
+    int seconds = diff_time % 60;
+    char time_tot[9];
+    char score[15];
+        
+    time_t start_time;  //tempo della partita
+    time_t current_time; 
+    start_time = time(NULL);  // Ottieni il tempo attuale all'inizio 
+
+    diff_time = difftime(current_time, start_time);
+
     WINDOW* win = set_win();
     WINDOW* win_info = set_info_window();
     WINDOW* win_predict = set_predict_window();
+    WINDOW* win_crono = set_crono_window();
 
     if(!has_colors) mvwprintw(win, 40, 10, "Daltonico"); //DA CAMBIARE
     set_colors(false); //false per modalità neon
     print_gamespace(win);
     info_window(win_info, griglia);
     predict_window(win_predict, next_pointer);
+    crono_window(win_crono, 0, 0, 0);
 
     keypad(win, true);
     int movement;
     int timer = 0, delay = 1000;   //in millisecondi
     while(!is_game_over(pointer, griglia) && close == false){
+        hours = diff_time / 3600;
+        minute = (diff_time %3600) / 60;
+        seconds = diff_time % 60;
+        current_time = time(NULL);
+
         print_griglia(win, griglia);
         do{
             wtimeout(win, delay);
@@ -78,25 +97,27 @@ void play(){
         timer = 0;
         info_window(win_info, griglia);
         predict_window(win_predict, next_pointer);
+        crono_window(win_crono, hours, minute, seconds);
     }
 
     if(close == false){
         clear();
         refresh();
-        //insert(griglia.score); da aggiungere variabili cronometro
+        insert(griglia.score, hours, minute, seconds);
     }
-    else{ //da rivedere (!)
+    /*else{
         cout<<close<<endl;
         wclear(win); 
         wrefresh(win);
         delwin(win);
         clear();
         refresh();
-    }
+    }*/
 
     delwin(win);
     delwin(win_info);
     delwin(win_predict);
+    delwin(win_crono);
     
     endwin();
 

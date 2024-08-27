@@ -1,7 +1,4 @@
 #include "board.h"
-#include "tetramini.h"
-#include "style_game.h"
-#include <iostream>
 using namespace std;
 
 Board::Board(int score){

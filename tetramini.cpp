@@ -1,8 +1,4 @@
 #include "tetramini.h"
-#include "board.h"
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
 
 using namespace std;
 

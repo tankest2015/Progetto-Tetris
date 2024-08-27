@@ -1,6 +1,4 @@
-#include <iostream>
 #include "style_game.h"
-
 
 using namespace std;
 
@@ -214,4 +212,26 @@ void info_window(WINDOW* win, Board &griglia){
         wattroff(win, COLOR_PAIR(13));
     }
     wrefresh(win);
+}
+
+WINDOW* set_crono_window(){
+    int height = 6;
+    int width = 14;
+    WINDOW* win = newwin(height, width, 15, 25);
+    box(win,0,0);
+    wrefresh(win);
+    return win;
+}
+
+void crono_window(WINDOW* win, int hours, int minutes, int seconds){    //Da testare (!)
+    box(win, 0, 0);
+    wmove(win, 2, 2);
+    wattron(win, A_BOLD);
+    wprintw(win, "TIMER:");
+    wattroff(win, A_BOLD);
+    mvwprintw(win, 4, 2, "%d", hours);
+    wprintw(win, " : ");
+    wprintw(win, "%d", minutes);
+    wprintw(win, " : ");
+    wprintw(win, "%d", seconds);
 }
