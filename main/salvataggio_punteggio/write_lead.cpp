@@ -1,28 +1,3 @@
-    /*
-    #####
-    Is part of the std namespace and refers to a set of flags and constants used to control the behavior of input/output (I/O) streams. 
-    These flags are used in conjunction with classes like std::ios_base
-    #####
-
-    std::ios::in: File open mode for reading.
-    std::ios::out: File open mode for writing.
-    std::ios::binary: File open mode for binary mode.
-    std::ios::app: File open mode for appending to the end of the file.
-    std::ios::ate: File open mode with the file pointer positioned at the end of the file.
-    std::ios::trunc: If the file already exists, its contents are truncated upon opening.
-    std::ios::ate: The file pointer is positioned at the end of the file after opening.
-    std::ios::in | std::ios::out: File open mode for reading and writing simultaneously.
-    */
-
-
-    /*
-    ofstream including ios::out
-    ifstream including ios::in
-
-    fstream including none 
-    */
-
-
 #include <iostream>
 #include <fstream>
 #include <cstring>
