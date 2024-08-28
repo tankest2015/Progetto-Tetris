@@ -106,6 +106,6 @@ int Board::get_row_col_size(bool flag) {        //true per restituire row_size, 
         return row_size;
     }
     else {
-         return col_size;
+        return col_size;
     }
 }

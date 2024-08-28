@@ -9,13 +9,13 @@
 #include <string>
 
 
-int main(int argc, char ** argv) {
+int main(int argc, char ** argv){
 
     WINDOW* win;
     WINDOW* win_rank;
     WINDOW* exit; //Che Davoli è?
     
-    char *choices[4] = {"Play","Leaderboard","Options","Exit"}; //perché puntatore a char se sono stringhe
+    char* choices[4] = {"Play","Leaderboard","Options","Exit"}; //perché puntatore a char se sono stringhe
     
     menu Menu(win,choices,4,0,0);
     Read_menu R(win,choices,4,0,0,win_rank,exit,4,1,0);
@@ -25,7 +25,7 @@ int main(int argc, char ** argv) {
     bool pass = true;
     int select;
     int highlight = 0;
-    bool flag = false;
+    bool flag = true;
 
     while(pass){
 
@@ -33,29 +33,29 @@ int main(int argc, char ** argv) {
 
         if(select == KEY_UP){
             highlight--;
-            if(highlight == -1) highlight = 0;
+            if(highlight == -1) highlight = 3;
         }
-        else if(select==KEY_DOWN){
+        else if(select == KEY_DOWN){
             highlight++;
-            if(highlight == 4) highlight = 3;
+            if(highlight == 4) highlight = 0;
         }
 
-        if(highlight==0){
-           Menu.menu_S(highlight,4);
+        if(highlight == 0){
+            Menu.menu_S(highlight,4);
         }
-        else if(highlight==1){
-           Menu.menu_S(highlight,4);
+        else if(highlight == 1){
+            Menu.menu_S(highlight,4);
         }
-        else if(highlight==2){
-           Menu.menu_S(highlight,4);
+        else if(highlight == 2){
+            Menu.menu_S(highlight,4);
         }
-        else if(highlight==3){
-           Menu.menu_S(highlight,4);
+        else if(highlight == 3){
+            Menu.menu_S(highlight,4);
         }
 
-        if(select==10){ //10 = premo invio per selezionare il campo 
-            if(highlight==0){
-                Menu.delete_W(win); //Usare Ncurses?
+        if(select == 10){ //10 = premo invio per selezionare il campo 
+            if(highlight == 0){
+                delwin(win);
                 clear();
                 refresh();
 
@@ -65,8 +65,8 @@ int main(int argc, char ** argv) {
                 Menu.menu_start();
             
             }
-            else if(highlight==1){
-                Menu.delete_W(win);
+            else if(highlight == 1){
+                delwin(win);
                 clear();
                 refresh();
                 
@@ -75,9 +75,8 @@ int main(int argc, char ** argv) {
                 Menu.create_W();
                 Menu.menu_start();
             }
-            else if(highlight ==2)
-            {
-                Menu.delete_W(win);
+            else if(highlight == 2){
+                delwin(win);
                 clear();
                 refresh();
 
@@ -85,7 +84,7 @@ int main(int argc, char ** argv) {
                 Menu.create_W();
                 Menu.menu_start();
             }
-            else if(highlight==3){
+            else if(highlight == 3){
                 pass = false;
             }
 
@@ -94,8 +93,7 @@ int main(int argc, char ** argv) {
         }
         refresh();
     }
-
-    Menu.delete_W(win);
+    delwin(win);
 
     endwin();
     return 0;

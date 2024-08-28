@@ -10,7 +10,7 @@ void play(bool mod){
     bool close = false;
 
     Board griglia(0);
-    tetramino *pointer = gen_tetramino(griglia);
+    tetramino *pointer = gen_tetramino(griglia);        //spostiamo tutto a sinistra il '*'?
     pointer->board_delete_assign(true, griglia, pointer->get_colour());
     tetramino *next_pointer = gen_tetramino(griglia);
 
@@ -30,7 +30,7 @@ void play(bool mod){
     WINDOW* win_predict = set_predict_window();
     WINDOW* win_crono = set_crono_window();
 
-    if(!has_colors) mvwprintw(win, 40, 10, "Daltonico"); //DA CAMBIARE
+    if(!has_colors) mvwprintw(win, 40, 10, "Daltonico"); //DA CAMBIARE (forse già verificata)
     set_colors(mod); //false per modalità neon
     print_gamespace(win);
     info_window(win_info, griglia);
@@ -74,7 +74,7 @@ void play(bool mod){
                     break;
 
                 case 27:
-                    close = pause(win);
+                    close = pause();
                     break;
 
                 default:
@@ -105,14 +105,6 @@ void play(bool mod){
         refresh();
         insert(griglia.score, hours, minute, seconds);
     }
-    /*else{
-        cout<<close<<endl;
-        wclear(win);
-        wrefresh(win);
-        delwin(win);
-        clear();
-        refresh();
-    }*/
 
     clear();
     delwin(win);
@@ -126,6 +118,4 @@ void play(bool mod){
     pointer = NULL;
     delete next_pointer;
     next_pointer = NULL;
-
-    cout << "Game Over [Rantegoso! Ti spacco la faccia!]" << endl; //DA TOGLIERE
 }

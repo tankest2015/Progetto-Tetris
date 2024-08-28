@@ -8,6 +8,6 @@
 
 using namespace std;
 
-bool pause(WINDOW *Fut);
+bool pause();
 
 #endif
