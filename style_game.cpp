@@ -4,7 +4,7 @@ using namespace std;
 
 void set_colors(bool flag){
     start_color();
-    
+
     init_color(8, 918, 457, 82);
     if(flag){
 
@@ -223,7 +223,18 @@ WINDOW* set_crono_window(){
     return win;
 }
 
-void crono_window(WINDOW* win, int hours, int minutes, int seconds){    //Da testare (!)
+void crono_tic_tac(WINDOW* win, int &hours, int &minutes, int &seconds){
+    wtimeout(win, 1000);
+    seconds ++;
+    if(seconds > 60){
+        minutes ++;
+        if(minutes > 60){
+            hours ++;
+        }
+    }
+}
+
+void crono_window(WINDOW* win, int hours, int minutes, int seconds){
     box(win, 0, 0);
     wmove(win, 2, 2);
     wattron(win, A_BOLD);

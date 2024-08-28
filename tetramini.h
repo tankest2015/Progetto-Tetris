@@ -22,7 +22,6 @@ public:
         tetramino(int colour, Board &griglia);
 
         int get_colour();
-        void print_colour();
         bool control_rot(char C, Board &griglia);
         void left_rotation(Board &griglia);
         void right_rotation(Board &griglia);
@@ -33,6 +32,6 @@ public:
 };
 
     tetramino* gen_tetramino(Board &griglia);
-    void swap_tetramino_pointer(tetramino* &point, tetramino* &next_point, Board &griglia);    
+    void swap_tetramino_pointer(tetramino* &point, tetramino* &next_point, Board &griglia);
 
 #endif

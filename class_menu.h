@@ -19,14 +19,14 @@ class menu {     //Classe Principale e padre di tutte le altre
 
     public:
     menu(WINDOW* win, char* str[], int k, int y, int x); //Costruttore
-    
+
     void init();                    //funziona che mi inizializza lo schermo
     int get_y();
     int get_x();
     void create_W();                //mi inizializza la finestra
     void menu_start();              //mi inizializza il menu
-    void menu_S(int k, int j);       //evidenzia il corretto campo in cui l'utente si trova 
-    int get_wg();       //evidenzia il corretto campo in cui l'utente si trova 
+    void menu_S(int k, int j);       //evidenzia il corretto campo in cui l'utente si trova
+    int get_wg();       //evidenzia il corretto campo in cui l'utente si trova
 };
 
 

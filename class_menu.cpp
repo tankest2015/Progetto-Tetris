@@ -16,10 +16,9 @@ menu::menu(WINDOW* win, char* str[], int k, int y, int x){ //costruttore
 
 void menu::init(){ //funziona che mi inizializza lo schermo
     initscr(); //initializeed the screen
-    noecho(); 
+    noecho();
     cbreak();
     curs_set(0);
-    
 
     if(!has_colors()){
         printw("Terminal doesn't support the color");
@@ -27,11 +26,9 @@ void menu::init(){ //funziona che mi inizializza lo schermo
     }
     else{
         start_color();
-        getmaxyx(stdscr, yMax,xMax);
-    } 
-        
+        getmaxyx(stdscr, yMax, xMax);
+    }
 }
-
 
 int menu::get_y(){
     return yMax;
@@ -60,7 +57,7 @@ void menu::menu_start(){ //mi inizializza il menu
     mvwprintw(win, 6, 18, "%s", "| |    |  __|   | |    |  _  /  | |   \\___ \\");
     mvwprintw(win, 7, 18, "%s", "| |    | |__    | |    | | \\ \\  | |   ____) |");
     mvwprintw(win, 8, 18, "%s", "|_|    |____|   |_|    |_|  \\_\\ |_|  |_____/");
-    
+
     for(int i = 0; i < 4; i++){
         mvwprintw(win, i + 12, 34, "%s", choices[i]);
     }
@@ -69,8 +66,8 @@ void menu::menu_start(){ //mi inizializza il menu
     wrefresh(win);
 }
 
-void menu::menu_S(int k, int j){ //evidenzia il corretto campo in cui l'utente si trova 
-    for(int i = 0; i < j; i++){     //Cosimo si arrabbia? (!)
+void menu::menu_S(int k, int j){ //evidenzia il corretto campo in cui l'utente si trova
+    for(int i = 0; i < j; i++){
         if(k == i){
             wattron(win, A_REVERSE);
             mvwprintw(win, i + 12, 34, "%s", choices[i]);
@@ -80,7 +77,7 @@ void menu::menu_S(int k, int j){ //evidenzia il corretto campo in cui l'utente s
         else{
             mvwprintw(win, i + 12, 34, "%s", choices[i]);
             wrefresh(win);
-        }     
+        }
     }
 }
 
@@ -115,7 +112,7 @@ void Read_menu::create_win_exit(){
 
 void Read_menu::scr(){
     bool flag = false;
-    bool fix = true; //flag per verificare se il file è stato modificato o no 
+    bool fix = true; //flag per verificare se il file è stato modificato o no
 
     create_win_rank();
 
@@ -131,12 +128,12 @@ void Read_menu::scr(){
     mvwprintw(win_rank, 1, 80, "Block:");
 
 
-    if(!file.is_open()) // is file doesn't exits i do an interrupt 
+    if(!file.is_open()) // is file doesn't exits i do an interrupt
         cout << "error to open file "<<endl;
     else{
         while(!file.eof()){          //è vero fin tanto che il file non sia finito
             file>>line;
-            
+
             if(strcmp(line, "ff") ==0){
                 c = 4;
                 r = 1;
@@ -150,7 +147,7 @@ void Read_menu::scr(){
                 i = 0;
                 file>>line;
                 fix = true;
-            } 
+            }
 
             if(strcmp(line, "n") == 0){
                 c++;
@@ -171,8 +168,8 @@ void Read_menu::scr(){
 
     file.close();//chiude il file
 
-    if(fix){         // se vero allora nella prima riga c'è tt quindi il file in precendenza è stato modificato    
-        
+    if(fix){         // se vero allora nella prima riga c'è tt quindi il file in precendenza è stato modificato
+
         fstream fileR;
         fileR.open("salvataggio_punteggio/leaderboard.txt", std::ios::in | std::ios::out);
 
@@ -197,7 +194,7 @@ void Read_menu::scr(){
         car = wgetch(exit);
         if(car == 10) flag = true;
     }
-    
+
     delwin(exit);
     delwin(win_rank);
 
@@ -237,7 +234,7 @@ void Menu_pausa::menu_start(){
     mvwprintw(P, 1, 1, "%s", choices[0]);
     wattroff(P, A_REVERSE);
     mvwprintw(P, 2, 1, "%s", choices[1]);
-    
+
     //wrefresh(P);
 }
 

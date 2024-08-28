@@ -7,16 +7,16 @@ Board::Board(int score){
 }
 
 void Board::init_matrix(){
-    for(int i=0; i<col_size; i++){
-        for(int j=0; j<row_size; j++){
+    for(int i = 0; i < col_size; i++){
+        for(int j = 0; j < row_size; j++){
             matrix[i][j] = 0;
         }
     }
 }
 
 void Board::print_matrix(){
-    for(int i=0; i<col_size; i++){
-        for(int j=0; j<row_size; j++){
+    for(int i = 0; i < col_size; i++){
+        for(int j = 0; j < row_size; j++){
             cout << matrix[i][j];
         }
         cout << endl;
@@ -32,12 +32,12 @@ bool Board::is_full(int row) {
         i++;
     }
     return flag;
-} 
+}
 
 void Board::move_row_down(int row, int n_rows){ //n_rows: numero di spostamenti verso il basso da effettuare
-    for(int i=0; i < row_size; i++){
+    for(int i = 0; i < row_size; i++){
         matrix[row+n_rows][i] = matrix[row][i];
-        matrix[row][i] = 0; 
+        matrix[row][i] = 0;
     }
 }
 
@@ -52,7 +52,7 @@ bool Board::is_empty(int row) {
 }
 
 void Board::clear_row(int row){
-    for(int i=0; i < row_size; i++){
+    for(int i = 0; i < row_size; i++){
         matrix[row][i] = 0;
     }
 }

@@ -8,7 +8,7 @@ tetramino::tetramino(int colour, Board &griglia) {
     rot_id = 0;
 
     switch (colour){
-            
+
         case 1:     // Z : Red(1)
                     //  [][]
                     //    [][]
@@ -45,8 +45,8 @@ tetramino::tetramino(int colour, Board &griglia) {
 
         case 3:     // O : Yellow(3)
                     //  [][]
-                    //  [][]             
-            
+                    //  [][]
+
             p1.x = 4; //posizione blocco 1
             p1.y = 1;
 
@@ -126,7 +126,7 @@ tetramino::tetramino(int colour, Board &griglia) {
             p4.x = 4; //posizione blocco 4
             p4.y = 2;
             break;
-        
+
         default:
             break;
         }
@@ -136,43 +136,6 @@ int tetramino::get_colour(){
     return colour;
 }
 
-void tetramino::print_colour(){ //funzione di test da ELIMINARE
-    switch (colour)
-    {
-    case 1:
-        cout<<"Red (ID: 1)";
-        break;
-
-    case 2:
-        cout<<"Green (ID: 2)";
-        break;
-    
-    case 3:
-        cout<<"Yellow (ID: 3)";
-        break;
-
-    case 4:
-        cout<<"Blue (ID: 4)";
-        break;
-
-    case 5:
-        cout<<"Magenta (ID: 5)";
-        break;
-
-    case 6:
-        cout<<"Cyan (ID: 6)";
-        break;
-
-    case 7:
-        cout<<"Orange (ID: 7)";
-        break;
-    
-    default:
-        cout<<"Undefined (ID: ?)";
-        break;
-    }
-}
-
 bool tetramino::control_rot(char C, Board &griglia){       // l: for left
     Position P1, P2, P3, P4;                               // r: for right
     //Blocks position relative to p2
@@ -180,7 +143,6 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
     P2 = p2;
     P3 = p2;
     P4 = p2;
-            
 
     if(C == 'r'){
         switch (colour){
@@ -306,7 +268,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
                 rot_id = 0;
             }
             break;
-        
+
         default:
 
             break;
@@ -446,14 +408,14 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
                 rot_id = 2;
             }
             break;
-        
+
         default:
             break;
         }
     }
-    
+
     /*Control if the blocks are in the grid and can rotate without collide*/
-    if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x >= 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20 && 
+    if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x >= 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20 &&
        griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
             p1 = P1;
             p2 = P2;
@@ -551,7 +513,7 @@ tetramino* gen_tetramino(Board &griglia){
 void swap_tetramino_pointer(tetramino* &point, tetramino* &next_point, Board &griglia){
     point = next_point;
     point->board_delete_assign(true, griglia, point->get_colour());
-    next_point = gen_tetramino(griglia); 
+    next_point = gen_tetramino(griglia);
 }
 
 void tetramino::board_delete_assign (bool action, Board &griglia, int colour){     // For delete use false

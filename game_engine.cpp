@@ -10,7 +10,7 @@ void play(bool mod){
     bool close = false;
 
     Board griglia(0);
-    tetramino *pointer = gen_tetramino(griglia);        //spostiamo tutto a sinistra il '*'?
+    tetramino *pointer = gen_tetramino(griglia);
     pointer->board_delete_assign(true, griglia, pointer->get_colour());
     tetramino *next_pointer = gen_tetramino(griglia);
 
@@ -18,9 +18,7 @@ void play(bool mod){
     int hours = diff_time / 3600;
     int minute = (diff_time %3600) / 60;
     int seconds = diff_time % 60;
-    char time_tot[9];
-    char score[15];
-        
+
     time_t start_time;  //tempo della partita
     time_t current_time;
     start_time = time(NULL);  // Ottieni il tempo attuale all'inizio
@@ -43,7 +41,7 @@ void play(bool mod){
     while(!is_game_over(pointer, griglia) && close == false){
         current_time = time(NULL);
         diff_time = difftime(current_time, start_time);
-        
+
         hours = diff_time / 3600;
         minute = (diff_time %3600) / 60;
         seconds = diff_time % 60;
@@ -62,7 +60,7 @@ void play(bool mod){
                     pointer->move_right(griglia);
                     timer = timer + 250;
                     break;
-                
+
                 case 97:
                     pointer->left_rotation(griglia);
                     timer = timer + 250;
@@ -111,7 +109,7 @@ void play(bool mod){
     delwin(win_info);
     delwin(win_predict);
     delwin(win_crono);
-    
+
     endwin();
 
     delete pointer;

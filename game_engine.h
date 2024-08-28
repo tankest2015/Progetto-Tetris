@@ -9,7 +9,6 @@ class Board;
 #include "salvataggio_punteggio/write_lead.h"
 #include <iostream>
 #include <ncurses.h>
-#include <iostream>
 
 void play(bool mod);
 
