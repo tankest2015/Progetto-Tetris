@@ -31,4 +31,4 @@ options.o: options.cpp options.h
 	g++ -c options.cpp
 
 clean:
-	rm -f main *.o
+	rm -f main *.o salvataggio_punteggio/*.o

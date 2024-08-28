@@ -22,9 +22,8 @@ void play(bool mod){
     char score[15];
         
     time_t start_time;  //tempo della partita
-    time_t current_time; 
-    start_time = time(NULL);  // Ottieni il tempo attuale all'inizio 
-
+    time_t current_time;
+    start_time = time(NULL);  // Ottieni il tempo attuale all'inizio
 
     WINDOW* win = set_win();
     WINDOW* win_info = set_info_window();
@@ -82,10 +81,10 @@ void play(bool mod){
                     if(movement == KEY_DOWN || movement == ERR) timer = timer + delay;
                     break;
             }
-            print_griglia(win, griglia); 
+            print_griglia(win, griglia);
         } while (timer < delay && close == false);
 
-        if(!pointer->descend(griglia)){         //se descend è true fa la discesa, se è false crea una collisione  
+        if(!pointer->descend(griglia)){         //se descend è true fa la discesa, se è false crea una collisione
             clear_full_rows(pointer, griglia, win);
             delete pointer;
             swap_tetramino_pointer(pointer, next_pointer, griglia);
@@ -108,7 +107,7 @@ void play(bool mod){
     }
     /*else{
         cout<<close<<endl;
-        wclear(win); 
+        wclear(win);
         wrefresh(win);
         delwin(win);
         clear();

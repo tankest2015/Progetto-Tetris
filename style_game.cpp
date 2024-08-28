@@ -51,7 +51,7 @@ void print_griglia(WINDOW* win, Board &griglia){
         {
             if(griglia.matrix[i][j] != 0)
             {
-                wattron(win, COLOR_PAIR(griglia.matrix[i][j])); 
+                wattron(win, COLOR_PAIR(griglia.matrix[i][j]));
                 wprintw(win, "[]");
                 wrefresh(win);
                 wattroff(win, COLOR_PAIR(griglia.matrix[i][j]));
