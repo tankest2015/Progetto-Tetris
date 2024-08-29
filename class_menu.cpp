@@ -148,14 +148,14 @@ void Read_menu::scr(){
             file>>line;
 
             if(strcmp(line, "ff") ==0){
-                c = 4;
+                c = 10;    //francesco: prima era a 4 ma copriva la scritta leaderboard
                 r = 1;
                 i = 0;
                 //file>>line;
                 fix = false;
             }
             else if(strcmp(line, "tt") == 0){
-                c = 4;
+                c = 10;    //stessa cosa della condizione sopra
                 r = 1;
                 i = 0;
                 //file>>line;
