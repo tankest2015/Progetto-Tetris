@@ -15,10 +15,9 @@ int main(int argc, char ** argv){
     WINDOW* win_rank;
     WINDOW* exit; //Che Davoli è?
 
-    char* choices[4] = {"Play","Leaderboard","Options","Exit"}; //perché puntatore a char se sono stringhe
 
-    menu Menu(win,choices,4,0,0);
-    Read_menu R(win,choices,4,0,0,win_rank,exit,4,1,0);
+    menu Menu(win,4,0,0);
+    Read_menu R(win,4,0,0,win_rank,exit,4,1,0);
     Menu.create_W();
     Menu.menu_start();
 

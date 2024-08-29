@@ -9,6 +9,11 @@
 
 using namespace std;
 
+struct choiches
+{
+    char field[13];
+};
+
 class menu {     //Classe Principale e padre di tutte le altre
     protected:
     int k;              //indice dell'array
@@ -18,7 +23,7 @@ class menu {     //Classe Principale e padre di tutte le altre
     int xMax;
 
     public:
-    menu(WINDOW* win, char* str[], int k, int y, int x); //Costruttore
+    menu(WINDOW* win, int k, int y, int x); //Costruttore
 
     void init();                    //funziona che mi inizializza lo schermo
     int get_y();
@@ -37,7 +42,7 @@ class Read_menu:public menu {      // Classe derivata dalla classe menu: MENU_DI
     int c, r, i;
 
     public:
-    Read_menu(WINDOW* win, char* str[], int k, int y, int x, WINDOW* win_rank, WINDOW* exit, int col, int righe, int i);
+    Read_menu(WINDOW* win, int k, int y, int x, WINDOW* win_rank, WINDOW* exit, int col, int righe, int i);
 
     void create_win_rank();
     void create_win_exit();
@@ -53,7 +58,7 @@ class Menu_pausa:public menu {     //Classe derivata dalla classe menu: MENU_DI_
     int k;
 
     public:
-    Menu_pausa(WINDOW* win, char* ch[], int k, int y, int x, WINDOW* P, int xMax, int yMax, char* str[], int c);
+    Menu_pausa(WINDOW* win, int k, int y, int x, WINDOW* P, int xMax, int yMax, int c);
 
     void create_W();
 

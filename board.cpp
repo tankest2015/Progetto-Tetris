@@ -1,8 +1,9 @@
 #include "board.h"
 using namespace std;
 
-Board::Board(int score){
+Board::Board(int score = 0, int completed_rows = 0){
     this->score = score;
+    this->completed_rows = completed_rows;
     init_matrix();
 }
 
@@ -79,7 +80,7 @@ void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win) {
         }
         row_pos--;
     }
-    update_score(counter, griglia);
+    update_score_and_rows(counter, griglia);
 }
 
 bool is_game_over(tetramino* point, Board &griglia) {
@@ -89,15 +90,19 @@ bool is_game_over(tetramino* point, Board &griglia) {
     return false;
 }
 
-void update_score(int l_cleared, Board &griglia){
+void update_score_and_rows(int l_cleared, Board &griglia){
     if(l_cleared == 1){
         griglia.score += 150;
+        griglia.completed_rows ++;
     } else if (l_cleared == 2){
         griglia.score += 200;
+        griglia.completed_rows += 2;
     } else if(l_cleared == 3){
         griglia.score += 400;
+        griglia.completed_rows += 3;
     } else if(l_cleared == 4){
         griglia.score += 600;
+        griglia.completed_rows += 4;
     }
 }
 

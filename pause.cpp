@@ -4,7 +4,7 @@
 using namespace std;
 
 bool pause(){
-    bool pass = true; //flag falso: l'utente ha cliccato resume o exit vero: deve ancora scegliere l'opzione 
+    bool pass = true; //flag falso: l'utente ha cliccato resume o exit vero: deve ancora scegliere l'opzione
     int select;       //mi rivaca il getch() della finestra del menu di pausa
     int highlight = 0; //contatore per definire che cosa ha scelto l'utente
 
@@ -12,11 +12,8 @@ bool pause(){
     WINDOW *win;
     WINDOW *P;
 
-    char* choices[2] = {"Resume","Exit"}; //array di char* in cui mi ricavo le opzioni
-    char* no_char[1]={" "};//array nullo, mi serve per il costruttore se no mi dava problemi
 
-
-    Menu_pausa T(win, no_char, 0, 0, 0, P, 0, 0, choices, 2); // istanza della classe con costruttore, è una classe derivata dalla classe menu(vedi lib Class_menu.h).
+    Menu_pausa T(win, 0, 0, 0, P, 0, 0, 2); // istanza della classe con costruttore, è una classe derivata dalla classe menu(vedi lib Class_menu.h).
     char c;
     int i = 1;
 

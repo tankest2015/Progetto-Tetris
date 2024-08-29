@@ -9,7 +9,7 @@ void play(bool mod){
     curs_set(0);
     bool close = false;
 
-    Board griglia(0);
+    Board griglia(0, 0);                        //score iniziale e linee completate
     tetramino *pointer = gen_tetramino(griglia);
     pointer->board_delete_assign(true, griglia, pointer->get_colour());
     tetramino *next_pointer = gen_tetramino(griglia);
@@ -46,6 +46,7 @@ void play(bool mod){
         minute = (diff_time %3600) / 60;
         seconds = diff_time % 60;
 
+        crono_window(win_crono, hours, minute, seconds);
         print_griglia(win, griglia);
         do{
             wtimeout(win, delay);
@@ -95,7 +96,6 @@ void play(bool mod){
         timer = 0;
         info_window(win_info, griglia);
         predict_window(win_predict, next_pointer);
-        crono_window(win_crono, hours, minute, seconds);
     }
 
     if(close == false){

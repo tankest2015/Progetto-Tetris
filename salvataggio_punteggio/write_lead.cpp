@@ -12,11 +12,11 @@ void insert_line(fstream &newFile, int pos_prec, char pc[], char Nm[], char Tim[
     char mess[80];
     //pos insert
     sprintf(pc, "%d", pos_prec);
-    strcpy(mess,pc);
+    strcpy(mess, pc);
     strncat(mess,"      ",5);
 
     //name_insert
-    strncat(mess,Nm,10);
+    strncat(mess, Nm, 24);
     strncat(mess,"      ",5);
 
     //time_insert
@@ -24,14 +24,14 @@ void insert_line(fstream &newFile, int pos_prec, char pc[], char Nm[], char Tim[
     strncat(mess,"      ",5);
 
     //point_insert
-    strncat(mess,copy,6);
+    strncat(mess, copy, 6);
     strncat(mess,"      ",5);
 
     //line_insert
-    strncat(mess,B,6);
+    strncat(mess, B, 6);
 
-    newFile<<mess<<endl;
-    newFile<<"n"<<endl;
+    newFile << mess << endl;
+    newFile << "n" << endl;
 }
 
 void write(char h[], char min[], char s[], char point[], char name[], char line[]){
@@ -72,28 +72,31 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
     cout<<"tempo [hh:mm:ss]: "<< time <<endl;
     cout<<"score: "<< point <<endl;
 
+    char file_tmp[] = {"salvataggio_punteggio/tmp.txt"};
+    char file_final[] = {"salvataggio_punteggio/leaderboard.txt"};
+
     ofstream newF;
-    newF.open("salvataggio_punteggio/test_final.txt", ofstream::out | ios::trunc); //"pulisco" il file dove salvo temporaneamente i dati ordinati
+    newF.open(file_tmp, ofstream::out | ios::trunc); //"pulisco" il file dove salvo temporaneamente i dati ordinati
 
     newF.close();
 
     int j=1;
     fstream file;
-    file.open("salvataggio_punteggio/test1.txt", ios::in); //apro in lettura il file dove sono
-                                                            //salvati i miei dati ordinati tranne per quello che devo inserire
+    file.open(file_final, ios::in); //apro in lettura il file dove sono
+                                    //salvati i miei dati ordinati tranne per quello che devo inserire
 
     fstream newFile;
-    newFile.open("salvataggio_punteggio/test_final.txt", ios::app);//apro il file precedentemente pulito in append
+    newFile.open(file_tmp, ios::app);//apro il file precedentemente pulito in append
 
     char line_pos[80]; //con questo leggo le righe del file text1.txt
     char copy[10];     //mi salvo il punteggio della riga corrente
     char pc[4];        //char per convertire da char ad intero
     bool flag = false;
     int i = 0;
-    int pos_prec;      //indice che mi salva la posizione del giocatore corrente
+    int pos_prec = 0;      //indice che mi salva la posizione del giocatore corrente
     bool flagI = false;
 
-    char Nm[20];
+    char Nm[24];
     char Tim[9];
     char B[6];
     char P[6];
@@ -123,7 +126,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
 
                     //name
                     file >> line_pos;
-                    strncat(mess, line_pos, 10);
+                    strncat(mess, line_pos, 24);
                     strncat(mess, "      ", 5);
                     strcpy(Nm, line_pos);
 
@@ -139,16 +142,16 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
                     strncat(mess, "      ", 5);
                     strcpy(copy, line_pos);
 
-                    //block
+                    //completed rows
                     file >> line_pos;
                     strncat(mess, line_pos, 6);
-                    strncat(mess, "      ", 5);
                     strcpy(B, line_pos);
 
                     // mi ricavo tutti i dati che mi servono;
 
                     if(flag){
-                        insert_line(newFile, pos_prec++, pc, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
+                        pos_prec++;
+                        insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
                     }                                                             //quindi inserisco nel file text_final.txt tutti glil altri con la posizione aggiornata,
                     else if(flagI){
                         //discorso molto simile per il flag ma in questo caso se è attivo flagI vuol dire che
@@ -171,14 +174,14 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
                         char minuti[3] = {0};
                         char secondi[3] = {0};
                         if(stoi(copy)==stoi(point)){
-                            if(stoi(h)==stoi(strncpy(ore, Tim, 2))){
-                                if(stoi(min)==stoi(strncpy(minuti, Tim+3, 2))){
-                                    if(stoi(s)==stoi(strncpy(secondi, Tim+6, 2))){
+                            if(stoi(s)==stoi(strncpy(secondi, Tim + 6, 2))){
+                                if(stoi(min)==stoi(strncpy(minuti, Tim + 3, 2))){
+                                    if(stoi(h)==stoi(strncpy(ore, Tim, 2))){
                                         insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B); //inserisco la linea che ho ricavato dal file
                                         insert_line(newFile, pos_prec, pc, name, time, point, line);//inserisco la linea che devo inserire
                                         flagI = true;
                                     }
-                                    else if(stoi(s)>stoi(strncpy(secondi, Tim+6, 2)))
+                                    else if(stoi(h)>stoi(strncpy(ore, Tim, 2)))
                                         insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);
                                     else{
                                         flag = true;
@@ -198,7 +201,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
                                     insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);
                                 }
                             }
-                            else if(stoi(h) > stoi(strncpy(ore, Tim, 2)))
+                            else if(stoi(s) > stoi(strncpy(secondi, Tim + 6, 2)))
                                 insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);
                             else{
                                 flag = true;
@@ -210,8 +213,8 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
                         }
                         else{
                             flag = true;
-                            pos_prec++;
                             insert_line(newFile, pos_prec, pc, name, time, point, line);
+                            pos_prec++;
                             insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);
                         }
                     }
@@ -237,17 +240,17 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
     // chiudo tutti i file;
 
     ofstream F;
-    F.open("salvataggio_punteggio/test1.txt", ofstream::out | ios::trunc); //pulisce tutto il file e mi aggiorna il flag della modifica
+    F.open(file_final, ofstream::out | ios::trunc); //pulisce tutto il file e mi aggiorna il flag della modifica
 
     F<<"tt"<<endl; // tt perché ho inserito un nuovo giocatore;
 
     F.close();
 
     fstream final;
-    final.open("salvataggio_punteggio/test_final.txt", ios::in);
+    final.open(file_tmp, ios::in);
 
     fstream file_text;
-    file_text.open("salvataggio_punteggio/test1.txt", ios::app);
+    file_text.open(file_final, ios::app);
     char read[80];
 
     while(!final.eof()){ // ricopio i dati dal file test_final.txt a test1.txt + il relativo flag
@@ -258,7 +261,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
         if(!strcmp(read, "n") == 0){
 
             final >> read;
-            strncat(mess, read, 10);
+            strncat(mess, read, 24);
             strncat(mess, "      ", 5);
 
             final >> read;
@@ -272,7 +275,6 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
 
             final >> read;
             strncat(mess, read, 6);
-            strncat(mess, "      ", 5);
 
             final >> read;
             file_text << mess << endl;
@@ -283,6 +285,8 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
     file_text.close();
     final.close();
 
+    remove(file_tmp);
+
 }
 
 
@@ -290,9 +294,9 @@ void del_ch(WINDOW* player, char text[], int i){
     text[i] = '\0';
 
     if(i > -1){
-        // Ripristina il bordo verticale su una colonna specifica
-        mvwdelch(player, 2, i + 2);
-        mvwprintw(player, 2, 20, "%s", " ");
+        
+        mvwdelch(player, 13, i + 2);
+        mvwprintw(player, 13, 29, "%s", " ");
         box(player, 0, 0);
         wrefresh(player);
     }
@@ -328,11 +332,15 @@ void insert(int p,int h,int min,int s){
     int i = 0;
 
     WINDOW *player;
-    player = newwin(yMax/7, xMax/7, yMax/2, xMax/2);
-    refresh();
+    player = newwin(yMax/2, xMax/2, yMax/2 - yMax/4, xMax/2 - xMax/4);
     box(player, 0, 0);
-    wrefresh(player);
-    mvwprintw(player, 1, 1, "INSERT NAME:");
+    mvwprintw(player, 3, 3, "%s", "_____              __  __   _____       ____   __      __  _____  _____");
+    mvwprintw(player, 4, 2, "%s", "/ ____|     /\\     |  \\/  | |  __|      / __ \\  \\ \\    / / |  __| |  __ \\");
+    mvwprintw(player, 5, 1, "%s", "| |  __     /  \\    | \\  / | | |__      | |  | |  \\ \\  / /  | |__  | |__) |");
+    mvwprintw(player, 6, 1, "%s", "| | |_ |   / /\\ \\   | |\\/| | |  __|     | |  | |   \\ \\/ /   |  __| |  _  /");
+    mvwprintw(player, 7, 1, "%s", "| |__| |  / ____ \\  | |  | | | |__      | |__| |    \\  /    | |__  | | \\ \\");
+    mvwprintw(player, 8, 1, "%s", " \\_____| /_/    \\_\\ |_|  |_| |____|      \\____/      \\/     |____| |_|  \\_\\");
+    mvwprintw(player, 12, 1, "INSERT NAME:");
     wrefresh(player);
 
     keypad(player, true);
@@ -341,12 +349,12 @@ void insert(int p,int h,int min,int s){
 
     int ch;
     bool BSp = false;
-    char text[20] = {0};
+    char text[24] = {0};
     char hour[3];
     char minute[3];
     char second[3];
     char point[6];
-    char block[5] = {'9','0','8','5','\0'};
+    char completed_rows[5] = {'\0'};
 
     sprintf(point, "%d", p);
     sprintf(hour, "%d", h);
@@ -359,14 +367,14 @@ void insert(int p,int h,int min,int s){
             BSp = check(text);
 
             if(BSp){
-                mvwprintw(player, 3, 1, "%s", "è presente un carattere non valido");
-                while(i>0){
+                mvwprintw(player, 13, 2, "%s", "è presente un carattere non valido");
+                while(i > 0){
                     i--;
                     del_ch(player, text, i);
                 }
             }
             else{
-                write(hour, minute, second, point, text, block);
+                write(hour, minute, second, point, text, completed_rows);
 
                 wclear(player);
                 wrefresh(player);
@@ -383,6 +391,16 @@ void insert(int p,int h,int min,int s){
         }
         else if(ch != KEY_UP && ch != KEY_DOWN && ch != KEY_LEFT && ch != KEY_RIGHT && ch != 27){
             if(i < sizeof(text) - 1){
+
+                wmove(player, 3, 1);
+                wclrtoeol(player);
+                wmove(player, 4, 1);
+                wclrtoeol(player);
+                wrefresh(player);
+
+                box(player, 0, 0);
+                wrefresh(player);
+
                 text[i] = (char) ch;
                 mvwprintw(player, 2, 2, "%s", text);
                 wrefresh(player);

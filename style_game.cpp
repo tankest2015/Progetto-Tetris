@@ -223,18 +223,10 @@ WINDOW* set_crono_window(){
     return win;
 }
 
-void crono_tic_tac(WINDOW* win, int &hours, int &minutes, int &seconds){
-    wtimeout(win, 1000);
-    seconds ++;
-    if(seconds > 60){
-        minutes ++;
-        if(minutes > 60){
-            hours ++;
-        }
-    }
-}
-
 void crono_window(WINDOW* win, int hours, int minutes, int seconds){
+    wmove(win, 4, 0);
+    wclrtoeol(win);
+
     box(win, 0, 0);
     wmove(win, 2, 2);
     wattron(win, A_BOLD);
