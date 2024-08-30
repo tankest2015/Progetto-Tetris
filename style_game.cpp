@@ -91,14 +91,14 @@ void flicker_row(WINDOW *win, Board &griglia, int row){
 WINDOW* set_win(){
     int height = 22;
     int width = 22;
-    WINDOW* win = newwin(height, width, 0, 0);
+    WINDOW* win = newwin(height, width, 7, 56);
     return(win);
 }
 
 WINDOW* set_predict_window(){
     int height = 6;
     int width = 14;
-    WINDOW* win = newwin(height, width, 0, 25);
+    WINDOW* win = newwin(height, width, 7, 81);
     return(win);
 }
 
@@ -180,7 +180,7 @@ void predict_window(WINDOW* win, tetramino* next_point){
 WINDOW* set_info_window(){
     int height = 9;
     int width = 17;
-    WINDOW* win = newwin(height, width, 6, 25);
+    WINDOW* win = newwin(height, width, 13, 81);
     return(win);
 }
 
@@ -217,7 +217,7 @@ void info_window(WINDOW* win, Board &griglia){
 WINDOW* set_crono_window(){
     int height = 7;
     int width = 14;
-    WINDOW* win = newwin(height, width, 15, 25);
+    WINDOW* win = newwin(height, width, 22, 81);
     box(win,0,0);
     wrefresh(win);
     return win;
@@ -240,4 +240,15 @@ void crono_window(WINDOW* win, int hours, int minutes, int seconds){
     wprintw(win, " : ");
     wprintw(win, "%d", seconds);
     wrefresh(win);
+}
+
+void crono_tic_tac(int &hours, int &minutes, int &seconds){
+    if(seconds > 60){
+        seconds = seconds - 60;
+        minutes ++;
+        if(minutes > 60){
+            minutes = minutes - 60;
+            hours ++;
+        }
+    }
 }

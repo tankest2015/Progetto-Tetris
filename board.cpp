@@ -85,7 +85,10 @@ void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win) {
 
 bool is_game_over(tetramino* point, Board &griglia) {
     point->board_delete_assign(false, griglia, point->get_colour());
-    if(griglia.matrix[1][5] != 0 || griglia.matrix[2][5] != 0) return true;
+    if(griglia.matrix[1][3] != 0 || griglia.matrix[2][3] != 0 || griglia.matrix[1][4] != 0 || griglia.matrix[2][4] != 0 ||
+    griglia.matrix[1][5] != 0 || griglia.matrix[2][5] != 0 || griglia.matrix[1][6] != 0 || griglia.matrix[2][6] != 0){
+        return true;
+    }
     point->board_delete_assign(true, griglia, point->get_colour());
     return false;
 }

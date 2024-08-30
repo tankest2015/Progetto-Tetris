@@ -15,25 +15,28 @@ void play(bool mod){
     tetramino *next_pointer = gen_tetramino(griglia);
 
     int diff_time;
-    int hours = diff_time / 3600;
-    int minute = (diff_time %3600) / 60;
-    int seconds = diff_time % 60;
+    int hours = 0;
+    int minutes = 0;
+    int seconds = 0;
+    int h = 0, m = 0, s = 0;
 
-    time_t start_time;  //tempo della partita
+    time_t start_time;          //tempo della partita
     time_t current_time;
-    start_time = time(NULL);  // Ottieni il tempo attuale all'inizio
+    start_time = time(NULL);    // Ottieni il tempo attuale all'inizio
 
     WINDOW* win = set_win();
     WINDOW* win_info = set_info_window();
     WINDOW* win_predict = set_predict_window();
     WINDOW* win_crono = set_crono_window();
 
+    bool flag = true;
+
     if(!has_colors) mvwprintw(win, 40, 10, "Daltonico"); //DA CAMBIARE (forse già verificata)
     set_colors(mod); //false per modalità neon
     print_gamespace(win);
     info_window(win_info, griglia);
     predict_window(win_predict, next_pointer);
-    crono_window(win_crono, 0, 0, 0);
+    crono_window(win_crono, hours, minutes, seconds);
 
     keypad(win, true);
     int movement;
@@ -42,11 +45,12 @@ void play(bool mod){
         current_time = time(NULL);
         diff_time = difftime(current_time, start_time);
 
-        hours = diff_time / 3600;
-        minute = (diff_time %3600) / 60;
-        seconds = diff_time % 60;
+        hours = h + diff_time / 3600;
+        minutes = m + (diff_time % 3600) / 60;
+        seconds = s + diff_time % 60;
 
-        crono_window(win_crono, hours, minute, seconds);
+        crono_tic_tac(hours, minutes, seconds);
+        crono_window(win_crono, hours, minutes, seconds);
         print_griglia(win, griglia);
         do{
             wtimeout(win, delay);
@@ -72,8 +76,24 @@ void play(bool mod){
                     timer = timer + 250;
                     break;
 
+                case 32:
+                    while(flag) {
+                        flag = pointer->descend(griglia);
+                    }
+                    flag = true;
+                    timer = delay;
+                    break;
+
                 case 27:
+                    h = hours;
+                    m = minutes;
+                    s = seconds;
                     close = pause();
+
+                    info_window(win_info, griglia);
+                    predict_window(win_predict, next_pointer);
+                    crono_window(win_crono, h, m, s);
+                    start_time = time(NULL);
                     break;
 
                 default:
@@ -101,7 +121,7 @@ void play(bool mod){
     if(close == false){
         clear();
         refresh();
-        insert(griglia.score, hours, minute, seconds);
+        insert(griglia.score, hours, minutes, seconds, griglia.completed_rows);
     }
 
     clear();

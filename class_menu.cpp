@@ -57,6 +57,7 @@ void menu::create_W(){ //mi inizializza la finestra
 }
 
 void menu::menu_start(){ //mi inizializza il menu
+    wattron(win, A_BOLD);
     mvwprintw(win, 3, 16, "%s", "_______   ____  _______   _____    _     _____");
     mvwprintw(win, 4, 15, "%s", "|__   __| |  __||__   __| |  __ \\  | |   / ____|");
     mvwprintw(win, 5, 18, "%s", "| |    | |__    | |    | |__) | | |  | (___");
@@ -67,12 +68,14 @@ void menu::menu_start(){ //mi inizializza il menu
     for(int i = 0; i < 4; i++){
         mvwprintw(win, i + 12, 34, "%s", Ch[i].field);
     }
+    wattroff(win, A_BOLD);
     wrefresh(win);
     menu_S(0, 4);
     wrefresh(win);
 }
 
 void menu::menu_S(int k, int j){ //evidenzia il corretto campo in cui l'utente si trova
+    wattron(win, A_BOLD);
     for(int i = 0; i < j; i++){
         if(k == i){
             wattron(win, A_REVERSE);
@@ -85,6 +88,7 @@ void menu::menu_S(int k, int j){ //evidenzia il corretto campo in cui l'utente s
             wrefresh(win);
         }
     }
+    wattroff(win, A_BOLD);
 }
 
 int menu::get_wg(){
@@ -119,14 +123,15 @@ void Read_menu::create_win_exit(){
 void Read_menu::scr(){
     bool flag = false;
     bool fix = true; //flag per verificare se il file è stato modificato o no
+    int pos_h;
+    bool not_exist = false;
 
     create_win_rank();
 
-    fstream file;
-    file.open("salvataggio_punteggio/leaderboard.txt", ios::in); //mi apre il file in lettura
-    char line[80];
+
 
     //colonne
+    wattron(win_rank, A_BOLD);
     mvwprintw(win_rank, 1, 31, " _       _____           _____    _____  _____   ____    ____             _____   _____");
     mvwprintw(win_rank, 2, 31, "| |     |  __|    /\\    |  __ \\  |  __| |  __ \\ |  _ \\  / __ \\     /\\    |  __ \\ |  __ \\");
     mvwprintw(win_rank, 3, 31, "| |     | |__    /  \\   | |  | | | |__  | |__) || |_) || |  | |   /  \\   | |__) || |  | |");
@@ -134,48 +139,73 @@ void Read_menu::scr(){
     mvwprintw(win_rank, 5, 31, "| |___  | |__  / ____ \\ | |__| | | |__  | | \\ \\ | |_) || |__| | / ____ \\ | | \\ \\ | |__| |");
     mvwprintw(win_rank, 6, 31, "|______||____|/_/    \\_\\|_____/  |____| |_|  \\_\\|____/  \\____/ /_/    \\_\\|_|  \\_\\|_____/");
     mvwprintw(win_rank, 7, 1, "______________________________________________________________________________________________________________________________________________________");
-    mvwprintw(win_rank, 8, 1, "Position:");
-    mvwprintw(win_rank, 8, 20, "Name:");
-    mvwprintw(win_rank, 8, 40, "Time[hh/mm/ss]:");
-    mvwprintw(win_rank, 8, 60, "Points:");
-    mvwprintw(win_rank, 8, 80, "Completed rows:");
+    mvwprintw(win_rank, 8, 31, "Position:");
+    mvwprintw(win_rank, 8, 51, "Name:");
+    mvwprintw(win_rank, 8, 71, "Time[hh/mm/ss]:");
+    mvwprintw(win_rank, 8, 91, "Points:");
+    mvwprintw(win_rank, 8, 111, "Completed rows:");
+    wattroff(win_rank, A_BOLD);
+
+    fstream file;
+    file.open("salvataggio_punteggio/leaderboard.txt", ios::in); //mi apre il file in lettura
+    char line[80];
 
 
-    if(!file.is_open()) // is file doesn't exits i do an interrupt
-        cout << "error to open file "<<endl;
-    else{
-        while(!file.eof()){          //è vero fin tanto che il file non sia finito
+    if(!file.is_open()){ // is file doesn't exits i do an interrupt
+        not_exist = true;
+        ofstream f("salvataggio_punteggio/leaderboard.txt");
+            f<<"new"<<endl;
+        f.close();
+        file.open("salvataggio_punteggio/leaderboard.txt", ios::in);
+        if(!file.is_open())
+        {
+            cout<<"errore, file salvataggio non creato "<<endl;
+            endwin();
+
+        }
+    }
+
+    while(!file.eof()){          //è vero fin tanto che il file non sia finito
+        file>>line;
+
+        if(strcmp(line, "ff") ==0){
+            c = 10;
+            r = 31;
+            i = 0;
+
             file>>line;
+            pos_h = stoi(line);
+            fix = false;
+        }
+        else if(strcmp(line, "tt") == 0){
+            c = 10;
+            r = 31;
+            i = 0;
+            file>>line;
+            pos_h = stoi(line);
+            fix = true;
+        }
+        else if(strcmp(line,"new")==0)
+        {
+            c = 10;
+            r = 31;
+            i = 0;
+            fix = false;
+        }
+        else if(strcmp(line, "n") == 0){
+            c++;
+            r = 31;
+            i++;
 
-            if(strcmp(line, "ff") ==0){
-                c = 10;    //francesco: prima era a 4 ma copriva la scritta leaderboard
-                r = 1;
-                i = 0;
-                //file>>line;
-                fix = false;
-            }
-            else if(strcmp(line, "tt") == 0){
-                c = 10;    //stessa cosa della condizione sopra
-                r = 1;
-                i = 0;
-                //file>>line;
-                fix = true;
-            }
-            else if(strcmp(line, "n") == 0){
-                c++;
-                r = 1;
-                i++;
-
-            }
-            else{
-                if(i == 0){
+        }
+        else{
+            if(i == pos_h-1){
                     wattron(win_rank, A_REVERSE);
                     mvwprintw(win_rank, c, r, "%s", line);
                     wattroff(win_rank, A_REVERSE);
                 }
                 else mvwprintw(win_rank, c, r, "%s", line);
                 r = r + 20;
-            }
         }
     }
 
@@ -198,9 +228,9 @@ void Read_menu::scr(){
 
     create_win_exit();
 
-    wattron(exit, A_REVERSE);
-    mvwprintw(exit, 1, 2, "EXIT");
-    wattroff(exit, A_REVERSE);
+    wattron(exit, A_REVERSE | A_BOLD);
+    mvwprintw(exit, 1, 3, "EXIT");
+    wattroff(exit, A_REVERSE | A_BOLD);
     int car;
 
     while(!flag){
@@ -225,14 +255,16 @@ Menu_pausa::Menu_pausa(WINDOW* win, int k, int y, int x, WINDOW* P, int xMax,int
 void Menu_pausa::create_W(){
     menu::init();
 
-    P = newwin(yMax/2, xMax/2, yMax/2 - yMax/4, xMax/2 - xMax/4);
+    P = newwin(yMax/2 + 3, xMax/2, yMax/2 - yMax/4 - 3, xMax/2 - xMax/4);
 
+    wattron(P, A_BOLD);
     mvwprintw(P, 3, 18, " _____            _    _    _____   ____");
     mvwprintw(P, 4, 18, "|  __ \\    /\\    | |  | |  / ____| |  __|");
     mvwprintw(P, 5, 18, "| |__) |  /  \\   | |  | | | (___   | |__");
     mvwprintw(P, 6, 18, "|  ___/  / /\\ \\  | |  | |  \\___ \\  |  __|");
     mvwprintw(P, 7, 18, "| |     / ____ \\ | |__| |  ____) | | |__");
     mvwprintw(P, 8, 18, "|_|    /_/    \\_\\ \\____/  |_____/  |____|");
+    wattroff(P, A_BOLD);
 
     box(P, 0, 0);//initialized my boards of menu
     wrefresh(P);
@@ -240,9 +272,11 @@ void Menu_pausa::create_W(){
 }
 
 void Menu_pausa::menu_start(){
+    wattron(P, A_BOLD);
     for(int i = 0; i < 2; i++){
-        mvwprintw(P, i + i + 13, 35 + i, "%s",Ch_Menu_pausa[i].field);
+        mvwprintw(P, i + i + 14, 35 + i, "%s",Ch_Menu_pausa[i].field);
     }
+    wattroff(P, A_BOLD);
     wrefresh(P);
 
     Menu_pausa::menu_S(0, 2);
@@ -250,14 +284,16 @@ void Menu_pausa::menu_start(){
 }
 
 void Menu_pausa::menu_S(int k, int j){
+    wattron(P, A_BOLD);
     for(int i = 0; i < j; i++){
         if(k == i){
             wattron(P, A_REVERSE);
-            mvwprintw(P, i + i + 13, 35 + i, "%s", Ch_Menu_pausa[i].field);
+            mvwprintw(P, i + i + 14, 35 + i, "%s", Ch_Menu_pausa[i].field);
             wattroff(P, A_REVERSE);
         }
-        else mvwprintw(P, i + i + 13, 35 + i, "%s", Ch_Menu_pausa[i].field);
+        else mvwprintw(P, i + i + 14, 35 + i, "%s", Ch_Menu_pausa[i].field);
     }
+    wattroff(P, A_BOLD);
 }
 
 void Menu_pausa::delete_W(){

@@ -15,5 +15,6 @@ WINDOW* set_info_window();
 void info_window(WINDOW* win, Board &griglia);
 WINDOW* set_crono_window();
 void crono_window(WINDOW* win, int hours, int minutes, int seconds);
+void crono_tic_tac(int &hours, int &minutes, int &seconds);
 
 #endif

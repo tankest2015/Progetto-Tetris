@@ -39,19 +39,8 @@ int main(int argc, char ** argv){
             if(highlight == 4) highlight = 0;
         }
 
-        if(highlight == 0){
-            Menu.menu_S(highlight,4);
-        }
-        else if(highlight == 1){
-            Menu.menu_S(highlight,4);
-        }
-        else if(highlight == 2){
-            Menu.menu_S(highlight,4);
-        }
-        else if(highlight == 3){
-            Menu.menu_S(highlight,4);
-        }
-
+        Menu.menu_S(highlight,4);
+        
         if(select == 10){ //10 = premo invio per selezionare il campo
             if(highlight == 0){
                 delwin(win);

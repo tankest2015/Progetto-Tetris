@@ -1,7 +1,0 @@
-ff
-1     jnnnnnn     00:11:41     7450     n
-n
-ok     00:00:51     550     9085     n
-n
-partecipo     00:00:37     500     n     n
-n
