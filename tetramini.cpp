@@ -416,7 +416,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
 
     /*Control if the blocks are in the grid and can rotate without collide*/
     if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x >= 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20 &&
-       griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
+       P1.y > 0 && P2.y > 0 && P3.y > 0 && P4.y > 0 && griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
             p1 = P1;
             p2 = P2;
             p3 = P3;
