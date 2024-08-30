@@ -7,9 +7,9 @@ Per il gioco sono state utilizzate il minor numero di librerie possibili e, in p
 ## Installazione
 Per installare tutti i file del gioco è sufficiente scaricare dalla repository GitHub tramite:
 
-- $ git clone https://github.com/tankest2015/Progetto-programmazione.git
+- $ git clone https://github.com/tankest2015/Progetto-Tetris.git
 
-- oppure accedendo direttamente tramite browser al link >> https://github.com/tankest2015/Progetto-programmazione
+- oppure accedendo direttamente tramite browser al link >> https://github.com/tankest2015/Progetto-Tetris
 
 1. Compilare il gioco tramite shell Linux
 Per compilare il gioco in una qualsiasi distribuzione di Linux è sufficiente utilizzare il comando 'make' per compilare, tramite g++, i file .o e l'eseguibile.
