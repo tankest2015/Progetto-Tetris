@@ -148,6 +148,7 @@ void Read_menu::scr(){
 
     fstream file;
     file.open("salvataggio_punteggio/leaderboard.txt", ios::in); //mi apre il file in lettura
+    
     char line[80];
 
 
@@ -165,7 +166,7 @@ void Read_menu::scr(){
         }
     }
 
-    while(!file.eof()){          //è vero fin tanto che il file non sia finito
+    while(!file.eof() && i<30){          //è vero fin tanto che il file non sia finito
         file>>line;
 
         if(strcmp(line, "ff") ==0){
@@ -175,14 +176,17 @@ void Read_menu::scr(){
 
             file>>line;
             pos_h = stoi(line);
+            
             fix = false;
         }
         else if(strcmp(line, "tt") == 0){
             c = 10;
             r = 31;
             i = 0;
+            
             file>>line;
             pos_h = stoi(line);
+            
             fix = true;
         }
         else if(strcmp(line,"new")==0)
@@ -190,6 +194,7 @@ void Read_menu::scr(){
             c = 10;
             r = 31;
             i = 0;
+            
             fix = false;
         }
         else if(strcmp(line, "n") == 0){
@@ -206,8 +211,10 @@ void Read_menu::scr(){
                 }
                 else mvwprintw(win_rank, c, r, "%s", line);
                 r = r + 20;
+            
         }
     }
+    
 
     file.close();//chiude il file
 

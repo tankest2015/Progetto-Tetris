@@ -2,8 +2,9 @@
 
 using namespace std;
 
-void insert_line(fstream &newFile, int pos_prec, char pc[], char Nm[], char Tim[], char copy[], char B[]){
+void insert_line(fstream &newFile, int pos_prec, char Nm[], char Tim[], char copy[], char B[]){
     char mess[80];
+    char pc[4];
     //pos insert
     sprintf(pc, "%d", pos_prec);
     strcpy(mess, pc);
@@ -84,7 +85,6 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
 
     char line_pos[80]; //con questo leggo le righe del file text1.txt
     char copy[10];     //mi salvo il punteggio della riga corrente
-    char pc[4];        //char per convertire da char ad intero
     bool flag = false;
     bool flagI = false;
     int i = 0;
@@ -110,8 +110,8 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
             strcpy(mess,line_pos);
             strncat(mess,"      ",5);
 
-            if(!strcmp(line_pos,"ff") == 0 && !strcmp(line_pos,"tt") == 0){
-                if(!strcmp(line_pos,"n") == 0 && !strcmp(line_pos,"new") == 0){
+            if(!strcmp(line_pos,"ff") == 0 && !strcmp(line_pos,"tt") == 0 && !strcmp(line_pos,"new") == 0){
+                if(!strcmp(line_pos,"n") == 0){
                     if(!is_insert) count++;
                     //mi legge i dati della classifica nel file text1.txt
                     pos_prec = stoi(line_pos); //mi salva la posizione in cui sono ora
@@ -147,11 +147,11 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
 
                     if(flag){
                         pos_prec++;
-                        insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
+                        insert_line(newFile, pos_prec, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
                     }
                     else if(flagI)
                     {
-                        insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
+                        insert_line(newFile, pos_prec, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
                     }                                                             //quindi inserisco nel file text_final.txt tutti glil altri con la posizione aggiornata,
                     /*
                     ci possono essere 3 casi:
@@ -166,20 +166,19 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
                         if(stoi(copy)==stoi(point)){
                             flagI = true;
                             is_insert = true;
-                            insert_line(newFile, pos_prec, pc, name, time, point, line);
-                            insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);
+                            insert_line(newFile, pos_prec, name, time, point, line);
+                            insert_line(newFile, pos_prec, Nm, Tim, copy, B);
                         }
                         else{
                             flag = true;
                             is_insert = true;
-                            insert_line(newFile, pos_prec, pc, name, time, point, line);
+                            insert_line(newFile, pos_prec, name, time, point, line);
                             pos_prec++;
-                            insert_line(newFile, pos_prec, pc, Nm, Tim, copy, B);
+                            insert_line(newFile, pos_prec, Nm, Tim, copy, B);
                         }
                     }
                     else{
-                        newFile << mess << endl;
-                        newFile << "n" << endl;
+                        insert_line(newFile, pos_prec, Nm, Tim, copy, B);
                     }
                 }
             }else file>>line_pos;
@@ -193,7 +192,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
 
         pos_prec++;
         count++;
-        insert_line(newFile, pos_prec, pc, name, time, point, line);
+        insert_line(newFile, pos_prec, name, time, point, line);
     }
 
     file.close();
