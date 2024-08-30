@@ -7,7 +7,7 @@ Per il gioco sono state utilizzate il minor numero di librerie possibili e, in p
 ## Installazione
 Per installare tutti i file del gioco è sufficiente scaricare dalla repository GitHub tramite:
 
--$ git clone https://github.com/tankest2015/Progetto-programmazione.git
+- $ git clone https://github.com/tankest2015/Progetto-programmazione.git
 
 - oppure accedendo direttamente tramite browser al link >> https://github.com/tankest2015/Progetto-programmazione
 
