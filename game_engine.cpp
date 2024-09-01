@@ -31,8 +31,7 @@ void play(bool mod){
 
     bool flag = true;
 
-    if(!has_colors) mvwprintw(win, 40, 10, "Daltonico"); //DA CAMBIARE (forse già verificata)
-    set_colors(mod); //false per modalità neon
+    set_colors(mod);        //false per modalità neon
     print_gamespace(win);
     info_window(win_info, griglia);
     predict_window(win_predict, next_pointer);
@@ -88,7 +87,7 @@ void play(bool mod){
                     h = hours;
                     m = minutes;
                     s = seconds;
-                    close = pause();
+                    close = pause(); //permette di fermare il tempo dentro il menu di pausa
 
                     info_window(win_info, griglia);
                     predict_window(win_predict, next_pointer);

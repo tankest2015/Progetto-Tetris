@@ -5,7 +5,7 @@ using namespace std;
 void set_colors(bool flag){
     start_color();
 
-    init_color(8, 918, 457, 82);
+    init_color(8, 918, 457, 82);    //inizializzazione colore arancione
     if(flag){
 
         init_pair(1, COLOR_RED, COLOR_RED);
@@ -23,13 +23,13 @@ void set_colors(bool flag){
         init_pair(4, COLOR_BLUE, COLOR_BLACK);
         init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
         init_pair(6, COLOR_CYAN, COLOR_BLACK);
-        init_pair(7, 8, COLOR_BLACK);                     //orange
+        init_pair(7, 8, COLOR_BLACK);           //orange
     }
-    init_pair(8, COLOR_BLACK, COLOR_BLACK); //for flicker_row()
-    init_pair(9, COLOR_WHITE, COLOR_WHITE); //for flicker_row()
+    init_pair(8, COLOR_BLACK, COLOR_BLACK);     //for flicker_row()
+    init_pair(9, COLOR_WHITE, COLOR_WHITE);     //for flicker_row()
 
-    init_pair(10, COLOR_GREEN, COLOR_BLACK); //per personalizzare il livello di difficoltà
-    init_pair(11, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(10, COLOR_GREEN, COLOR_BLACK);    //per personalizzare il colore della scritta
+    init_pair(11, COLOR_YELLOW, COLOR_BLACK);   // del livello di difficoltà
     init_pair(12, COLOR_RED, COLOR_BLACK);
     init_pair(13, COLOR_MAGENTA, COLOR_BLACK);
 }
@@ -109,7 +109,7 @@ void predict_window(WINDOW* win, tetramino* next_point){
     wclrtoeol(win);
 
     box(win, 0, 0);
-    switch (next_point->get_colour()){
+    switch (next_point->get_colour()){  //Stampa del tetramino successivo
     case 1:
         wmove(win, 2, 4);
         wattron(win, COLOR_PAIR(1));

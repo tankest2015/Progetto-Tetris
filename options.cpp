@@ -53,7 +53,7 @@ bool neon(){
             wattroff(neon, A_REVERSE);
             mvwprintw(neon, 15, 49, "COLOR");
         }
-        else if(select){
+        else if(select){        //DA REVISIONARE (!) se il primo if è falso quello dopo è necessariamente vero
             mvwprintw(neon, 12, 27, "PLEASE SELECT THE MODE:");
             wattron(neon,A_REVERSE);
             mvwprintw(neon, 15, 49, "COLOR");

@@ -35,13 +35,6 @@ bool Board::is_full(int row) {
     return flag;
 }
 
-void Board::move_row_down(int row, int n_rows){ //n_rows: numero di spostamenti verso il basso da effettuare
-    for(int i = 0; i < row_size; i++){
-        matrix[row+n_rows][i] = matrix[row][i];
-        matrix[row][i] = 0;
-    }
-}
-
 bool Board::is_empty(int row) {
     int i = 0;
     bool flag = true;
@@ -52,19 +45,34 @@ bool Board::is_empty(int row) {
     return flag;
 }
 
+void Board::move_row_down(int row, int n_rows){ //n_rows: numero di spostamenti verso il basso da effettuare
+    for(int i = 0; i < row_size; i++){
+        matrix[row+n_rows][i] = matrix[row][i];
+        matrix[row][i] = 0;
+    }
+}
+
 void Board::clear_row(int row){
     for(int i = 0; i < row_size; i++){
         matrix[row][i] = 0;
     }
 }
 
-int max_y(tetramino* point) { //blocco più basso del tetramino, quindi il valore y più alto
+int Board::get_row_col_size(bool flag) {        //true per restituire row_size, false per  restituire col_size
+    if(flag){
+        return row_size;
+    }
+    else {
+        return col_size;
+    }
+}
+
+int max_y(tetramino* point) {   //blocco più basso del tetramino, quindi il valore y più alto
     if(point->p1.y >= point->p2.y && point->p1.y >= point->p3.y && point->p1.y >= point->p4.y) return point->p1.y;
     else if(point->p2.y >= point->p1.y && point->p2.y >= point->p3.y && point->p2.y >= point->p4.y) return point->p2.y;
     else if(point->p3.y >= point->p1.y && point->p3.y >= point->p2.y && point->p3.y >= point->p4.y) return point->p3.y;
     else return point->p4.y;
 }
-
 
 void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win) {
     int row_pos = max_y(point);
@@ -106,14 +114,5 @@ void update_score_and_rows(int l_cleared, Board &griglia){
     } else if(l_cleared == 4){
         griglia.score += 600;
         griglia.completed_rows += 4;
-    }
-}
-
-int Board::get_row_col_size(bool flag) {        //true per restituire row_size, false per col_size
-    if(flag){
-        return row_size;
-    }
-    else {
-        return col_size;
     }
 }

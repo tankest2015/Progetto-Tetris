@@ -1,14 +1,14 @@
 #include "class_menu.h"
 #include <ncurses.h>
 
-choiches Ch[4] = {
+choiches Ch[4] = {      //DA REVISIONARE (!)
     {"Play"},
     {"Leaderboard"},
     {"Options"},
     {"Exit"}
 };
 
-choiches Ch_Menu_pausa[2] = {
+choiches Ch_Menu_pausa[2] = {   //DA REVISIONARE (!)
     {"Resume"},
     {"Exit"}
 };
@@ -108,7 +108,7 @@ void Read_menu::create_win_rank(){
 
     win_rank = newwin(yMax, xMax - 4, 0, 2);
     wrefresh(win_rank);
-    box(win_rank, 0, 0);//initialized my boards of menu
+    box(win_rank, 0, 0);    //initialized my boards of menu
     wrefresh(win_rank);
     keypad(win_rank, true);
 }
@@ -128,9 +128,6 @@ void Read_menu::scr(){
 
     create_win_rank();
 
-
-
-    //colonne
     wattron(win_rank, A_BOLD);
     mvwprintw(win_rank, 1, 31, " _       _____           _____    _____  _____   ____    ____             _____   _____");
     mvwprintw(win_rank, 2, 31, "| |     |  __|    /\\    |  __ \\  |  __| |  __ \\ |  _ \\  / __ \\     /\\    |  __ \\ |  __ \\");
@@ -148,9 +145,8 @@ void Read_menu::scr(){
 
     fstream file;
     file.open("salvataggio_punteggio/leaderboard.txt", ios::in); //mi apre il file in lettura
-    
-    char line[80];
 
+    char line[80];
 
     if(!file.is_open()){ // is file doesn't exits i do an interrupt
         not_exist = true;
@@ -166,7 +162,7 @@ void Read_menu::scr(){
         }
     }
 
-    while(!file.eof() && i<30){          //è vero fin tanto che il file non sia finito
+    while(!file.eof()){          //è vero fin tanto che il file non sia finito
         file>>line;
 
         if(strcmp(line, "ff") ==0){
@@ -176,17 +172,17 @@ void Read_menu::scr(){
 
             file>>line;
             pos_h = stoi(line);
-            
+
             fix = false;
         }
         else if(strcmp(line, "tt") == 0){
             c = 10;
             r = 31;
             i = 0;
-            
+
             file>>line;
             pos_h = stoi(line);
-            
+
             fix = true;
         }
         else if(strcmp(line,"new")==0)
@@ -194,16 +190,16 @@ void Read_menu::scr(){
             c = 10;
             r = 31;
             i = 0;
-            
+
             fix = false;
         }
         else if(strcmp(line, "n") == 0){
             c++;
             r = 31;
             i++;
-
         }
         else{
+            if(i<30){
             if(i == pos_h-1){
                     wattron(win_rank, A_REVERSE);
                     mvwprintw(win_rank, c, r, "%s", line);
@@ -211,10 +207,10 @@ void Read_menu::scr(){
                 }
                 else mvwprintw(win_rank, c, r, "%s", line);
                 r = r + 20;
-            
+            }
         }
     }
-    
+
 
     file.close();//chiude il file
 
@@ -273,7 +269,7 @@ void Menu_pausa::create_W(){
     mvwprintw(P, 8, 18, "|_|    /_/    \\_\\ \\____/  |_____/  |____|");
     wattroff(P, A_BOLD);
 
-    box(P, 0, 0);//initialized my boards of menu
+    box(P, 0, 0);   //initialized my boards of menu
     wrefresh(P);
     keypad(P, true);
 }
@@ -287,7 +283,6 @@ void Menu_pausa::menu_start(){
     wrefresh(P);
 
     Menu_pausa::menu_S(0, 2);
-
 }
 
 void Menu_pausa::menu_S(int k, int j){

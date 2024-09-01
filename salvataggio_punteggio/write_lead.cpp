@@ -11,7 +11,7 @@ void insert_line(fstream &newFile, int pos_prec, char Nm[], char Tim[], char cop
     strncat(mess,"      ",5);
 
     //name_insert
-    strncat(mess, Nm, 24);
+    strncat(mess, Nm, 19);
     strncat(mess,"      ",5);
 
     //time_insert
@@ -35,13 +35,13 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
     const int length = 100;
     char input[length];
 
-    char time[9];//time [9] = '\0'
+    char time[9];   //time [9] = '\0'
     char mess[80];
     char mess_1[80];
 
     if (strlen(h) == 1) {
         // Sposta il carattere corrente alla fine e aggiungi '0' all'inizio
-        h[1] = h[0]; // Sposta il numero che ho ora a destra
+        h[1] = h[0];   // Sposta il numero che ho ora a destra
         h[0] = '0';    // Aggiungi '0' all'inizio
         h[2] = '\0';   // Aggiungi il terminatore nullo
     }
@@ -77,22 +77,22 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
 
     int j=1;
     fstream file;
-    file.open(file_final, ios::in); //apro in lettura il file dove sono
-                                    //salvati i miei dati ordinati tranne per quello che devo inserire
+    file.open(file_final, ios::in);     //apro in lettura il file dove sono
+                                        //salvati i miei dati ordinati tranne per quello che devo inserire
 
     fstream newFile;
-    newFile.open(file_tmp, ios::app);//apro il file precedentemente pulito in append
+    newFile.open(file_tmp, ios::app);   //apro il file precedentemente pulito in append
 
-    char line_pos[80]; //con questo leggo le righe del file text1.txt
-    char copy[10];     //mi salvo il punteggio della riga corrente
+    char line_pos[80];      //con questo leggo le righe del file text1.txt
+    char copy[10];          //mi salvo il punteggio della riga corrente
     bool flag = false;
     bool flagI = false;
     int i = 0;
-    int pos_prec = 0;      //indice che mi salva la posizione del giocatore corrente
+    int pos_prec = 0;       //indice che mi salva la posizione del giocatore corrente
     int count = 0;
     bool is_insert = false;
 
-    char Nm[24];
+    char Nm[19];
     char Tim[9];
     char B[6];
     char P[6];
@@ -122,7 +122,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
 
                     //name
                     file >> line_pos;
-                    strncat(mess, line_pos, 24);
+                    strncat(mess, line_pos, 19);
                     strncat(mess, "      ", 5);
                     strcpy(Nm, line_pos);
 
@@ -154,7 +154,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
                         insert_line(newFile, pos_prec, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
                     }                                                             //quindi inserisco nel file text_final.txt tutti glil altri con la posizione aggiornata,
                     /*
-                    ci possono essere 3 casi:
+                    ci possono essere 2 casi:
 
                     1°: il punteggio del giocatore che devo inserire è minore di quello che sto leggendo in questo momento
                         quindi mi inserisce nel file il giocatore corrente.
@@ -225,7 +225,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
         if(!strcmp(read, "n") == 0){
 
             final >> read;
-            strncat(mess, read, 24);
+            strncat(mess, read, 19);
             strncat(mess, "      ", 5);
 
             final >> read;
@@ -249,15 +249,13 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
     final.close();
 
     remove(file_tmp);
-
 }
-
 
 void del_ch(WINDOW* player, char text[], int i, int limit){
     text[i] = '\0';
 
     if(i > -1){
-        
+
         mvwdelch(player, 13, i + 2);
         mvwprintw(player, 13, 2, "%-*s", limit, text);  // Ripulisce la riga e riscrive la stringa aggiornata
         box(player, 0, 0);
@@ -303,7 +301,7 @@ void insert(int p,int h,int min,int s, int row){
     mvwprintw(player, 6, 1, "%s", "| | |_ |   / /\\ \\   | |\\/| | |  __|     | |  | |   \\ \\/ /   |  __| |  _  /");
     mvwprintw(player, 7, 1, "%s", "| |__| |  / ____ \\  | |  | | | |__      | |__| |    \\  /    | |__  | | \\ \\");
     mvwprintw(player, 8, 1, "%s", " \\_____| /_/    \\_\\ |_|  |_| |____|      \\____/      \\/     |____| |_|  \\_\\");
-    mvwprintw(player, 12, 1, "INSERT NAME:");
+    mvwprintw(player, 12, 1, "INSERT NAME (max: 19 letters):");
     wrefresh(player);
 
     keypad(player, true);
@@ -312,7 +310,7 @@ void insert(int p,int h,int min,int s, int row){
 
     int ch;
     bool BSp = false;
-    char text[24] = {'\0'};
+    char text[19] = {'\0'};
     char hour[3] = {'\0'};
     char minute[3] = {'\0'};
     char second[3] = {'\0'};
