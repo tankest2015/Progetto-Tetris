@@ -22,6 +22,7 @@ bool neon(){
     wrefresh(neon);
     keypad(neon, true);
 
+    wattron(neon, A_BOLD);
     mvwprintw(neon, 3, 13, "____    _____   _______   _    ____    _   _    _____");
     mvwprintw(neon, 4, 12, "/ __ \\  |  __ \\ |__   __| | |  / __ \\  | \\ | |  / ____|");
     mvwprintw(neon, 5, 11, "| |  | | | |__) |   | |    | | | |  | | |  \\| | | (___");
@@ -34,6 +35,7 @@ bool neon(){
     mvwprintw(neon, 15, 23, "NEON");
     wattroff(neon, A_REVERSE);
     mvwprintw(neon, 15, 49, "COLOR");
+    wattroff(neon, A_BOLD);
     wrefresh(neon);
 
     while(flag){
@@ -42,6 +44,8 @@ bool neon(){
         if(key == KEY_LEFT) select = false;
         if(key == KEY_RIGHT) select = true;
 
+        wattron(neon, A_BOLD);
+
         if(!select){
             mvwprintw(neon, 12, 27, "PLEASE SELECT THE MODE:");
             wattron(neon, A_REVERSE);
@@ -49,13 +53,14 @@ bool neon(){
             wattroff(neon, A_REVERSE);
             mvwprintw(neon, 15, 49, "COLOR");
         }
-        else if(select){
+        else if(select){        //DA REVISIONARE (!) se il primo if è falso quello dopo è necessariamente vero
             mvwprintw(neon, 12, 27, "PLEASE SELECT THE MODE:");
             wattron(neon,A_REVERSE);
             mvwprintw(neon, 15, 49, "COLOR");
             wattroff(neon,A_REVERSE);
             mvwprintw(neon, 15, 23, "NEON");
         }
+        wattroff(neon, A_BOLD);
 
         if(key == 10)
             flag = false;

@@ -9,8 +9,7 @@
 
 using namespace std;
 
-struct choiches
-{
+struct choiches{
     char field[13];
 };
 
@@ -23,6 +22,7 @@ class menu {     //Classe Principale e padre di tutte le altre
     int xMax;
 
     public:
+
     menu(WINDOW* win, int k, int y, int x); //Costruttore
 
     void init();                    //funziona che mi inizializza lo schermo
@@ -70,5 +70,4 @@ class Menu_pausa:public menu {     //Classe derivata dalla classe menu: MENU_DI_
 
     int get_wg();
 };
-
 #endif

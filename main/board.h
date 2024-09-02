@@ -1,3 +1,4 @@
+
 #ifndef BOARD_H
 #define BOARD_H
 class tetramino;
@@ -7,10 +8,6 @@ class tetramino;
 #include <iostream>
 #include <ncurses.h>
 
-struct Coordinate{
-    int x, y;
-};
-
 class Board {
     private:
         const int row_size = 10;
@@ -18,8 +15,9 @@ class Board {
     public:
         int score = 0;
         int completed_rows = 0;
-        Board(int score, int completed_rows);
         int matrix[20][10];
+
+        Board(int score, int completed_rows);
 
         void init_matrix();
         void print_matrix();
@@ -31,7 +29,7 @@ class Board {
 };
 
 int max_y(tetramino* point);
-void update_score_and_rows(int l_cleared, Board &griglia);
 void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win);
 bool is_game_over(tetramino* point, Board &griglia);
+void update_score_and_rows(int l_cleared, Board &griglia);
 #endif

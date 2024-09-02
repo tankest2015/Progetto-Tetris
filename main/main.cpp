@@ -13,7 +13,7 @@ int main(int argc, char ** argv){
 
     WINDOW* win;
     WINDOW* win_rank;
-    WINDOW* exit; //Che Davoli è?
+    WINDOW* exit;
 
 
     menu Menu(win,4,0,0);
@@ -40,14 +40,14 @@ int main(int argc, char ** argv){
         }
 
         Menu.menu_S(highlight,4);
-        
+
         if(select == 10){ //10 = premo invio per selezionare il campo
             if(highlight == 0){
                 delwin(win);
                 clear();
                 refresh();
 
-                play(flag); //chiamata a test_ata
+                play(flag); //chiamata a game_engine
 
                 Menu.create_W();
                 Menu.menu_start();

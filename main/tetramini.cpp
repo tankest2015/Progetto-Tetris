@@ -416,8 +416,8 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
 
     /*Control if the blocks are in the grid and can rotate without collide*/
     if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x >= 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20 &&
-       griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
-            p1 = P1;
+       P1.y >= 0 && P2.y >= 0 && P3.y >= 0 && P4.y >= 0 && griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
+            p1 = P1;        //La condizione griglia.matrix[][] == 0 è per evotare tetramini sovrascritti / cancellati
             p2 = P2;
             p3 = P3;
             p4 = P4;
@@ -485,6 +485,21 @@ bool tetramino::move_left(Board &griglia){
     return(flag);
 }
 
+void tetramino::board_delete_assign (bool action, Board &griglia, int colour){     // For delete use false
+    if(action){                                                                   // For assign use true
+        griglia.matrix[p1.y][p1.x] = colour;
+        griglia.matrix[p2.y][p2.x] = colour;
+        griglia.matrix[p3.y][p3.x] = colour;
+        griglia.matrix[p4.y][p4.x] = colour;
+    }
+    else{
+        griglia.matrix[p1.y][p1.x] = 0;
+        griglia.matrix[p2.y][p2.x] = 0;
+        griglia.matrix[p3.y][p3.x] = 0;
+        griglia.matrix[p4.y][p4.x] = 0;
+    }
+}
+
 bool tetramino::descend(Board &griglia){
     bool flag = false;
     if(p1.y == 19 || p2.y == 19 || p3.y == 19 || p4.y == 19) return false;
@@ -514,19 +529,4 @@ void swap_tetramino_pointer(tetramino* &point, tetramino* &next_point, Board &gr
     point = next_point;
     point->board_delete_assign(true, griglia, point->get_colour());
     next_point = gen_tetramino(griglia);
-}
-
-void tetramino::board_delete_assign (bool action, Board &griglia, int colour){     // For delete use false
-    if(action){                                                                   // For assign use true
-        griglia.matrix[p1.y][p1.x] = colour;
-        griglia.matrix[p2.y][p2.x] = colour;
-        griglia.matrix[p3.y][p3.x] = colour;
-        griglia.matrix[p4.y][p4.x] = colour;
-    }
-    else{
-        griglia.matrix[p1.y][p1.x] = 0;
-        griglia.matrix[p2.y][p2.x] = 0;
-        griglia.matrix[p3.y][p3.x] = 0;
-        griglia.matrix[p4.y][p4.x] = 0;
-    }
 }

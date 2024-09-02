@@ -8,7 +8,6 @@
 #include <ncurses.h>
 #include <stdio.h>
 
-
 using namespace std;
 
 void insert_line(fstream &newFile, int pos_prec, char pc[], char Nm[], char Tim[], char copy[], char B[]);
