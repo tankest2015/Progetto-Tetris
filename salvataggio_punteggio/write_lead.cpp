@@ -254,16 +254,10 @@ void del_ch(WINDOW* player, char text[], int i, int limit){
 
 bool check(char text[]){
     int i = 0;
-    bool flag = false;
+    bool flag;
     if(text[i] == '\0')
         flag = true;
-    else{
-        while(text[i] != '\0' && !flag){
-            if(text[i] == char(32))
-                flag = true;
-            i++;
-        }
-    }
+    else flag = false;
     return flag;
 }
 
@@ -294,8 +288,6 @@ void insert(int p,int h,int min,int s, int row){
     wrefresh(player);
 
     keypad(player, true);
-
-
 
     int ch;
     bool BSp = false;
@@ -334,7 +326,7 @@ void insert(int p,int h,int min,int s, int row){
             BSp = check(text);
 
             if(BSp){
-                mvwprintw(player, 14, 2, "%s", "è presente un carattere non valido");
+                mvwprintw(player, 14, 2, "%s", "inserire almeno un carattere valido");
                 while(i > 0){
                     i--;
                     del_ch(player, text, i, xMax);
@@ -356,7 +348,7 @@ void insert(int p,int h,int min,int s, int row){
                 del_ch(player, text, i, xMax);
             }
         }
-        else if(ch != KEY_UP && ch != KEY_DOWN && ch != KEY_LEFT && ch != KEY_RIGHT && ch != 27){
+        else if(ch>=33 && ch<=126){
             if(i < sizeof(text) - 1){
 
                 wmove(player, 14, 1);
@@ -371,6 +363,15 @@ void insert(int p,int h,int min,int s, int row){
                 wrefresh(player);
                 i++;
             }
+        }
+        else{
+            wmove(player, 14, 1);
+            wclrtoeol(player);
+            wrefresh(player);
+
+            box(player, 0, 0);
+            wrefresh(player);
+            mvwprintw(player, 14, 2, "%s", "inserire almeno un carattere valido");
         }
     }
     endwin();
