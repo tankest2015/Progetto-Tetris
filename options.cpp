@@ -4,7 +4,7 @@
 using namespace std;
 
 bool neon(){
-    initscr();      //initializeed the screen
+    initscr();
     noecho();
     cbreak();
     curs_set(0);
@@ -18,7 +18,7 @@ bool neon(){
     neon = newwin(y/2, x/2, y/2 - y/4, x/2 - x/4);
     refresh();
 
-    box(neon,0,0);      //initialized my boards of menu
+    box(neon,0,0);
     wrefresh(neon);
     keypad(neon, true);
 
@@ -53,7 +53,7 @@ bool neon(){
             wattroff(neon, A_REVERSE);
             mvwprintw(neon, 15, 49, "COLOR");
         }
-        else if(select){        //DA REVISIONARE (!) se il primo if è falso quello dopo è necessariamente vero
+        else{
             mvwprintw(neon, 12, 27, "PLEASE SELECT THE MODE:");
             wattron(neon,A_REVERSE);
             mvwprintw(neon, 15, 49, "COLOR");

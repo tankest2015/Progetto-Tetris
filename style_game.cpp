@@ -25,11 +25,11 @@ void set_colors(bool flag){
         init_pair(6, COLOR_CYAN, COLOR_BLACK);
         init_pair(7, 8, COLOR_BLACK);           //orange
     }
-    init_pair(8, COLOR_BLACK, COLOR_BLACK);     //for flicker_row()
-    init_pair(9, COLOR_WHITE, COLOR_WHITE);     //for flicker_row()
+    init_pair(8, COLOR_BLACK, COLOR_BLACK);     //per flicker_row()
+    init_pair(9, COLOR_WHITE, COLOR_WHITE);     //per flicker_row()
 
     init_pair(10, COLOR_GREEN, COLOR_BLACK);    //per personalizzare il colore della scritta
-    init_pair(11, COLOR_YELLOW, COLOR_BLACK);   // del livello di difficoltà
+    init_pair(11, COLOR_YELLOW, COLOR_BLACK);   //del livello di difficoltà
     init_pair(12, COLOR_RED, COLOR_BLACK);
     init_pair(13, COLOR_MAGENTA, COLOR_BLACK);
 }
@@ -240,15 +240,4 @@ void crono_window(WINDOW* win, int hours, int minutes, int seconds){
     wprintw(win, " : ");
     wprintw(win, "%d", seconds);
     wrefresh(win);
-}
-
-void crono_tic_tac(int &hours, int &minutes, int &seconds){
-    if(seconds > 60){
-        seconds = seconds - 60;
-        minutes ++;
-        if(minutes > 60){
-            minutes = minutes - 60;
-            hours ++;
-        }
-    }
 }

@@ -136,9 +136,9 @@ int tetramino::get_colour(){
     return colour;
 }
 
-bool tetramino::control_rot(char C, Board &griglia){       // l: for left
-    Position P1, P2, P3, P4;                               // r: for right
-    //Blocks position relative to p2
+bool tetramino::control_rot(char C, Board &griglia){       // l: per sinistra
+    Position P1, P2, P3, P4;                               // r: per destra
+    //Posizione dei blocchi relativa a p2
     P1 = p2;
     P2 = p2;
     P3 = p2;
@@ -414,7 +414,7 @@ bool tetramino::control_rot(char C, Board &griglia){       // l: for left
         }
     }
 
-    /*Control if the blocks are in the grid and can rotate without collide*/
+    /*Controllo se i blocchi sono nella griglia e possono ruotare senza collidere*/
     if(P1.x < 10 && P2.x < 10 && P3.x < 10 && P4.x < 10 && P1.x >= 0 && P2.x >= 0 && P3.x >= 0 && P4.x >= 0 && P1.y < 20 && P2.y < 20 && P3.y < 20 && P4.y < 20 &&
        P1.y >= 0 && P2.y >= 0 && P3.y >= 0 && P4.y >= 0 && griglia.matrix[P1.y][P1.x] == 0 && griglia.matrix[P2.y][P2.x] == 0 && griglia.matrix[P3.y][P3.x] == 0 && griglia.matrix[P4.y][P4.x] == 0){
             p1 = P1;        //La condizione griglia.matrix[][] == 0 è per evotare tetramini sovrascritti / cancellati
@@ -485,8 +485,8 @@ bool tetramino::move_left(Board &griglia){
     return(flag);
 }
 
-void tetramino::board_delete_assign (bool action, Board &griglia, int colour){     // For delete use false
-    if(action){                                                                   // For assign use true
+void tetramino::board_delete_assign (bool action, Board &griglia, int colour){     // Per eliminare usa false
+    if(action){                                                                   // Per assegnare usa true
         griglia.matrix[p1.y][p1.x] = colour;
         griglia.matrix[p2.y][p2.x] = colour;
         griglia.matrix[p3.y][p3.x] = colour;

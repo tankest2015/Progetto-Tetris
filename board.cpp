@@ -58,7 +58,7 @@ void Board::clear_row(int row){
     }
 }
 
-int Board::get_row_col_size(bool flag) {        //true per restituire row_size, false per  restituire col_size
+int Board::get_row_col_size(bool flag) {        //true per restituire row_size, false per restituire col_size
     if(flag){
         return row_size;
     }
@@ -74,7 +74,7 @@ int max_y(tetramino* point) {   //blocco più basso del tetramino, quindi il val
     else return point->p4.y;
 }
 
-void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win) {
+void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win) {       //Funzione principale per eliminare le righe complete
     int row_pos = max_y(point);
     int counter = 0;
     while(!griglia.is_empty(row_pos)) {

@@ -22,7 +22,6 @@ class menu {     //Classe Principale e padre di tutte le altre
     int xMax;
 
     public:
-
     menu(WINDOW* win, int k, int y, int x); //Costruttore
 
     void init();                    //funziona che mi inizializza lo schermo
@@ -30,10 +29,9 @@ class menu {     //Classe Principale e padre di tutte le altre
     int get_x();
     void create_W();                //mi inizializza la finestra
     void menu_start();              //mi inizializza il menu
-    void menu_S(int k, int j);       //evidenzia il corretto campo in cui l'utente si trova
-    int get_wg();       //evidenzia il corretto campo in cui l'utente si trova
+    void menu_S(int k, int j);      //evidenzia il corretto campo in cui l'utente si trova
+    int get_wg();                   //esegue il getch della finestra
 };
-
 
 class Read_menu:public menu {      // Classe derivata dalla classe menu: MENU_DI_GIOCO
     protected:
@@ -61,13 +59,9 @@ class Menu_pausa:public menu {     //Classe derivata dalla classe menu: MENU_DI_
     Menu_pausa(WINDOW* win, int k, int y, int x, WINDOW* P, int xMax, int yMax, int c);
 
     void create_W();
-
     void menu_start();
-
     void menu_S(int k, int j);
-
     void delete_W();
-
     int get_wg();
 };
 
