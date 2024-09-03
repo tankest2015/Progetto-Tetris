@@ -243,10 +243,10 @@ void crono_window(WINDOW* win, int hours, int minutes, int seconds){
 }
 
 void crono_tic_tac(int &hours, int &minutes, int &seconds){
-    if(seconds > 60){
+    if(seconds >= 60){
         seconds = seconds - 60;
         minutes ++;
-        if(minutes > 60){
+        if(minutes >= 60){
             minutes = minutes - 60;
             hours ++;
         }
