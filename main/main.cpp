@@ -15,7 +15,6 @@ int main(int argc, char ** argv){
     WINDOW* win_rank;
     WINDOW* exit;
 
-
     menu Menu(win,4,0,0);
     Read_menu R(win,4,0,0,win_rank,exit,4,1,0);
     Menu.create_W();
@@ -25,6 +24,13 @@ int main(int argc, char ** argv){
     int select;
     int highlight = 0;
     bool flag = true;
+
+    if(!has_colors()){
+        pass = false;
+        endwin();
+        cout << "Terminal doesn't support colors"<<endl;
+    }
+
 
     while(pass){
 
@@ -57,7 +63,7 @@ int main(int argc, char ** argv){
                 clear();
                 refresh();
 
-                R.scr();
+                R.scr(); //Chiamata alla classe Read_menu
 
                 Menu.create_W();
                 Menu.menu_start();

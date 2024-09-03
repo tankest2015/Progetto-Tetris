@@ -1,4 +1,3 @@
-
 #ifndef BOARD_H
 #define BOARD_H
 class tetramino;
@@ -32,4 +31,5 @@ int max_y(tetramino* point);
 void clear_full_rows(tetramino* point, Board &griglia, WINDOW* win);
 bool is_game_over(tetramino* point, Board &griglia);
 void update_score_and_rows(int l_cleared, Board &griglia);
+
 #endif

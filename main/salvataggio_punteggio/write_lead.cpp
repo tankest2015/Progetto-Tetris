@@ -31,7 +31,6 @@ void insert_line(fstream &newFile, int pos_prec, char Nm[], char Tim[], char cop
 
 void write(char h[], char min[], char s[], char point[], char name[], char line[]){
 
-    //const int max_l_I = 25;
     const int length = 100;
     char input[length];
 
@@ -64,9 +63,6 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
     strcat(time,":");
     strncat(time,s,2);
 
-    cout<<"tempo [hh:mm:ss]: "<< time <<endl;
-    cout<<"score: "<< point <<endl;
-
     char file_tmp[] = {"salvataggio_punteggio/tmp.txt"};
     char file_final[] = {"salvataggio_punteggio/leaderboard.txt"};
 
@@ -77,13 +73,12 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
 
     int j=1;
     fstream file;
-    file.open(file_final, ios::in);     //apro in lettura il file dove sono
-                                        //salvati i miei dati ordinati tranne per quello che devo inserire
+    file.open(file_final, ios::in);     //apro in lettura il file dove sono salvati i miei dati ordinati tranne per quello che devo inserire
 
     fstream newFile;
     newFile.open(file_tmp, ios::app);   //apro il file precedentemente pulito in append
 
-    char line_pos[80];      //con questo leggo le righe del file text1.txt
+    char line_pos[80];      //con questo leggo le righe del file leaderboard.txt
     char copy[10];          //mi salvo il punteggio della riga corrente
     bool flag = false;
     bool flagI = false;
@@ -97,15 +92,15 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
     char B[6];
     char P[6];
 
-    if(!file.is_open()){ // is file doesn't exits i do an interrupt file = test1.txt
+    if(!file.is_open()){ // if file doesn't exits i do an interrupt file = leaderboard.txt
         cout<<"error to open file "<<endl;
     }
     else{
         while(!file.eof()){ //continuo fin tanto che il file non sia arrivato all'ultima riga
-                            //mi ricavo se la prima riga del file il flag
+                            //mi ricavo se la prima riga del file sia un flag
                             // altrimenti la posizione del giocatore
 
-            //pos
+            //posizione
             file>>line_pos;
             strcpy(mess,line_pos);
             strncat(mess,"      ",5);
@@ -113,7 +108,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
             if(!strcmp(line_pos,"ff") == 0 && !strcmp(line_pos,"tt") == 0 && !strcmp(line_pos,"new") == 0){
                 if(!strcmp(line_pos,"n") == 0){
                     if(!is_insert) count++;
-                    //mi legge i dati della classifica nel file text1.txt
+                    //mi legge i dati della classifica nel file leaderboard.txt
                     pos_prec = stoi(line_pos); //mi salva la posizione in cui sono ora
                     /*
                     posso ricavare solo ora la posizione perché
@@ -149,19 +144,10 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
                         pos_prec++;
                         insert_line(newFile, pos_prec, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
                     }
-                    else if(flagI)
-                    {
+                    else if(flagI){
                         insert_line(newFile, pos_prec, Nm, Tim, copy, B);     //se flag è attivo vuol dire che ho già inserito il nuovo giocatore
-                    }                                                             //quindi inserisco nel file text_final.txt tutti glil altri con la posizione aggiornata,
-                    /*
-                    ci possono essere 2 casi:
+                    }                                                             //quindi inserisco nel file tmp.txt tutti glil altri con la posizione aggiornata,
 
-                    1°: il punteggio del giocatore che devo inserire è minore di quello che sto leggendo in questo momento
-                        quindi mi inserisce nel file il giocatore corrente.
-
-                    2°: è maggiore quindi mi inscerisce prima il giocatore che devo inserire con la posizione di pos aggiornata(e di tutti gli altri)
-
-                    */
                     else if(stoi(copy) <= stoi(point) && !flag){
                         if(stoi(copy)==stoi(point)){
                             flagI = true;
@@ -217,7 +203,7 @@ void write(char h[], char min[], char s[], char point[], char name[], char line[
     file_text.open(file_final, ios::app);
     char read[80];
 
-    while(!final.eof()){ // ricopio i dati dal file test_final.txt a test1.txt + il relativo flag
+    while(!final.eof()){ // ricopio i dati dal file tmp.txt a leaderboard.txt + il relativo flag
         final >> read;
         strcpy(mess, read);
         strncat(mess, "      ", 5);
@@ -265,16 +251,10 @@ void del_ch(WINDOW* player, char text[], int i, int limit){
 
 bool check(char text[]){
     int i = 0;
-    bool flag = false;
+    bool flag;
     if(text[i] == '\0')
         flag = true;
-    else{
-        while(text[i] != '\0' && !flag){
-            if(text[i] == char(32))
-                flag = true;
-            i++;
-        }
-    }
+    else flag = false;
     return flag;
 }
 
@@ -305,8 +285,6 @@ void insert(int p,int h,int min,int s, int row){
     wrefresh(player);
 
     keypad(player, true);
-
-
 
     int ch;
     bool BSp = false;
@@ -345,7 +323,7 @@ void insert(int p,int h,int min,int s, int row){
             BSp = check(text);
 
             if(BSp){
-                mvwprintw(player, 14, 2, "%s", "è presente un carattere non valido");
+                mvwprintw(player, 14, 2, "%s", "inserire almeno un carattere valido");
                 while(i > 0){
                     i--;
                     del_ch(player, text, i, xMax);
@@ -367,7 +345,7 @@ void insert(int p,int h,int min,int s, int row){
                 del_ch(player, text, i, xMax);
             }
         }
-        else if(ch != KEY_UP && ch != KEY_DOWN && ch != KEY_LEFT && ch != KEY_RIGHT && ch != 27){
+        else if(ch>=33 && ch<=126){
             if(i < sizeof(text) - 1){
 
                 wmove(player, 14, 1);
@@ -382,6 +360,15 @@ void insert(int p,int h,int min,int s, int row){
                 wrefresh(player);
                 i++;
             }
+        }
+        else{
+            wmove(player, 14, 1);
+            wclrtoeol(player);
+            wrefresh(player);
+
+            box(player, 0, 0);
+            wrefresh(player);
+            mvwprintw(player, 14, 2, "%s", "inserire almeno un carattere valido");
         }
     }
     endwin();

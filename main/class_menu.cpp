@@ -1,14 +1,14 @@
 #include "class_menu.h"
 #include <ncurses.h>
 
-choiches Ch[4] = {      //DA REVISIONARE (!)
+choiches Ch[4] = {
     {"Play"},
     {"Leaderboard"},
     {"Options"},
     {"Exit"}
 };
 
-choiches Ch_Menu_pausa[2] = {   //DA REVISIONARE (!)
+choiches Ch_Menu_pausa[2] = {
     {"Resume"},
     {"Exit"}
 };
@@ -22,19 +22,12 @@ menu::menu(WINDOW* win, int k, int y, int x){ //costruttore
 }
 
 void menu::init(){ //funziona che mi inizializza lo schermo
-    initscr(); //initializeed the screen
+    initscr();
     noecho();
     cbreak();
     curs_set(0);
 
-    if(!has_colors()){
-        printw("Terminal doesn't support the color");
-        getch();
-    }
-    else{
-        start_color();
-        getmaxyx(stdscr, yMax, xMax);
-    }
+    getmaxyx(stdscr, yMax, xMax);
 }
 
 int menu::get_y(){
@@ -51,7 +44,7 @@ void menu::create_W(){ //mi inizializza la finestra
     win = newwin(yMax/2, xMax/2, yMax/2 - yMax/4, xMax/2 - xMax/4);
     refresh();
 
-    box(win, 0, 0);//initialized my boards of menu
+    box(win, 0, 0);
     wrefresh(win);
     keypad(win, true);
 }
@@ -108,7 +101,7 @@ void Read_menu::create_win_rank(){
 
     win_rank = newwin(yMax, xMax - 4, 0, 2);
     wrefresh(win_rank);
-    box(win_rank, 0, 0);    //initialized my boards of menu
+    box(win_rank, 0, 0);
     wrefresh(win_rank);
     keypad(win_rank, true);
 }
@@ -148,7 +141,7 @@ void Read_menu::scr(){
 
     char line[80];
 
-    if(!file.is_open()){ // is file doesn't exits i do an interrupt
+    if(!file.is_open()){ // se il file non esiste eseguo un interrupt
         not_exist = true;
         ofstream f("salvataggio_punteggio/leaderboard.txt");
             f<<"new"<<endl;
@@ -158,7 +151,6 @@ void Read_menu::scr(){
         {
             cout<<"errore, file salvataggio non creato "<<endl;
             endwin();
-
         }
     }
 
@@ -221,8 +213,6 @@ void Read_menu::scr(){
 
         fileR<<"ff"<<endl;
 
-        //file>>endl;
-
         fileR.close();
         fix = false;
     }
@@ -241,9 +231,9 @@ void Read_menu::scr(){
         if(car == 10) flag = true;
     }
 
-    clear();
     delwin(exit);
     delwin(win_rank);
+    clear();
 
     endwin();
 }
@@ -269,7 +259,7 @@ void Menu_pausa::create_W(){
     mvwprintw(P, 8, 18, "|_|    /_/    \\_\\ \\____/  |_____/  |____|");
     wattroff(P, A_BOLD);
 
-    box(P, 0, 0);   //initialized my boards of menu
+    box(P, 0, 0);
     wrefresh(P);
     keypad(P, true);
 }
@@ -307,5 +297,4 @@ void Menu_pausa::delete_W(){
 
 int Menu_pausa::get_wg(){
     return wgetch(P);
-
 }

@@ -9,7 +9,7 @@ void play(bool mod){
     curs_set(0);
     bool close = false;
 
-    Board griglia(0, 0);                        //score iniziale e linee completate
+    Board griglia(0, 0);         //score iniziale e linee completate
     tetramino *pointer = gen_tetramino(griglia);
     pointer->board_delete_assign(true, griglia, pointer->get_colour());
     tetramino *next_pointer = gen_tetramino(griglia);
@@ -20,9 +20,9 @@ void play(bool mod){
     int seconds = 0;
     int h = 0, m = 0, s = 0;
 
-    time_t start_time;          //tempo della partita
+    time_t start_time;
     time_t current_time;
-    start_time = time(NULL);    // Ottieni il tempo attuale all'inizio
+    start_time = time(NULL);    // Ottieni il tempo attuale all'inizio del gioco
 
     WINDOW* win = set_win();
     WINDOW* win_info = set_info_window();
@@ -48,7 +48,6 @@ void play(bool mod){
         minutes = m + (diff_time % 3600) / 60;
         seconds = s + diff_time % 60;
 
-        crono_tic_tac(hours, minutes, seconds);
         crono_window(win_crono, hours, minutes, seconds);
         print_griglia(win, griglia);
         do{
@@ -65,12 +64,22 @@ void play(bool mod){
                     timer = timer + 250;
                     break;
 
-                case 97:
+                case 97:    //a minuscola
                     pointer->left_rotation(griglia);
                     timer = timer + 250;
                     break;
 
-                case 100:
+                case 65:    //A maiuscola
+                    pointer->left_rotation(griglia);
+                    timer = timer + 250;
+                    break;
+
+                case 100:   //d minuscola
+                    pointer->right_rotation(griglia);
+                    timer = timer + 250;
+                    break;
+
+                case 68:    //D minuscola
                     pointer->right_rotation(griglia);
                     timer = timer + 250;
                     break;
@@ -97,6 +106,7 @@ void play(bool mod){
 
                 default:
                     if(movement == KEY_DOWN || movement == ERR) timer = timer + delay;
+                    else timer = timer + 250;
                     break;
             }
             print_griglia(win, griglia);
@@ -108,7 +118,7 @@ void play(bool mod){
             swap_tetramino_pointer(pointer, next_pointer, griglia);
         }
 
-        if(griglia.score < 1000) delay = 1000;
+        if(griglia.score < 1000) delay = 1000;      //Soglie di punteggio
         else if(griglia.score < 1500) delay = 800;
         else if(griglia.score < 2000) delay = 500;
         else if(griglia.score >= 2500) delay = 300;
@@ -123,11 +133,11 @@ void play(bool mod){
         insert(griglia.score, hours, minutes, seconds, griglia.completed_rows);
     }
 
-    clear();
     delwin(win);
     delwin(win_info);
     delwin(win_predict);
     delwin(win_crono);
+    clear();
 
     endwin();
 
