@@ -48,6 +48,7 @@ void play(bool mod){
         minutes = m + (diff_time % 3600) / 60;
         seconds = s + diff_time % 60;
 
+        crono_tic_tac(hours, minutes, seconds);
         crono_window(win_crono, hours, minutes, seconds);
         print_griglia(win, griglia);
         do{
